@@ -16,7 +16,7 @@ const App = () => {
   return (
     <div>
       <Router>
-        <Header />
+        {/* <Header /> */}
 
         <Routes>
           <Route path="/" element={<Home />} />
@@ -28,7 +28,7 @@ const App = () => {
           <Route path="/Sell" element={<Sell />} />
           <Route path="/*" element={<NotFoundPage />} />
         </Routes>
-        <Footer />
+        {/* <Footer /> */}
       </Router>
       {/* for suggestion we need to hit ctrl + space */}
     </div>
