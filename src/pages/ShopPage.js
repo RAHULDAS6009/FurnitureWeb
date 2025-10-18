@@ -12,7 +12,7 @@ const products = [
     category: "Fashion Bag",
     detailsUrl: "shop-details.html",
     categoryUrl: "/shop",
-    quantity: "1",
+    quantity: 1,
   },
   {
     id: 2,
@@ -23,7 +23,7 @@ const products = [
     category: "Travel Bag",
     detailsUrl: "shop-details.html",
     categoryUrl: "/shop",
-    quantity: "1",
+    quantity: 1,
   },
   {
     id: 3,
@@ -34,7 +34,7 @@ const products = [
     category: "Luxury Bag",
     detailsUrl: "shop-details.html",
     categoryUrl: "/shop",
-    quantity: "1",
+    quantity: 1,
   },
   {
     id: 4,
@@ -45,7 +45,7 @@ const products = [
     category: "Women Bag",
     detailsUrl: "shop-details.html",
     categoryUrl: "/shop",
-    quantity: "1",
+    quantity: 1,
   },
   {
     id: 5,
@@ -56,7 +56,7 @@ const products = [
     category: "Casual Bag",
     detailsUrl: "shop-details.html",
     categoryUrl: "/shop",
-    quantity: "1",
+    quantity: 1,
   },
   {
     id: 6,
@@ -67,7 +67,7 @@ const products = [
     category: "Accessories",
     detailsUrl: "shop-details.html",
     categoryUrl: "/shop",
-    quantity: "1",
+    quantity: 1,
   },
 ];
 

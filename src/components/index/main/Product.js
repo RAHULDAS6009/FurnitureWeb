@@ -11,7 +11,7 @@ export const products = [
     category: "Fashion Bag",
     detailsUrl: "shop-details.html",
     categoryUrl: "/shop",
-    quantity: "1",
+    quantity: 1,
   },
   {
     id: 4,
@@ -22,7 +22,7 @@ export const products = [
     category: "Fashion Bag",
     detailsUrl: "shop-details.html",
     categoryUrl: "/shop",
-    quantity: "1",
+    quantity: 1,
   },
   {
     id: 5,
@@ -33,7 +33,7 @@ export const products = [
     category: "Fashion Bag",
     detailsUrl: "shop-details.html",
     categoryUrl: "/shop",
-    quantity: "1",
+    quantity: 1,
   },
 ];
 
