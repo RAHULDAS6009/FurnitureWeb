@@ -70,7 +70,7 @@ export const Header = () => {
             {/* <!-- header left --> */}
             <div className="header-bottom-left">
               <div className="logo-container">
-                <a href="index.html" className="d-inline-block">
+                <a href="/" className="d-inline-block">
                   <img src="assets/img/logo.svg" alt="logo" className="logo" />
                 </a>
               </div>
@@ -115,12 +115,12 @@ export const Header = () => {
             <div className="ul-header-nav-wrapper">
               <div className="to-go-to-sidebar-in-mobile">
                 <nav className="ul-header-nav">
-                  <a href="index.html">Home</a>
-                  <a href="shop.html">Shop</a>
-                  <a href="shop.html">Women</a>
-                  <a href="shop.html">Men's</a>
-                  <a href="shop.html">Kids</a>
-                  <a href="blog.html">Blog</a>
+                  <a href="/">Home</a>
+                  <a href="/shop">Shop</a>
+                  <a href="/shop">Women</a>
+                  <a href="/shop">Men's</a>
+                  <a href="/shop">Kids</a>
+                  <a href="/blog">Blog</a>
 
                   <div className="has-sub-menu has-mega-menu">
                     <a role="button">Pages</a>
@@ -166,7 +166,7 @@ export const Header = () => {
                         <span className="single-col-title">Shop Pages</span>
                         <ul>
                           <li>
-                            <a href="shop.html">Shop Left Sidebar</a>
+                            <a href="/shop">Shop Left Sidebar</a>
                           </li>
                           <li>
                             <a href="shop-right-sidebar.html">
@@ -183,10 +183,10 @@ export const Header = () => {
                             <a href="wishlist.html">Wishlist</a>
                           </li>
                           <li>
-                            <a href="cart.html">Cart</a>
+                            <a href="/cart">Cart</a>
                           </li>
                           <li>
-                            <a href="checkout.html">Checkout</a>
+                            <a href="/checkout">Checkout</a>
                           </li>
                         </ul>
                       </div>
@@ -294,13 +294,13 @@ export const Header = () => {
               <button className="ul-header-mobile-search-opener d-xxl-none">
                 <i className="flaticon-search-interface-symbol"></i>
               </button>
-              <a href="login.html">
+              <a href="/login">
                 <i className="flaticon-user"></i>
               </a>
-              <a href="wishlist.html">
+              <a href="/wishlist">
                 <i className="flaticon-heart"></i>
               </a>
-              <a href="cart.html">
+              <a href="/cart">
                 <i className="flaticon-shopping-bag"></i>
               </a>
             </div>

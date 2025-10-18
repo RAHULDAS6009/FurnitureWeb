@@ -49,7 +49,7 @@ const AdSection = () => {
               <img src="assets/img/ad-img.png" alt="Ad Image" />
             </div>
 
-            <a href="shop.html" className="ul-btn">
+            <a href="/shop" className="ul-btn">
               Check Discount <i className="flaticon-up-right-arrow"></i>
             </a>
           </div>

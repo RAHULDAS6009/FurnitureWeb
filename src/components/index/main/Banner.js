@@ -25,7 +25,7 @@ const Banner = () => {
                       <p className="ul-banner-slide-price">
                         Starting From <span className="price">$129</span>
                       </p>
-                      <a href="shop.html" className="ul-btn">
+                      <a href="/shop" className="ul-btn">
                         SHOP NOW <i className="flaticon-up-right-arrow"></i>
                       </a>
                     </div>
@@ -46,7 +46,7 @@ const Banner = () => {
                       <p className="ul-banner-slide-price">
                         Starting From <span className="price">$129</span>
                       </p>
-                      <a href="shop.html" className="ul-btn">
+                      <a href="/shop" className="ul-btn">
                         SHOP NOW <i className="flaticon-up-right-arrow"></i>
                       </a>
                     </div>
@@ -67,7 +67,7 @@ const Banner = () => {
                       <p className="ul-banner-slide-price">
                         Starting From <span className="price">$129</span>
                       </p>
-                      <a href="shop.html" className="ul-btn">
+                      <a href="/shop" className="ul-btn">
                         SHOP NOW <i className="flaticon-up-right-arrow"></i>
                       </a>
                     </div>

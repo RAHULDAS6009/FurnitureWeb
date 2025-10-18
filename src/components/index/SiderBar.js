@@ -68,7 +68,7 @@ export default function SiderBar() {
                     <a href="shop-details.html">Orange Airsuit</a>
                   </h4>
                   <h5 className="ul-product-category">
-                    <a href="shop.html">Fashion Bag</a>
+                    <a href="/shop">Fashion Bag</a>
                   </h5>
                 </div>
               </div>
@@ -103,7 +103,7 @@ export default function SiderBar() {
                     <a href="shop-details.html">Orange Airsuit</a>
                   </h4>
                   <h5 className="ul-product-category">
-                    <a href="shop.html">Fashion Bag</a>
+                    <a href="/shop">Fashion Bag</a>
                   </h5>
                 </div>
               </div>
@@ -138,7 +138,7 @@ export default function SiderBar() {
                     <a href="shop-details.html">Orange Airsuit</a>
                   </h4>
                   <h5 className="ul-product-category">
-                    <a href="shop.html">Fashion Bag</a>
+                    <a href="/shop">Fashion Bag</a>
                   </h5>
                 </div>
               </div>

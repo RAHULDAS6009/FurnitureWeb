@@ -16,7 +16,7 @@ const SubBannerSection = () => {
                     <p className="ul-sub-banner-descr">Up to 22% off Gimbals</p>
                   </div>
                   <div className="bottom">
-                    <a href="shop.html" className="ul-sub-banner-btn">
+                    <a href="/shop" className="ul-sub-banner-btn">
                       Collection <i className="flaticon-up-right-arrow"></i>
                     </a>
                   </div>
@@ -41,7 +41,7 @@ const SubBannerSection = () => {
                     <p className="ul-sub-banner-descr">Up to 22% off Gimbals</p>
                   </div>
                   <div className="bottom">
-                    <a href="shop.html" className="ul-sub-banner-btn">
+                    <a href="/shop" className="ul-sub-banner-btn">
                       Collection <i className="flaticon-up-right-arrow"></i>
                     </a>
                   </div>
@@ -66,7 +66,7 @@ const SubBannerSection = () => {
                     <p className="ul-sub-banner-descr">Up to 22% off Gimbals</p>
                   </div>
                   <div className="bottom">
-                    <a href="shop.html" className="ul-sub-banner-btn">
+                    <a href="/shop" className="ul-sub-banner-btn">
                       Collection <i className="flaticon-up-right-arrow"></i>
                     </a>
                   </div>

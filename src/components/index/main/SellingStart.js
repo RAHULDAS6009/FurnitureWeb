@@ -68,7 +68,7 @@ const MostSellingSection = () => {
                       <a href="shop-details.html">Orange Airsuit</a>
                     </h4>
                     <h5 className="ul-product-category">
-                      <a href="shop.html">Fashion Bag</a>
+                      <a href="/shop">Fashion Bag</a>
                     </h5>
                     <div className="ul-product-rating">
                       {[...Array(5)].map((_, i) => (

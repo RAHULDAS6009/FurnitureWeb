@@ -34,7 +34,7 @@ const FlashSaleSection = () => {
                 </div>
               </div>
 
-              <a href="shop.html" className="ul-btn">
+              <a href="/shop" className="ul-btn">
                 View All Collection <i className="flaticon-up-right-arrow"></i>
               </a>
             </div>
@@ -78,7 +78,7 @@ const FlashSaleSection = () => {
                           <a href="shop-details.html">Orange Airsuit</a>
                         </h4>
                         <h5 className="ul-product-category">
-                          <a href="shop.html">Fashion Bag</a>
+                          <a href="/shop">Fashion Bag</a>
                         </h5>
                       </div>
                     </div>

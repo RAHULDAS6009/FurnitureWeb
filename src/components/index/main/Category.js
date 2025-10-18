@@ -10,7 +10,7 @@ const CategorySection = () => {
             <div className="row row-cols-lg-4 row-cols-md-3 row-cols-2 row-cols-xxs-1 ul-bs-row">
               {/* single category */}
               <div className="col">
-                <a className="ul-category" href="shop.html">
+                <a className="ul-category" href="/shop">
                   <div className="ul-category-img">
                     <img src="assets/img/category-1.jpg" alt="Category" />
                   </div>
@@ -27,7 +27,7 @@ const CategorySection = () => {
 
               {/* single category */}
               <div className="col">
-                <a className="ul-category" href="shop.html">
+                <a className="ul-category" href="/shop">
                   <div className="ul-category-img">
                     <img src="assets/img/category-2.jpg" alt="Category" />
                   </div>
@@ -44,7 +44,7 @@ const CategorySection = () => {
 
               {/* single category */}
               <div className="col">
-                <a className="ul-category" href="shop.html">
+                <a className="ul-category" href="/shop">
                   <div className="ul-category-img">
                     <img src="assets/img/category-3.jpg" alt="Category" />
                   </div>
@@ -61,7 +61,7 @@ const CategorySection = () => {
 
               {/* single category */}
               <div className="col">
-                <a className="ul-category" href="shop.html">
+                <a className="ul-category" href="/shop">
                   <div className="ul-category-img">
                     <img src="assets/img/category-1.jpg" alt="Category" />
                   </div>
@@ -78,7 +78,7 @@ const CategorySection = () => {
 
               {/* single category */}
               <div className="col">
-                <a className="ul-category" href="shop.html">
+                <a className="ul-category" href="/shop">
                   <div className="ul-category-img">
                     <img src="assets/img/category-4.jpg" alt="Category" />
                   </div>
@@ -95,7 +95,7 @@ const CategorySection = () => {
 
               {/* single category */}
               <div className="col">
-                <a className="ul-category" href="shop.html">
+                <a className="ul-category" href="/shop">
                   <div className="ul-category-img">
                     <img src="assets/img/category-5.jpg" alt="Category" />
                   </div>
@@ -112,7 +112,7 @@ const CategorySection = () => {
 
               {/* single category */}
               <div className="col">
-                <a className="ul-category" href="shop.html">
+                <a className="ul-category" href="/shop">
                   <div className="ul-category-img">
                     <img src="assets/img/category-6.jpg" alt="Category" />
                   </div>
@@ -129,7 +129,7 @@ const CategorySection = () => {
 
               {/* single category */}
               <div className="col">
-                <a className="ul-category" href="shop.html">
+                <a className="ul-category" href="/shop">
                   <div className="ul-category-img">
                     <img src="assets/img/category-7.jpg" alt="Category" />
                   </div>
