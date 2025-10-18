@@ -11,26 +11,30 @@ import {
 export const CartPage = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.data);
-  const totalAmount = useSelector((state) => state.cart.totalAmount);
+  const [totalAmount, setTotalAmount] = useState(0);
   const totalItems = useSelector((state) => state.cart.totalItems);
 
-  // Update totals whenever cart changes
   useEffect(() => {
-    console.log(cart);
-    dispatch(getCartTotal());
-  }, [cart, dispatch]);
+    // Convert all prices (like "$89") to numbers and sum up
+    const total = cart.reduce((sum, item) => {
+      const numericPrice = parseFloat(item.price.replace("$", ""));
+      return sum + numericPrice * item.quantity;
+    }, 0);
+
+    setTotalAmount(total);
+  }, [cart]);
 
   const handleIncrease = (id) => {
     const product = cart.find((item) => item.id === id);
     if (product) {
-      dispatch(updateQuantity({ id, quantity: product.quantity + 1 }));
+      dispatch(updateQuantity({ id, quantity: Number(product.quantity) + 1 }));
     }
   };
 
   const handleDecrease = (id) => {
     const product = cart.find((item) => item.id === id);
     if (product && product.quantity > 1) {
-      dispatch(updateQuantity({ id, quantity: product.quantity - 1 }));
+      dispatch(updateQuantity({ id, quantity: Number(product.quantity) - 1 }));
     }
   };
 
@@ -524,7 +528,7 @@ const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
       </td>
 
       <td>
-        <span className="ul-cart-item-price">${price}</span>
+        <span className="ul-cart-item-price">{price}</span>
       </td>
 
       <td>
@@ -560,7 +564,7 @@ const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
 
       <td>
         <span className="ul-cart-item-subtotal">
-          ${(price * quantity).toFixed(2)}
+          ${price.replace("$", "") * quantity}
         </span>
       </td>
 

@@ -11,6 +11,7 @@ export const products = [
     category: "Fashion Bag",
     detailsUrl: "shop-details.html",
     categoryUrl: "/shop",
+    quantity: "1",
   },
   {
     id: 4,
@@ -21,6 +22,7 @@ export const products = [
     category: "Fashion Bag",
     detailsUrl: "shop-details.html",
     categoryUrl: "/shop",
+    quantity: "1",
   },
   {
     id: 5,
@@ -31,6 +33,7 @@ export const products = [
     category: "Fashion Bag",
     detailsUrl: "shop-details.html",
     categoryUrl: "/shop",
+    quantity: "1",
   },
 ];
 
@@ -99,7 +102,7 @@ const ProductsSection = () => {
 
                             <div className="ul-product-actions">
                               <button
-                                onClick={() => dispatch(addToCart(product.id))}
+                                onClick={() => dispatch(addToCart(product))}
                               >
                                 <i className="flaticon-shopping-bag"></i>
                               </button>
