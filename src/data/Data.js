@@ -75,8 +75,7 @@ export const products = [
     title: "Double Bed",
     short_description: "Double Bed",
     price: "6000",
-    description:
-      "Double bed with wooden colour.",
+    description: "Double bed with wooden colour.",
   },
   {
     id: 2,
@@ -97,8 +96,7 @@ export const products = [
     title: "Refrigrator",
     short_description: "Refrigrator",
     price: "3000",
-    description:
-      "Refrigrator with silver colour and single door.",
+    description: "Refrigrator with silver colour and single door.",
   },
   {
     id: 4,
@@ -108,8 +106,7 @@ export const products = [
     title: "Cooler",
     short_description: "Cooler",
     price: "1800",
-    description:
-      "Iron body cooler with good condition.",
+    description: "Iron body cooler with good condition.",
   },
   {
     id: 5,
@@ -119,8 +116,7 @@ export const products = [
     title: "Washing Machine",
     short_description: "Washing Machine",
     price: "2000",
-    description:
-      "Washing Machine in good condition with proper working. ",
+    description: "Washing Machine in good condition with proper working. ",
   },
   {
     id: 6,
@@ -130,8 +126,7 @@ export const products = [
     title: "Double bed",
     short_description: "Double bed",
     price: "6000",
-    description:
-      "Double bed with brown colour  and in good condition.",
+    description: "Double bed with brown colour  and in good condition.",
   },
 
   {
@@ -164,8 +159,7 @@ export const products = [
     title: "Double bed",
     short_description: "Double bed",
     price: "6500",
-    description:
-      "Double bed brown colour and in good condition.",
+    description: "Double bed brown colour and in good condition.",
   },
   {
     id: 10,
@@ -175,8 +169,7 @@ export const products = [
     title: "Mattress",
     short_description: "Mattress",
     price: "2500",
-    description:
-      "King Size Dual Comfort Mattress",
+    description: "King Size Dual Comfort Mattress",
   },
   {
     id: 11,
@@ -186,8 +179,7 @@ export const products = [
     title: "Mattress",
     short_description: "Mattress",
     price: "1500",
-    description:
-      "Single bed Comfort Mattress | High Resilience Foam.",
+    description: "Single bed Comfort Mattress | High Resilience Foam.",
   },
   {
     id: 12,
@@ -208,8 +200,7 @@ export const products = [
     title: "Mattress",
     short_description: "Mattress",
     price: "1700",
-    description:
-      "Single bed Comfort Mattress | High Resilience Foam.",
+    description: "Single bed Comfort Mattress | High Resilience Foam.",
   },
   {
     id: 14,
@@ -230,8 +221,7 @@ export const products = [
     title: "Mattress",
     short_description: "Mattress",
     price: "1600",
-    description:
-      "Single bed Comfort Mattress | High Resilience Foam | blue .",
+    description: "Single bed Comfort Mattress | High Resilience Foam | blue .",
   },
   {
     id: 16,
@@ -241,8 +231,7 @@ export const products = [
     title: "Refrigrator",
     short_description: "Whirlpool Refrigrator",
     price: "3000",
-    description:
-      "Refrigrator| 3 star| blue.",
+    description: "Refrigrator| 3 star| blue.",
   },
   {
     id: 17,
@@ -252,8 +241,7 @@ export const products = [
     title: "RO",
     short_description: "Aqua guard RO",
     price: "1600",
-    description:
-      "Aqua guard RO in proper working conditon",
+    description: "Aqua guard RO in proper working conditon",
   },
   {
     id: 18,
@@ -266,7 +254,7 @@ export const products = [
     description:
       "OSCAR 139 cm (55 inch) Nexg Series 4K Ultra HD LED Smart Google TV 55UIG (Black)",
   },
-   {
+  {
     id: 19,
     img: "../images/miniture/chair/LED 32inch.jpeg",
     category: "LED",
@@ -274,10 +262,9 @@ export const products = [
     title: "Onida LED",
     short_description: "Onida LED",
     price: "6500",
-    description:
-      "Onida 108 cm (43 inch) Full HD Smart TV 43ACF (Black)",
+    description: "Onida 108 cm (43 inch) Full HD Smart TV 43ACF (Black)",
   },
-   {
+  {
     id: 20,
     img: "../images/miniture/chair/Table.jpeg",
     category: "Table",
@@ -285,10 +272,9 @@ export const products = [
     title: "Table",
     short_description: "Premium table",
     price: "2800",
-    description:
-      "Leonis Coffee Table , Engineered Wood",
+    description: "Leonis Coffee Table , Engineered Wood",
   },
-   {
+  {
     id: 21,
     img: "../images/miniture/chair/Sofa.jpeg",
     category: "Sofa",
@@ -296,12 +282,8 @@ export const products = [
     title: "Sofa",
     short_description: "Premium Sofa",
     price: "5000",
-    description:
-      "Titanic Modern Luxury Deep blue Sectional Large Corner Sofa",
+    description: "Titanic Modern Luxury Deep blue Sectional Large Corner Sofa",
   },
-  
-
-
 ];
 
 export const arriveItems = [

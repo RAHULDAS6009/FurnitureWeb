@@ -38,6 +38,7 @@ const cartSlice = createSlice({
       } else {
         state.data.push(action.payload);
         storeInLocalStorage(state.data);
+        console.log(state.data);
       }
     },
 

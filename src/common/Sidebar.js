@@ -12,6 +12,8 @@ const Sidebar = ({ isSidebarOpen, closeSidebar }) => {
 
   const cartSelector = useSelector((state) => state.cart);
   useEffect(() => {
+    // console.log(dispatch(getCartTotal()));
+    console.log(cartProducts, totalAmount);
     dispatch(getCartTotal());
   }, [cartSelector]);
 

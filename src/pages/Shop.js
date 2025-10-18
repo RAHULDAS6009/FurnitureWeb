@@ -7,9 +7,18 @@ import { BiCart } from "react-icons/bi";
 import Modal from "../common/Modal";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
+import { addToCart } from "../redux/cartSlice";
+import { useDispatch } from "react-redux";
 
 // ---------- Portal-based mobile bottom sheet (always full viewport) ----------
-function MobileFilterSheet({ open, title, onClose, onClear, onApply, children }) {
+function MobileFilterSheet({
+  open,
+  title,
+  onClose,
+  onClear,
+  onApply,
+  children,
+}) {
   useEffect(() => {
     if (!open) return;
     const prev = document.body.style.overflow;
@@ -25,12 +34,10 @@ function MobileFilterSheet({ open, title, onClose, onClear, onApply, children })
     <>
       <div className="fixed inset-0 z-[9998] bg-black/50" onClick={onClose} />
       <div
-  className="fixed left-0 right-0 bottom-0 z-[9999] w-screen rounded-t-2xl bg-white border-t shadow-2xl sheet-big"
-  role="dialog"
-  aria-modal="true"
->
-
-
+        className="fixed left-0 right-0 bottom-0 z-[9999] w-screen rounded-t-2xl bg-white border-t shadow-2xl sheet-big"
+        role="dialog"
+        aria-modal="true"
+      >
         <div className="px-4 py-3 flex items-center justify-between border-b">
           <h3 className="text-lg font-semibold">{title}</h3>
           <button
@@ -67,6 +74,7 @@ const Shop = () => {
   const [isModalOpen, setIsModalOpen] = useState(null);
   const handleOpen = (productId) => setIsModalOpen(productId);
   const handleClose = () => setIsModalOpen(null);
+  const dispatch = useDispatch();
 
   const [filters, setFilters] = useState({
     categories: [],
@@ -78,7 +86,10 @@ const Shop = () => {
   const brandList = Array.from(new Set(products.map((p) => p.brand)));
 
   const filteredProducts = products.filter((product) => {
-    if (filters.categories.length > 0 && !filters.categories.includes(product.category)) {
+    if (
+      filters.categories.length > 0 &&
+      !filters.categories.includes(product.category)
+    ) {
       return false;
     }
     if (filters.brands.length > 0 && !filters.brands.includes(product.brand)) {
@@ -104,7 +115,8 @@ const Shop = () => {
     });
   };
 
-  const clearAll = () => setFilters({ categories: [], brands: [], priceRange: [0, 20000] });
+  const clearAll = () =>
+    setFilters({ categories: [], brands: [], priceRange: [0, 20000] });
 
   // mobile sheet controller: "price" | "category" | "brand" | null
   const [activeSheet, setActiveSheet] = useState(null);
@@ -145,8 +157,6 @@ const Shop = () => {
         </div>
 
         <div className="flex gap-3 items-start">
-        
-          
           {/* Product grid */}
           <div className="w-full md:w-3/4">
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3 products-grid ">
@@ -161,7 +171,11 @@ const Shop = () => {
                       />
                       <div className="opacity-100 md:opacity-0 md:hover:opacity-100 transition-opacity absolute -bottom-3 right-0 bg-white p-4 rounded-s-2xl">
                         <div className="bg-black text-white h-10 w-10 grid place-items-center rounded-3xl">
-                          <button className="text-2xl" onClick={() => handleOpen(item.id)}>
+                          <button
+                            className="text-2xl"
+                            // onClick={() => handleOpen(item.id)}
+                            onClick={() => dispatch(addToCart(item.id))}
+                          >
                             <BiCart />
                           </button>
                         </div>
@@ -175,7 +189,9 @@ const Shop = () => {
                 </div>
               ))}
               {filteredProducts.length === 0 && (
-                <div className="col-span-full text-slate-600">No products match your filter.</div>
+                <div className="col-span-full text-slate-600">
+                  No products match your filter.
+                </div>
               )}
             </div>
           </div>
@@ -222,7 +238,10 @@ const Shop = () => {
         {activeSheet === "category" && (
           <div className="space-y-2">
             {categoryList.map((category) => (
-              <label key={category} className="flex items-center gap-2 text-slate-700">
+              <label
+                key={category}
+                className="flex items-center gap-2 text-slate-700"
+              >
                 <input
                   type="checkbox"
                   className="h-4 w-4 accent-blue-600"
@@ -238,7 +257,10 @@ const Shop = () => {
         {activeSheet === "brand" && (
           <div className="space-y-2">
             {brandList.map((brand) => (
-              <label key={brand} className="flex items-center gap-2 text-slate-700">
+              <label
+                key={brand}
+                className="flex items-center gap-2 text-slate-700"
+              >
                 <input
                   type="checkbox"
                   className="h-4 w-4 accent-blue-600"

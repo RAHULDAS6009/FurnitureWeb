@@ -15,7 +15,10 @@ const GAS_URL =
 
 const Cart = () => {
   const dispatch = useDispatch();
-  const { data: cartProducts, totalAmount } = useSelector((state) => state.cart);
+  const { data: cartProducts, totalAmount } = useSelector(
+    (state) => state.cart
+  );
+  // const selector = useSelector();
 
   const removeFromCart = (itemId) => {
     dispatch(removeItem({ id: itemId }));
@@ -72,7 +75,9 @@ const Cart = () => {
 
     // cart from localStorage → fallback to Redux
     let items = [];
-    try { items = JSON.parse(localStorage.getItem("cart") || "[]"); } catch {}
+    try {
+      items = JSON.parse(localStorage.getItem("cart") || "[]");
+    } catch {}
     if (!Array.isArray(items) || items.length === 0) items = cartProducts;
 
     const subTotal = items.reduce(
@@ -119,12 +124,14 @@ const Cart = () => {
     add("itemsJson", JSON.stringify(items)); // full cart array
 
     document.body.appendChild(form);
-    form.submit();  // posts inside hidden iframe (bypasses CORS)
+    form.submit(); // posts inside hidden iframe (bypasses CORS)
     form.remove();
 
     setTimeout(() => {
       setSending(false);
-      setSuccessMsg("Order received! You’ll get a WhatsApp tracking update shortly.");
+      setSuccessMsg(
+        "Order received! You’ll get a WhatsApp tracking update shortly."
+      );
       // OPTIONAL: clear cart after buy
       // localStorage.removeItem("cart");
       // dispatch(clearCart()) // if you have an action
@@ -145,12 +152,13 @@ const Cart = () => {
             </div>
           ) : (
             <div className="space-y-6">
-             
-
               {/* Mobile cards */}
               <div className="md:hidden space-y-4">
                 {cartProducts.map((item, key) => (
-                  <div key={key} className="bg-white rounded-2xl shadow-md border p-3">
+                  <div
+                    key={key}
+                    className="bg-white rounded-2xl shadow-md border p-3"
+                  >
                     <div className="flex items-start gap-3">
                       <img
                         src={item.img}
@@ -159,7 +167,9 @@ const Cart = () => {
                       />
                       <div className="flex-1">
                         <div className="flex justify-between gap-2">
-                          <p className="font-semibold leading-snug">{item.title}</p>
+                          <p className="font-semibold leading-snug">
+                            {item.title}
+                          </p>
                           <button
                             className="text-red-500 hover:text-red-600"
                             onClick={() => removeFromCart(item.id)}
@@ -168,13 +178,17 @@ const Cart = () => {
                             <FaTimes />
                           </button>
                         </div>
-                        <div className="mt-1 text-sm text-slate-600">Price: ₹{item.price}</div>
+                        <div className="mt-1 text-sm text-slate-600">
+                          Price: ₹{item.price}
+                        </div>
 
                         <div className="mt-2 flex items-center justify-between">
                           <div className="flex items-center gap-2">
                             <button
                               className="border rounded-lg p-2 active:scale-95"
-                              onClick={() => decreaseQuantity(item.id, item.quantity)}
+                              onClick={() =>
+                                decreaseQuantity(item.id, item.quantity)
+                              }
                               aria-label="Decrease"
                             >
                               <PiMinus className="text-lg" />
@@ -184,7 +198,9 @@ const Cart = () => {
                             </span>
                             <button
                               className="border rounded-lg p-2 active:scale-95"
-                              onClick={() => increaseQuantity(item.id, item.quantity)}
+                              onClick={() =>
+                                increaseQuantity(item.id, item.quantity)
+                              }
                               aria-label="Increase"
                             >
                               <PiPlus className="text-lg" />
@@ -210,7 +226,9 @@ const Cart = () => {
                     </h2>
 
                     <div>
-                      <label className="block text-gray-700 mb-1">Full Name</label>
+                      <label className="block text-gray-700 mb-1">
+                        Full Name
+                      </label>
                       <input
                         type="text"
                         name="fullName"
@@ -224,7 +242,9 @@ const Cart = () => {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-gray-700 mb-1">Email</label>
+                        <label className="block text-gray-700 mb-1">
+                          Email
+                        </label>
                         <input
                           type="email"
                           name="email"
@@ -236,7 +256,9 @@ const Cart = () => {
                         />
                       </div>
                       <div>
-                        <label className="block text-gray-700 mb-1">Phone Number</label>
+                        <label className="block text-gray-700 mb-1">
+                          Phone Number
+                        </label>
                         <input
                           type="tel"
                           name="phone"
@@ -250,7 +272,9 @@ const Cart = () => {
                     </div>
 
                     <div>
-                      <label className="block text-gray-700 mb-1">Address</label>
+                      <label className="block text-gray-700 mb-1">
+                        Address
+                      </label>
                       <textarea
                         name="address"
                         value={formData.address}
@@ -263,7 +287,9 @@ const Cart = () => {
                     </div>
 
                     <div className="sm:max-w-xs">
-                      <label className="block text-gray-700 mb-1">Zip / Pincode</label>
+                      <label className="block text-gray-700 mb-1">
+                        Zip / Pincode
+                      </label>
                       <input
                         type="text"
                         name="zip"
@@ -278,7 +304,7 @@ const Cart = () => {
                 </div>
 
                 {/* Totals + Buy button + messages */}
-                <div className="p-5 rounded-2xl shadow-2xl bg-white h-fit padding" >
+                <div className="p-5 rounded-2xl shadow-2xl bg-white h-fit padding">
                   <h1 className="mb-4 text-center text-2xl md:text-3xl font-bold">
                     Cart Total
                   </h1>
@@ -310,12 +336,13 @@ const Cart = () => {
                   </div>
 
                   <p className="text-xs text-slate-500 mt-2">
-                    We’ll use your phone number to send a WhatsApp tracking update.
+                    We’ll use your phone number to send a WhatsApp tracking
+                    update.
                   </p>
 
                   <div className="flex flex-col sm:flex-row gap-3 mt-5 padding">
                     <button
-                      type="button"                 // important: keep click, not form submit
+                      type="button" // important: keep click, not form submit
                       onClick={handleBuy}
                       disabled={sending}
                       className="text-center px-4 py-2 rounded-lg text-white bg-blue-600 hover:bg-blue-700 transition disabled:opacity-60"
@@ -333,7 +360,11 @@ const Cart = () => {
               </div>
 
               {/* hidden iframe target for CORS-free post */}
-              <iframe name="gasPostSimple" style={{ display: "none" }} title="gasPostSimple" />
+              <iframe
+                name="gasPostSimple"
+                style={{ display: "none" }}
+                title="gasPostSimple"
+              />
             </div>
           )}
         </div>

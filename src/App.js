@@ -11,6 +11,8 @@ import Shop from "./pages/Shop";
 import ContactUs from "./pages/Contact";
 import AboutUs from "./pages/AboutUs";
 import Sell from "./pages/Sell";
+import { CartPage } from "./pages/CartPage";
+import { ShopPage } from "./pages/ShopPage";
 
 const App = () => {
   return (
@@ -21,8 +23,9 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/index" element={<Index />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/shop" element={<Shop />} />
+          {/* <Route path="/cart" element={<Cart />} /> */}
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/shop" element={<ShopPage />} />
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/Sell" element={<Sell />} />

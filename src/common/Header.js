@@ -31,26 +31,20 @@ const Header = () => {
 
   return (
     <>
-    
-      <div className={`${sticky ? "header py-4 sticky top-0 z-50 shadow-xl" : ""}`}>
+      <div
+        className={`${sticky ? "header py-4 sticky top-0 z-50 shadow-xl" : ""}`}
+      >
         <div className="flex flex-wrap justify-between items-center w-10/12 m-auto">
-         
-            <div className="logo">UsedStuff</div>
-         
-          
+          <div className="logo">UsedStuff</div>
 
-         <li className="flex always-right">
-            
-
-           
-
+          <li className="flex always-right">
             <Link onClick={toggleSidebar} className="relative mr-5 text-2xl">
               <MdOutlineShoppingBag />
               <div className="items_count">
                 <span className="text-white">{totalItems}</span>
               </div>
             </Link>
-             {/* User icon or username */}
+            {/* User icon or username */}
             <Link
               className="mr-5 text-2xl cursor-pointer"
               onClick={handleUserClick}
@@ -62,16 +56,19 @@ const Header = () => {
       </div>
       {/* <br /> */}
       <div className=" md:flex flex-wrap text-base py-3 col-span-12 hidden justify-center items-center w-10/12 m-auto">
-            {navbar.map((nav, key) => (
-              <div key={key} className="mr-5">
-                <Link className="active link-hover transition-all" to={nav.path}>
-                  {nav.nav}
-                </Link>
-              </div>
-            ))}
+        {navbar.map((nav, key) => (
+          <div key={key} className="mr-5">
+            <Link className="active link-hover transition-all" to={nav.path}>
+              {nav.nav}
+            </Link>
           </div>
+        ))}
+      </div>
 
-      <Sidebar isSidebarOpen={isSidebarOpen} closeSidebar={() => toggleSidebar()} />
+      <Sidebar
+        isSidebarOpen={isSidebarOpen}
+        closeSidebar={() => toggleSidebar()}
+      />
 
       {/* Show login modal only when user clicks HiOutlineUser */}
       {showLogin && (
