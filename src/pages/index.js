@@ -7,7 +7,7 @@ export default function index() {
   return (
     <div>
       {/* <Loader /> */}
-      <SiderBar />
+      {/* <SiderBar /> */}
       <Header />
       <Hero />
       <Footer />

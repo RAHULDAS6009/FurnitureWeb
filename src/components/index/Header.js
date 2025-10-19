@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import SiderBar from "./SiderBar";
 
 export const Header = () => {
   const state = useSelector((state) => state.cart.data);
   const [items, setItem] = useState(0);
+  const [open, setOpen] = useState(false);
   useEffect(() => {
     setItem(state.length);
   }, [state]);
@@ -278,13 +280,20 @@ export const Header = () => {
 
             {/* <!-- sidebar opener --> */}
             <div className="d-inline-flex">
-              <button className="ul-header-sidebar-opener">
+              <button
+                className="ul-header-sidebar-opener"
+                onClick={() => {
+                  console.log(open);
+                  setOpen(!open);
+                }}
+              >
                 <i className="flaticon-hamburger"></i>
               </button>
             </div>
           </div>
         </div>
       </div>
+      {open && <SiderBar onClose={() => setOpen(false)} />}
     </div>
   );
 };

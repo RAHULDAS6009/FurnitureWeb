@@ -1,17 +1,21 @@
 import React from "react";
 
-export default function SiderBar() {
+export default function SiderBar({ onClose }) {
   return (
-    <div className="ul-sidebar">
+    <div
+      className="fixed top-0 right-0 h-full overflow-x-hidden p-10 overflow-y-scroll w-[600px] bg-white shadow-2xl z-50 transition-transform duration-300 animate-slide-in
+    animate-slide-out
+    "
+    >
       {/* <!-- header --> */}
       <div className="ul-sidebar-header">
         <div className="ul-sidebar-header-logo">
-          <a href="index.html">
+          <a href="/">
             <img src="assets/img/logo.svg" alt="logo" className="logo" />
           </a>
         </div>
         {/* <!-- sidebar closer --> */}
-        <button className="ul-sidebar-closer">
+        <button className="ul-sidebar-closer" onClick={onClose}>
           <i className="flaticon-close"></i>
         </button>
       </div>
