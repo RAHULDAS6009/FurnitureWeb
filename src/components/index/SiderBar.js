@@ -296,7 +296,7 @@ function MobileSidebarNav() {
                       </a>
                     </li>
                     <li>
-                      <a href="/signup" className="hover:text-red-600">
+                      <a href="/register" className="hover:text-red-600">
                         Sign Up
                       </a>
                     </li>
@@ -325,7 +325,7 @@ function MobileSidebarNav() {
                       </a>
                     </li>
                     <li>
-                      <a href="/shop" className="hover:text-red-600">
+                      <a href="/shopdetails" className="hover:text-red-600">
                         Shop Details
                       </a>
                     </li>
@@ -354,32 +354,32 @@ function MobileSidebarNav() {
                   </h4>
                   <ul className="space-y-1 text-sm">
                     <li>
-                      <a href="#" className="hover:text-red-600">
+                      <a href="/shop" className="hover:text-red-600">
                         Clothing
                       </a>
                     </li>
                     <li>
-                      <a href="#" className="hover:text-red-600">
+                      <a href="/shop" className="hover:text-red-600">
                         Footwear
                       </a>
                     </li>
                     <li>
-                      <a href="#" className="hover:text-red-600">
+                      <a href="/shop" className="hover:text-red-600">
                         Accessories
                       </a>
                     </li>
                     <li>
-                      <a href="#" className="hover:text-red-600">
+                      <a href="/shop" className="hover:text-red-600">
                         Activewear
                       </a>
                     </li>
                     <li>
-                      <a href="#" className="hover:text-red-600">
+                      <a href="/shop" className="hover:text-red-600">
                         Grooming
                       </a>
                     </li>
                     <li>
-                      <a href="#" className="hover:text-red-600">
+                      <a href="/shop" className="hover:text-red-600">
                         Ethnic Wear
                       </a>
                     </li>
@@ -393,32 +393,32 @@ function MobileSidebarNav() {
                   </h4>
                   <ul className="space-y-1 text-sm">
                     <li>
-                      <a href="#" className="hover:text-red-600">
+                      <a href="/shop" className="hover:text-red-600">
                         Clothing
                       </a>
                     </li>
                     <li>
-                      <a href="#" className="hover:text-red-600">
+                      <a href="/shop" className="hover:text-red-600">
                         Footwear
                       </a>
                     </li>
                     <li>
-                      <a href="#" className="hover:text-red-600">
+                      <a href="/shop" className="hover:text-red-600">
                         Bags & Accessories
                       </a>
                     </li>
                     <li>
-                      <a href="#" className="hover:text-red-600">
+                      <a href="/shop" className="hover:text-red-600">
                         Activewear
                       </a>
                     </li>
                     <li>
-                      <a href="#" className="hover:text-red-600">
+                      <a href="/shop" className="hover:text-red-600">
                         Beauty & Grooming
                       </a>
                     </li>
                     <li>
-                      <a href="#" className="hover:text-red-600">
+                      <a href="/shop" className="hover:text-red-600">
                         Ethnic Wear
                       </a>
                     </li>
@@ -432,27 +432,27 @@ function MobileSidebarNav() {
                   </h4>
                   <ul className="space-y-1 text-sm">
                     <li>
-                      <a href="#" className="hover:text-red-600">
+                      <a href="/shop" className="hover:text-red-600">
                         Clothing
                       </a>
                     </li>
                     <li>
-                      <a href="#" className="hover:text-red-600">
+                      <a href="/shop" className="hover:text-red-600">
                         Footwear
                       </a>
                     </li>
                     <li>
-                      <a href="#" className="hover:text-red-600">
+                      <a href="/shop" className="hover:text-red-600">
                         Accessories
                       </a>
                     </li>
                     <li>
-                      <a href="#" className="hover:text-red-600">
+                      <a href="/shop" className="hover:text-red-600">
                         Toys & Games
                       </a>
                     </li>
                     <li>
-                      <a href="#" className="hover:text-red-600">
+                      <a href="/shop" className="hover:text-red-600">
                         Baby Essentials
                       </a>
                     </li>
@@ -466,32 +466,32 @@ function MobileSidebarNav() {
                   </h4>
                   <ul className="space-y-1 text-sm">
                     <li>
-                      <a href="#" className="hover:text-red-600">
+                      <a href="/shop" className="hover:text-red-600">
                         Ethnic & Traditional
                       </a>
                     </li>
                     <li>
-                      <a href="#" className="hover:text-red-600">
+                      <a href="/shop" className="hover:text-red-600">
                         Bridal
                       </a>
                     </li>
                     <li>
-                      <a href="#" className="hover:text-red-600">
+                      <a href="/shop" className="hover:text-red-600">
                         Bracelets
                       </a>
                     </li>
                     <li>
-                      <a href="#" className="hover:text-red-600">
+                      <a href="/shop" className="hover:text-red-600">
                         Rings
                       </a>
                     </li>
                     <li>
-                      <a href="#" className="hover:text-red-600">
+                      <a href="/shop" className="hover:text-red-600">
                         Earrings
                       </a>
                     </li>
                     <li>
-                      <a href="#" className="hover:text-red-600">
+                      <a href="/shop" className="hover:text-red-600">
                         Chains & Pendants
                       </a>
                     </li>
