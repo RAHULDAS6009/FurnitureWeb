@@ -1,10 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 
 const MostSellingSection = () => {
+  const [activeFilter, setActiveFilter] = useState("all");
+
+  const products = [
+    { id: 1, img: "product-img-sm-1.jpg", category: "best-selling" },
+    { id: 2, img: "product-img-sm-2.jpg", category: "on-selling" },
+    { id: 3, img: "product-img-sm-3.jpg", category: "top-rating" },
+    { id: 4, img: "product-img-sm-4.jpg", category: "best-selling" },
+    { id: 5, img: "product-img-sm-5.jpg", category: "on-selling" },
+    { id: 6, img: "product-img-sm-6.jpg", category: "top-rating" },
+    { id: 7, img: "product-img-sm-7.jpg", category: "best-selling" },
+    { id: 8, img: "product-img-sm-8.jpg", category: "on-selling" },
+    { id: 9, img: "product-img-sm-9.jpg", category: "top-rating" },
+    { id: 10, img: "product-img-sm-10.jpg", category: "best-selling" },
+  ];
+
+  const filteredProducts =
+    activeFilter === "all"
+      ? products
+      : products.filter((p) => p.category === activeFilter);
+
+  const handleFilterChange = (filter) => {
+    setActiveFilter(filter);
+  };
+
   return (
     <div className="ul-container">
       <section className="ul-products ul-most-selling-products">
         <div className="ul-inner-container">
+          {/* Heading */}
           <div className="ul-section-heading flex-lg-row flex-column text-md-start text-center">
             <div className="left">
               <span className="ul-section-sub-title">most selling items</span>
@@ -13,53 +38,43 @@ const MostSellingSection = () => {
               </h2>
             </div>
 
+            {/* Filter Tabs */}
             <div className="right">
               <div className="ul-most-sell-filter-navs">
-                <button type="button" data-filter="all">
-                  All Products
-                </button>
-                <button type="button" data-filter=".best-selling">
-                  Best Selling
-                </button>
-                <button type="button" data-filter=".on-selling">
-                  On Selling
-                </button>
-                <button type="button" data-filter=".top-rating">
-                  Top Rating
-                </button>
+                {[
+                  { label: "All Products", value: "all" },
+                  { label: "Best Selling", value: "best-selling" },
+                  { label: "On Selling", value: "on-selling" },
+                  { label: "Top Rating", value: "top-rating" },
+                ].map((tab) => (
+                  <button
+                    key={tab.value}
+                    type="button"
+                    className={activeFilter === tab.value ? "active" : ""}
+                    onClick={() => handleFilterChange(tab.value)}
+                  >
+                    {tab.label}
+                  </button>
+                ))}
               </div>
             </div>
           </div>
 
-          {/* Products grid */}
+          {/* Product Grid */}
           <div className="ul-bs-row row row-cols-xl-4 row-cols-lg-3 row-cols-sm-2 row-cols-1 ul-filter-products-wrapper">
-            {[
-              "product-img-sm-1.jpg",
-              "product-img-sm-2.jpg",
-              "product-img-sm-3.jpg",
-              "product-img-sm-4.jpg",
-              "product-img-sm-5.jpg",
-              "product-img-sm-6.jpg",
-              "product-img-sm-7.jpg",
-              "product-img-sm-8.jpg",
-              "product-img-sm-9.jpg",
-              "product-img-sm-10.jpg",
-              "product-img-sm-11.jpg",
-              "product-img-sm-12.jpg",
-            ].map((img, index) => (
+            {filteredProducts.map((product, index) => (
               <div
-                key={index}
-                className={`mix col ${
-                  index % 3 === 0
-                    ? "best-selling"
-                    : index % 3 === 1
-                    ? "on-selling"
-                    : "top-rating"
-                }`}
+                key={product.id}
+                className={`mix col ${product.category} fade-in-up`}
+                style={{ animationDelay: `${index * 0.05}s` }}
               >
                 <div className="ul-product-horizontal">
                   <div className="ul-product-horizontal-img">
-                    <img src={`assets/img/${img}`} alt="Product Image" />
+                    <img
+                      src={`assets/img/${product.img}`}
+                      alt="Product"
+                      loading="lazy"
+                    />
                   </div>
 
                   <div className="ul-product-horizontal-txt">
