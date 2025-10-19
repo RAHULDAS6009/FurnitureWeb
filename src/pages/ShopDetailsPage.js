@@ -1,65 +1,65 @@
 import React from "react";
 import { Header } from "../components/index/Header";
 import Footer from "../components/index/Footer";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../redux/cartSlice";
+// -----------------------------
+// 🧩 DATA SECTION
+// -----------------------------
 
+const sidebarProducts = [
+  {
+    id: 1,
+    price: "$99.00",
+    discount: "25% Off",
+    img: "assets/img/product-img-1.jpg",
+    title: "Orange Airsuit",
+    category: "Fashion Bag",
+  },
+  {
+    id: 2,
+    price: "$99.00",
+    discount: "25% Off",
+    img: "assets/img/product-img-2.jpg",
+    title: "Blue Airsuit",
+    category: "Fashion Bag",
+  },
+  {
+    id: 3,
+    price: "$99.00",
+    discount: "25% Off",
+    img: "assets/img/product-img-3.jpg",
+    title: "Classic Airsuit",
+    category: "Fashion Bag",
+  },
+];
+const productImages = [
+  "assets/img/product-details-1.jpg",
+  "assets/img/product-details-2.jpg",
+];
+const reviews = [
+  {
+    id: 1,
+    name: "Temptics Pro",
+    date: "March 20, 2023 at 2:37 pm",
+    img: "assets/img/reviewer-img-1.png",
+    rating: 4,
+    content:
+      "Phasellus eget fermentum mauris. Suspendisse nec dignissim nulla. Integer non quam commodo...",
+  },
+  {
+    id: 2,
+    name: "John Doe",
+    date: "March 21, 2023 at 1:15 pm",
+    img: "assets/img/reviewer-img-2.png",
+    rating: 5,
+    content:
+      "Aliquam hendrerit a augue insuscipit. Etiam aliquam massa quis des mauris commodo venenatis...",
+  },
+];
 export const ShopDetailsPage = () => {
-  // -----------------------------
-  // 🧩 DATA SECTION
-  // -----------------------------
-  const sidebarProducts = [
-    {
-      id: 1,
-      price: "$99.00",
-      discount: "25% Off",
-      img: "assets/img/product-img-1.jpg",
-      title: "Orange Airsuit",
-      category: "Fashion Bag",
-    },
-    {
-      id: 2,
-      price: "$99.00",
-      discount: "25% Off",
-      img: "assets/img/product-img-2.jpg",
-      title: "Blue Airsuit",
-      category: "Fashion Bag",
-    },
-    {
-      id: 3,
-      price: "$99.00",
-      discount: "25% Off",
-      img: "assets/img/product-img-3.jpg",
-      title: "Classic Airsuit",
-      category: "Fashion Bag",
-    },
-  ];
-
+  const dispatch = useDispatch();
   const headerOffers = Array(10).fill("limited time offer");
-
-  const productImages = [
-    "assets/img/product-details-1.jpg",
-    "assets/img/product-details-2.jpg",
-  ];
-
-  const reviews = [
-    {
-      id: 1,
-      name: "Temptics Pro",
-      date: "March 20, 2023 at 2:37 pm",
-      img: "assets/img/reviewer-img-1.png",
-      rating: 4,
-      content:
-        "Phasellus eget fermentum mauris. Suspendisse nec dignissim nulla. Integer non quam commodo...",
-    },
-    {
-      id: 2,
-      name: "John Doe",
-      date: "March 21, 2023 at 1:15 pm",
-      img: "assets/img/reviewer-img-2.png",
-      rating: 5,
-      content:
-        "Aliquam hendrerit a augue insuscipit. Etiam aliquam massa quis des mauris commodo venenatis...",
-    },
-  ];
 
   // -----------------------------
   // 🧱 COMPONENT SECTION
@@ -126,11 +126,27 @@ export const ShopDetailsPage = () => {
                     </p>
 
                     <div className="ul-product-details-actions">
-                      <button className="add-to-cart">
-                        Add to Cart <i className="flaticon-cart"></i>
+                      <button
+                        className="group add-to-cart rounded-md px-4 py-1"
+                        onClick={() => {
+                          dispatch(
+                            addToCart({
+                              id: 10,
+                              price: "$120.00",
+                              discount: "25% Off",
+                              img: "assets/img/product-details-1.jpg",
+                              title: "Front view modern dark sunglasses",
+                              category: "Fashion Bag",
+                            })
+                          );
+                        }}
+                      >
+                        Add to Cart{" "}
+                        <i className="flaticon-cart group-hover:animate-bounce"></i>
                       </button>
-                      <button className="add-to-wishlist">
-                        <i className="flaticon-heart"></i> Add to Wishlist
+                      <button className="group add-to-wishlist rounded-md px-4 py-1 text-white flex items-center gap-2">
+                        <i className="group-hover:animate-bounce flaticon-heart"></i>{" "}
+                        Add to Wishlist
                       </button>
                     </div>
                   </div>

@@ -7,9 +7,11 @@ import {
   getCartTotal,
   resetCart,
 } from "../redux/cartSlice";
+import { useNavigate } from "react-router-dom";
 
 export const CartPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const cart = useSelector((state) => state.cart.data);
   const [totalAmount, setTotalAmount] = useState(0);
   const totalItems = useSelector((state) => state.cart.totalItems);
@@ -128,7 +130,12 @@ export const CartPage = () => {
                     ${(totalAmount + 15).toFixed(2)}
                   </span>
                 </div>
-                <button className="ul-cart-checkout-direct-btn">
+                <button
+                  onClick={() => {
+                    navigate("/checkout");
+                  }}
+                  className="ul-cart-checkout-direct-btn"
+                >
                   CHECKOUT
                 </button>
               </div>

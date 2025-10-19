@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-
+import useIsMobile from "../../hooks/useIsMobile";
 export default function SiderBar({ onClose }) {
+  const isMobile = useIsMobile();
   return (
     <div
       className="fixed top-0 right-0 h-full overflow-x-hidden p-10 overflow-y-scroll w-[80%] lg:w-[600px] bg-white shadow-2xl z-50 transition-transform duration-300 animate-slide-in
@@ -178,9 +179,7 @@ export default function SiderBar({ onClose }) {
         </p>
       </div>
 
-      <div>
-        <MobileSidebarNav />
-      </div>
+      <div>{isMobile && <MobileSidebarNav />}</div>
       {/* <!-- sidebar footer --> */}
       <div className="ul-sidebar-footer">
         <span className="ul-sidebar-footer-title">Follow us</span>

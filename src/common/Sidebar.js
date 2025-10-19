@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 
 const Sidebar = ({ isSidebarOpen, closeSidebar }) => {
   const dispatch = useDispatch();
+  // const isM
   const { data: cartProducts, totalAmount } = useSelector(
     (state) => state.cart
   );
