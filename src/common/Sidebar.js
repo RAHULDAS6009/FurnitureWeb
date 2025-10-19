@@ -9,74 +9,102 @@ const Sidebar = ({ isSidebarOpen, closeSidebar }) => {
   const { data: cartProducts, totalAmount } = useSelector(
     (state) => state.cart
   );
-
   const cartSelector = useSelector((state) => state.cart);
+
   useEffect(() => {
-    // console.log(dispatch(getCartTotal()));
-    console.log(cartProducts, totalAmount);
     dispatch(getCartTotal());
-  }, [cartSelector]);
+  }, [cartSelector, dispatch]);
 
   const removeFromCart = (itemId) => {
     dispatch(removeItem({ id: itemId }));
     dispatch(getCartTotal());
   };
+
   return (
     <div>
+      {/* BACKDROP */}
+      {isSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-40 z-40 md:hidden"
+          onClick={closeSidebar}
+        ></div>
+      )}
+
+      {/* SIDEBAR */}
       <div
         style={{
-          zIndex: "100",
-          transform: `translateX(${isSidebarOpen ? "0%" : "100%"})`,
+          transform: ` translateX(${isSidebarOpen ? "0%" : "100%"})`,
         }}
-        className="fixed top-0 right-1 h-full bg-white shadow-lg transition-transform duration-300 ease-in-out overflow-y-auto"
+        className="fixed top-0 right-0 h-full  w-16 lg:w-48 bg-red-500 shadow-2xl 
+          transition-transform duration-300 ease-in-out overflow-y-auto z-50 rounded-l-2xl"
       >
-        <div className="border-b mb-4">
-          <h1 className="text-3xl p-4">Your Cart</h1>
+        {/* HEADER */}
+        <div className="flex justify-between items-center border-b px-6 py-4">
+          <h1 className="text-2xl font-semibold">Your Cart</h1>
+          <button
+            onClick={closeSidebar}
+            className="text-2xl text-gray-600 hover:text-black"
+          >
+            <FaTimes />
+          </button>
         </div>
 
+        {/* BODY */}
         <div className="p-4">
-          <span className="absolute top-0 right-1 p-4" onClick={closeSidebar}>
-            <FaTimes />
-          </span>
-
           {cartProducts.length === 0 ? (
-            <div className="text-3xl font-bold uppercase">
-              Your Cart has No Product
+            <div className="text-lg font-semibold text-gray-600 mt-10 text-center">
+              Your Cart is Empty
             </div>
           ) : (
             <div>
               {cartProducts.map((item, key) => (
-                <div className="flex justify-between mb-4" key={key}>
-                  <div className="flex">
-                    <div className="relative">
-                      <img src={item.img} alt="img" height={84} width={84} />
-                      <span
-                        className="absolute top-0 -mt-2 -ml-2 bg-red-600 text-white"
+                <div
+                  className="flex justify-between items-center mb-4 border-b pb-3"
+                  key={key}
+                >
+                  <div className="flex items-center">
+                    <div className="relative mr-3">
+                      <img
+                        src={item.img}
+                        alt={item.title}
+                        className="w-20 h-20 object-cover rounded-lg border"
+                      />
+                      <button
+                        className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full p-1 hover:bg-red-600"
                         onClick={() => removeFromCart(item.id)}
                       >
-                        <FaTimes />
-                      </span>
+                        <FaTimes size={10} />
+                      </button>
                     </div>
 
                     <div>
-                      <p>{item.title}</p>
+                      <p className="font-semibold text-sm sm:text-base">
+                        {item.title}
+                      </p>
+                      <p className="text-gray-600 text-sm">
+                        Qty: {item.quantity}
+                      </p>
                     </div>
                   </div>
 
-                  <div>
-                    <p>{item.price}</p>
-                    <p>Qty: {item.quantity}</p>
+                  <div className="text-right">
+                    <p className="font-bold text-gray-800">₹{item.price}</p>
                   </div>
                 </div>
               ))}
 
-              <div className="flex p-6 items-center bg-black w-full text-white font-bold">
-                <h2>
-                  Sub Total : <span>₹{totalAmount}</span>
+              {/* FOOTER */}
+              <div className="sticky bottom-0 left-0 right-0 bg-black text-white font-semibold flex flex-col sm:flex-row justify-between items-center gap-3 py-4 px-6 rounded-t-2xl">
+                <h2 className="text-lg">
+                  Subtotal: <span>₹{totalAmount}</span>
                 </h2>
-                <div className="ml-4 bg-rose-100 rounded-sm py-3 px-6 text-black">
-                  <Link to="/cart">View Cart</Link>
-                </div>
+                <Link
+                  to="/cart"
+                  onClick={closeSidebar}
+                  className="bg-rose-200 text-black px-6 py-2 rounded-md font-semibold hover:bg-rose-300 transition"
+                >
+                  View Cart
+                </Link>
               </div>
             </div>
           )}

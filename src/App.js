@@ -13,6 +13,7 @@ import AboutUs from "./pages/AboutUs";
 import Sell from "./pages/Sell";
 import { CartPage } from "./pages/CartPage";
 import { ShopPage } from "./pages/ShopPage";
+import { ShopDetailsPage } from "./pages/ShopDetailsPage";
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
           {/* <Route path="/cart" element={<Cart />} /> */}
           <Route path="/cart" element={<CartPage />} />
           <Route path="/shop" element={<ShopPage />} />
+          <Route path="/shopdetails" element={<ShopDetailsPage />} />
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/Sell" element={<Sell />} />

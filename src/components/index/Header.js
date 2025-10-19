@@ -146,7 +146,7 @@ export const Header = () => {
                             <a href="shop-no-sidebar.html">Shop Full Width</a>
                           </li>
                           <li>
-                            <a href="shop-details.html">Shop Details</a>
+                            <a href="/shopdetails">Shop Details</a>
                           </li>
                           <li>
                             <a href="wishlist.html">Wishlist</a>
