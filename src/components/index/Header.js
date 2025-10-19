@@ -1,6 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 export const Header = () => {
+  const state = useSelector((state) => state.cart.data);
+  const [items, setItem] = useState(0);
+  useEffect(() => {
+    setItem(state.length);
+  }, [state]);
   return (
     <div className="ul-header">
       {/* <!-- header top --> */}
@@ -301,7 +307,11 @@ export const Header = () => {
                 <i className="flaticon-heart"></i>
               </a>
               <a href="/cart">
-                <i className="flaticon-shopping-bag"></i>
+                <i className="flaticon-shopping-bag relative">
+                  <span className="text-[8px] font-semibold absolute -top-2  -right-1.5 bg-red-500 text-white rounded-full size-3 text-center items-center">
+                    {items}
+                  </span>
+                </i>
               </a>
             </div>
 
