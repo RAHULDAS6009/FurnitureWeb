@@ -8,65 +8,26 @@ export const Header = () => {
     setItem(state.length);
   }, [state]);
   return (
-    <div className="ul-header">
+    <div className="ul-header ">
       {/* <!-- header top --> */}
-      <div className="ul-header-top">
-        <div className="ul-header-top-slider splide">
-          <div className="splide__track">
-            <ul className="splide__list">
-              <li className="splide__slide">
-                <p className="ul-header-top-slider-item">
-                  <i className="flaticon-sparkle"></i> limited time offer
-                </p>
-              </li>
-              <li className="splide__slide">
-                <p className="ul-header-top-slider-item">
-                  <i className="flaticon-sparkle"></i> limited time offer
-                </p>
-              </li>
-              <li className="splide__slide">
-                <p className="ul-header-top-slider-item">
-                  <i className="flaticon-sparkle"></i> limited time offer
-                </p>
-              </li>
-              <li className="splide__slide">
-                <p className="ul-header-top-slider-item">
-                  <i className="flaticon-sparkle"></i> limited time offer
-                </p>
-              </li>
-              <li className="splide__slide">
-                <p className="ul-header-top-slider-item">
-                  <i className="flaticon-sparkle"></i> limited time offer
-                </p>
-              </li>
-              <li className="splide__slide">
-                <p className="ul-header-top-slider-item">
-                  <i className="flaticon-sparkle"></i> limited time offer
-                </p>
-              </li>
-              <li className="splide__slide">
-                <p className="ul-header-top-slider-item">
-                  <i className="flaticon-sparkle"></i> limited time offer
-                </p>
-              </li>
-              <li className="splide__slide">
-                <p className="ul-header-top-slider-item">
-                  <i className="flaticon-sparkle"></i> limited time offer
-                </p>
-              </li>
-              <li className="splide__slide">
-                <p className="ul-header-top-slider-item">
-                  <i className="flaticon-sparkle"></i> limited time offer
-                </p>
-              </li>
-              <li className="splide__slide">
-                <p className="ul-header-top-slider-item">
-                  <i className="flaticon-sparkle"></i> limited time offer
-                </p>
-              </li>
-            </ul>
-          </div>
-        </div>
+      <div className="cursor-default h-8 bg-black ul-header-top overflow-hidden whitespace-nowrap text-white flex items-center">
+        <ul className="flex animate-scroll gap-10">
+          {[...Array(10)].map((_, i) => (
+            <li key={i} className="flex-shrink-0">
+              <p className="ul-header-top-slider-item inline-flex items-center gap-2 text-[10px] uppercase tracking-wide">
+                <i className="flaticon-sparkle"></i> limited time offer
+              </p>
+            </li>
+          ))}
+          {/* Duplicate list for seamless looping */}
+          {[...Array(10)].map((_, i) => (
+            <li key={`dup-${i}`} className="flex-shrink-0">
+              <p className="ul-header-top-slider-item inline-flex items-center gap-2 text-[10px] uppercase tracking-wide">
+                <i className="flaticon-sparkle"></i> limited time offer
+              </p>
+            </li>
+          ))}
+        </ul>
       </div>
 
       {/* <!-- header bottom --> */}
