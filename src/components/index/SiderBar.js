@@ -4,7 +4,7 @@ export default function SiderBar({ onClose }) {
   const isMobile = useIsMobile();
   return (
     <div
-      className="border-l-2 border-red-500 fixed top-0 right-0 h-full overflow-x-hidden p-2 py-4 overflow-y-scroll w-[60%] lg:w-[600px] bg-white shadow-2xl z-50 transition-transform duration-300 animate-slide-in
+      className="border-l-2 border-red-500 fixed top-0 right-0 h-full overflow-x-hidden p-2 py-4 overflow-y-scroll w-[90%] lg:w-[600px] bg-white shadow-2xl z-50 transition-transform duration-300 animate-slide-in
     animate-slide-out
     flex 
     flex-col
