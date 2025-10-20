@@ -10,7 +10,7 @@ const products = [
     img: "assets/img/product-img-1.jpg",
     title: "Orange Airsuit",
     category: "Fashion Bag",
-    detailsUrl: "shop-details.html",
+    detailsUrl: "/shopdetails",
     categoryUrl: "/shop",
     quantity: 1,
   },
@@ -21,7 +21,7 @@ const products = [
     img: "assets/img/product-img-2.jpg",
     title: "Blue Backpack",
     category: "Travel Bag",
-    detailsUrl: "shop-details.html",
+    detailsUrl: "/shopdetails",
     categoryUrl: "/shop",
     quantity: 1,
   },
@@ -32,7 +32,7 @@ const products = [
     img: "assets/img/product-img-3.jpg",
     title: "Leather Handbag",
     category: "Luxury Bag",
-    detailsUrl: "shop-details.html",
+    detailsUrl: "/shopdetails",
     categoryUrl: "/shop",
     quantity: 1,
   },
@@ -43,7 +43,7 @@ const products = [
     img: "assets/img/product-img-4.jpg",
     title: "Stylish Tote",
     category: "Women Bag",
-    detailsUrl: "shop-details.html",
+    detailsUrl: "/shopdetails",
     categoryUrl: "/shop",
     quantity: 1,
   },
@@ -54,7 +54,7 @@ const products = [
     img: "assets/img/product-img-5.jpg",
     title: "Canvas Shopper",
     category: "Casual Bag",
-    detailsUrl: "shop-details.html",
+    detailsUrl: "/shopdetails",
     categoryUrl: "/shop",
     quantity: 1,
   },
@@ -65,7 +65,7 @@ const products = [
     img: "assets/img/product-img-6.jpg",
     title: "Compact Purse",
     category: "Accessories",
-    detailsUrl: "shop-details.html",
+    detailsUrl: "/shopdetails",
     categoryUrl: "/shop",
     quantity: 1,
   },
@@ -146,7 +146,7 @@ export const ShopPage = () => {
 
                   <div className="ul-product-txt">
                     <h4 className="ul-product-title">
-                      <a href="shop-details.html">Orange Airsuit</a>
+                      <a href="/shopdetails">Orange Airsuit</a>
                     </h4>
                     <h5 className="ul-product-category">
                       <a href="/shop">Fashion Bag</a>
@@ -184,7 +184,7 @@ export const ShopPage = () => {
 
                   <div className="ul-product-txt">
                     <h4 className="ul-product-title">
-                      <a href="shop-details.html">Orange Airsuit</a>
+                      <a href="/shopdetails">Orange Airsuit</a>
                     </h4>
                     <h5 className="ul-product-category">
                       <a href="/shop">Fashion Bag</a>
@@ -222,7 +222,7 @@ export const ShopPage = () => {
 
                   <div className="ul-product-txt">
                     <h4 className="ul-product-title">
-                      <a href="shop-details.html">Orange Airsuit</a>
+                      <a href="/shopdetails">Orange Airsuit</a>
                     </h4>
                     <h5 className="ul-product-category">
                       <a href="/shop">Fashion Bag</a>

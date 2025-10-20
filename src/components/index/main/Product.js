@@ -9,7 +9,7 @@ export const products = [
     image: "assets/img/product-img-1.jpg",
     title: "Orange Airsuit",
     category: "Fashion Bag",
-    detailsUrl: "shop-details.html",
+    detailsUrl: "/shopdetails",
     categoryUrl: "/shop",
     quantity: 1,
   },
@@ -20,7 +20,7 @@ export const products = [
     image: "assets/img/product-img-2.jpg",
     title: "Orange Airsuit",
     category: "Fashion Bag",
-    detailsUrl: "shop-details.html",
+    detailsUrl: "/shopdetails",
     categoryUrl: "/shop",
     quantity: 1,
   },
@@ -31,7 +31,7 @@ export const products = [
     image: "assets/img/product-img-3.jpg",
     title: "Orange Airsuit",
     category: "Fashion Bag",
-    detailsUrl: "shop-details.html",
+    detailsUrl: "/shopdetails",
     categoryUrl: "/shop",
     quantity: 1,
   },
@@ -198,7 +198,7 @@ const ProductsSection = () => {
 
                         <div className="ul-product-txt">
                           <h4 className="ul-product-title">
-                            <a href="shop-details.html">Orange Airsuit</a>
+                            <a href="/shopdetails">Orange Airsuit</a>
                           </h4>
                           <h5 className="ul-product-category">
                             <a href="/shop">Fashion Bag</a>
@@ -238,7 +238,7 @@ const ProductsSection = () => {
 
                         <div className="ul-product-txt">
                           <h4 className="ul-product-title">
-                            <a href="shop-details.html">Orange Airsuit</a>
+                            <a href="/shopdetails">Orange Airsuit</a>
                           </h4>
                           <h5 className="ul-product-category">
                             <a href="/shop">Fashion Bag</a>
@@ -278,7 +278,7 @@ const ProductsSection = () => {
 
                         <div className="ul-product-txt">
                           <h4 className="ul-product-title">
-                            <a href="shop-details.html">Orange Airsuit</a>
+                            <a href="/shopdetails">Orange Airsuit</a>
                           </h4>
                           <h5 className="ul-product-category">
                             <a href="/shop">Fashion Bag</a>

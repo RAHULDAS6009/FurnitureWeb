@@ -75,7 +75,7 @@ const FlashSaleSection = () => {
 
                       <div className="ul-product-txt">
                         <h4 className="ul-product-title">
-                          <a href="shop-details.html">Orange Airsuit</a>
+                          <a href="/shopdetails">Orange Airsuit</a>
                         </h4>
                         <h5 className="ul-product-category">
                           <a href="/shop">Fashion Bag</a>
