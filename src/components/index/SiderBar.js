@@ -4,14 +4,14 @@ export default function SiderBar({ onClose }) {
   const isMobile = useIsMobile();
   return (
     <div
-      className="fixed top-0 right-0 h-full overflow-x-hidden p-10 overflow-y-scroll w-[80%] lg:w-[600px] bg-white shadow-2xl z-50 transition-transform duration-300 animate-slide-in
+      className="border-l-2 border-red-500 fixed top-0 right-0 h-full overflow-x-hidden p-2 py-4 overflow-y-scroll w-[60%] lg:w-[600px] bg-white shadow-2xl z-50 transition-transform duration-300 animate-slide-in
     animate-slide-out
     flex 
     flex-col
     "
     >
       {/* <!-- header --> */}
-      <div className="ul-sidebar-header">
+      <div className="ul-sidebar-header ">
         <div className="ul-sidebar-header-logo">
           <a href="/">
             <img src="assets/img/logo.svg" alt="logo" className="logo" />
@@ -207,49 +207,51 @@ function MobileSidebarNav() {
   const [openMegaMenu, setOpenMegaMenu] = useState(false);
 
   return (
-    <div className="block lg:hidden ">
+    <div className="block lg:hidden text-[13px] uppercase pt-4">
       {/* Wrapper */}
-      <div className="p-4 bg-white  border-b">
-        <nav className="flex flex-col space-y-3 text-gray-800">
+      <div className=" bg-white  w-full">
+        <nav className="flex flex-col   border border-black   text-gray-800 ">
           {/* Main Links */}
-          <a href="/" className="hover:text-red-600">
+          <a href="/" className=" p-1 hover:text-red-600">
             Home
           </a>
-          <a href="/shop" className="hover:text-red-600">
+          <a href="/shop" className="border-t p-1 hover:text-red-600">
             Shop
           </a>
-          <a href="/shop" className="hover:text-red-600">
+          <a href="/shop" className="border-t p-1 hover:text-red-600">
             Women
           </a>
-          <a href="/shop" className="hover:text-red-600">
+          <a href="/shop" className="border-t p-1  hover:text-red-600">
             Men's
           </a>
-          <a href="/shop" className="hover:text-red-600">
+          <a href="/shop" className="border-t p-1 hover:text-red-600">
             Kids
           </a>
-          <a href="/blog" className="hover:text-red-600">
+          <a href="/blog" className="border-t p-1 hover:text-red-600">
             Blog
           </a>
 
           {/* Dropdown Section */}
-          <div className="border-t pt-3">
+          <div className=" border-t p-1">
             <button
               onClick={() => setOpenMegaMenu(!openMegaMenu)}
-              className="flex justify-between items-center w-full font-medium hover:text-red-600"
+              className="flex justify-between items-center w-full uppercase  hover:text-red-600"
             >
               Pages
-              <span className="text-sm">{openMegaMenu ? "−" : "+"}</span>
+              <span className="text-sm transition ease-out duration-300">
+                {openMegaMenu ? "−" : "+"}
+              </span>
             </button>
 
             {/* Mega Menu */}
             {openMegaMenu && (
-              <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-4 bg-gray-50 p-3 rounded-lg">
+              <div className="transition ease-out duration-300  grid grid-cols-1 sm:grid-cols-2 gap-4  rounded-lg">
                 {/* Inner Pages */}
                 <div>
-                  <h4 className="font-semibold uppercase  text-red-500 mb-2">
+                  <h4 className="mt-2 font-semibold uppercase text-[16px]  text-red-500 mb-2">
                     Inner Pages
                   </h4>
-                  <ul className="space-y-1 text-sm">
+                  <ul className="space-y-1 text-[10px] ">
                     <li>
                       <a href="/about" className="hover:text-red-600">
                         About
@@ -305,10 +307,10 @@ function MobileSidebarNav() {
 
                 {/* Shop Pages */}
                 <div>
-                  <h4 className="font-semibold uppercase  text-red-500 mb-2">
+                  <h4 className="font-semibold uppercase text-[16px]  text-red-500 mb-2">
                     Shop Pages
                   </h4>
-                  <ul className="space-y-1 text-sm">
+                  <ul className="space-y-1 text-[10px]">
                     <li>
                       <a href="/shop" className="hover:text-red-600">
                         Shop Left Sidebar
@@ -349,10 +351,10 @@ function MobileSidebarNav() {
 
                 {/* Men's */}
                 <div>
-                  <h4 className="font-semibold uppercase  text-red-500 mb-2">
+                  <h4 className="font-semibold uppercase text-[16px]   text-red-500 mb-2">
                     Men's
                   </h4>
-                  <ul className="space-y-1 text-sm">
+                  <ul className="space-y-1 text-[10px]">
                     <li>
                       <a href="/shop" className="hover:text-red-600">
                         Clothing
@@ -388,10 +390,10 @@ function MobileSidebarNav() {
 
                 {/* Women's */}
                 <div>
-                  <h4 className="font-semibold uppercase  text-red-500 mb-2">
+                  <h4 className="font-semibold uppercase  text-[16px] text-red-500 mb-2">
                     Women's
                   </h4>
-                  <ul className="space-y-1 text-sm">
+                  <ul className="space-y-1 text-[10px]">
                     <li>
                       <a href="/shop" className="hover:text-red-600">
                         Clothing
@@ -427,10 +429,10 @@ function MobileSidebarNav() {
 
                 {/* Children's */}
                 <div>
-                  <h4 className="font-semibold uppercase  text-red-500 mb-2">
+                  <h4 className="font-semibold uppercase text-[16px]  text-red-500 mb-2">
                     Children's
                   </h4>
-                  <ul className="space-y-1 text-sm">
+                  <ul className="space-y-1 text-[1opx]">
                     <li>
                       <a href="/shop" className="hover:text-red-600">
                         Clothing
