@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, getCartTotal } from "../redux/cartSlice";
 import { Header } from "../components/index/Header";
-const products = [
+import { useNavigate } from "react-router-dom";
+export const products = [
   {
     id: 1,
     price: "$99.00",
@@ -847,6 +848,7 @@ export const ProductCard = ({ product }) => {
     product;
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleAddToCart = (product) => {
     dispatch(addToCart(product));
@@ -854,7 +856,7 @@ export const ProductCard = ({ product }) => {
   };
 
   return (
-    <div className="col">
+    <div className="col" onClick={() => navigate(`/shopdetails/${id}`)}>
       <div className="ul-product">
         <div className="ul-product-heading">
           <span className="ul-product-price">{price}</span>

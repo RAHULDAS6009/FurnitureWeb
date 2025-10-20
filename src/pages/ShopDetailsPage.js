@@ -88,7 +88,7 @@ export const ShopDetailsPage = () => {
           <div className="ul-product-details">
             <div className="ul-product-details-top">
               <div className="row ul-bs-row row-cols-lg-2 row-cols-1 align-items-center">
-                {/* Images */}
+                {/*Product  Images */}
                 <div className="col">
                   <div className="ul-product-details-img">
                     <div className="swiper-wrapper">

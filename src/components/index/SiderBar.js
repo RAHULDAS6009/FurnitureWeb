@@ -4,7 +4,7 @@ export default function SiderBar({ onClose }) {
   const isMobile = useIsMobile();
   return (
     <div
-      className="border-l-2 border-red-500 fixed top-0 right-0 h-full overflow-x-hidden p-2 py-4 overflow-y-scroll w-[90%] lg:w-[600px] bg-white shadow-2xl z-50 transition-transform duration-300 animate-slide-in
+      className="border-l-2 border-red-500 fixed top-0 right-0 h-full overflow-x-hidden p-2 py-4 overflow-y-scroll w-[84%] lg:w-[600px] bg-white shadow-2xl z-50 transition-transform duration-300 animate-slide-in
     animate-slide-out
     flex 
     flex-col
@@ -212,22 +212,22 @@ function MobileSidebarNav() {
       <div className=" bg-white  w-full">
         <nav className="flex flex-col   border border-black   text-gray-800 ">
           {/* Main Links */}
-          <a href="/" className=" p-1 hover:text-red-600">
+          <a href="/" className=" py-2 px-4 hover:text-red-600">
             Home
           </a>
-          <a href="/shop" className="border-t p-1 hover:text-red-600">
+          <a href="/shop" className="border-t py-2 px-4 hover:text-red-600">
             Shop
           </a>
-          <a href="/shop" className="border-t p-1 hover:text-red-600">
+          <a href="/shop" className="border-t py-2 px-4 hover:text-red-600">
             Women
           </a>
-          <a href="/shop" className="border-t p-1  hover:text-red-600">
+          <a href="/shop" className="border-t py-2 px-4  hover:text-red-600">
             Men's
           </a>
-          <a href="/shop" className="border-t p-1 hover:text-red-600">
+          <a href="/shop" className="border-t py-2 px-4 hover:text-red-600">
             Kids
           </a>
-          <a href="/blog" className="border-t p-1 hover:text-red-600">
+          <a href="/blog" className="border-t py-2 px-4 hover:text-red-600">
             Blog
           </a>
 
@@ -235,7 +235,7 @@ function MobileSidebarNav() {
           <div className=" border-t p-1">
             <button
               onClick={() => setOpenMegaMenu(!openMegaMenu)}
-              className="flex justify-between items-center w-full uppercase  hover:text-red-600"
+              className="flex justify-between items-center py-2 px-4 w-full uppercase  hover:text-red-600"
             >
               Pages
               <span className="text-sm transition ease-out duration-300">
@@ -245,13 +245,13 @@ function MobileSidebarNav() {
 
             {/* Mega Menu */}
             {openMegaMenu && (
-              <div className="transition ease-out duration-300  grid grid-cols-1 sm:grid-cols-2 gap-4  rounded-lg">
+              <div className="transition px-4 ease-out duration-300  grid grid-cols-1 sm:grid-cols-2 gap-4  rounded-lg">
                 {/* Inner Pages */}
                 <div>
                   <h4 className="mt-2 font-semibold uppercase text-[16px]  text-red-500 mb-2">
                     Inner Pages
                   </h4>
-                  <ul className="space-y-1 text-[10px] ">
+                  <ul className="space-y-1  ">
                     <li>
                       <a href="/about" className="hover:text-red-600">
                         About
@@ -310,7 +310,7 @@ function MobileSidebarNav() {
                   <h4 className="font-semibold uppercase text-[16px]  text-red-500 mb-2">
                     Shop Pages
                   </h4>
-                  <ul className="space-y-1 text-[10px]">
+                  <ul className="space-y-1 ">
                     <li>
                       <a href="/shop" className="hover:text-red-600">
                         Shop Left Sidebar
@@ -354,7 +354,7 @@ function MobileSidebarNav() {
                   <h4 className="font-semibold uppercase text-[16px]   text-red-500 mb-2">
                     Men's
                   </h4>
-                  <ul className="space-y-1 text-[10px]">
+                  <ul className="space-y-1 ">
                     <li>
                       <a href="/shop" className="hover:text-red-600">
                         Clothing
@@ -393,7 +393,7 @@ function MobileSidebarNav() {
                   <h4 className="font-semibold uppercase  text-[16px] text-red-500 mb-2">
                     Women's
                   </h4>
-                  <ul className="space-y-1 text-[10px]">
+                  <ul className="space-y-1 ">
                     <li>
                       <a href="/shop" className="hover:text-red-600">
                         Clothing
