@@ -1,41 +1,43 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../redux/cartSlice";
-export const products = [
-  {
-    id: 3,
-    price: "$98.00",
-    discount: "24% Off",
-    image: "assets/img/product-img-1.jpg",
-    title: "Orange Airsuit",
-    category: "Fashion Bag",
-    detailsUrl: "/shopdetails",
-    categoryUrl: "/shop",
-    quantity: 1,
-  },
-  {
-    id: 4,
-    price: "$99.00",
-    discount: "25% Off",
-    image: "assets/img/product-img-2.jpg",
-    title: "Orange Airsuit",
-    category: "Fashion Bag",
-    detailsUrl: "/shopdetails",
-    categoryUrl: "/shop",
-    quantity: 1,
-  },
-  {
-    id: 5,
-    price: "$99.00",
-    discount: "25% Off",
-    image: "assets/img/product-img-3.jpg",
-    title: "Orange Airsuit",
-    category: "Fashion Bag",
-    detailsUrl: "/shopdetails",
-    categoryUrl: "/shop",
-    quantity: 1,
-  },
-];
+import { ProductCard } from "../../../pages/ShopPage";
+import { products } from "../../../pages/ShopPage";
+// export const products = [
+//   {
+//     id: 43,
+//     price: "$98.00",
+//     discount: "24% Off",
+//     image: "assets/img/product-img-1.jpg",
+//     title: "Orange Airsuit",
+//     category: "Fashion Bag",
+//     detailsUrl: "/shopdetails",
+//     categoryUrl: "/shop",
+//     quantity: 1,
+//   },
+//   {
+//     id: 44,
+//     price: "$99.00",
+//     discount: "25% Off",
+//     image: "assets/img/product-img-2.jpg",
+//     title: "Orange Airsuit",
+//     category: "Fashion Bag",
+//     detailsUrl: "/shopdetails",
+//     categoryUrl: "/shop",
+//     quantity: 1,
+//   },
+//   {
+//     id: 45,
+//     price: "$99.00",
+//     discount: "25% Off",
+//     image: "assets/img/product-img-3.jpg",
+//     title: "Orange Airsuit",
+//     category: "Fashion Bag",
+//     detailsUrl: "/shopdetails",
+//     categoryUrl: "/shop",
+//     quantity: 1,
+//   },
+// ];
 
 const ProductsSection = () => {
   const dispatch = useDispatch();
@@ -85,7 +87,7 @@ const ProductsSection = () => {
                 {/* products grid */}
                 <div className="swiper ul-products-slider-1">
                   <div className="swiper-wrapper">
-                    {products.map((product) => (
+                    {/* {products.map((product) => (
                       <div className="swiper-slide" key={product.id}>
                         <div className="ul-product">
                           <div className="ul-product-heading">
@@ -98,7 +100,7 @@ const ProductsSection = () => {
                           </div>
 
                           <div className="ul-product-img">
-                            <img src={product.image} alt={product.title} />
+                            <img src={product.img} alt={product.title} />
 
                             <div className="ul-product-actions">
                               <button
@@ -127,7 +129,11 @@ const ProductsSection = () => {
                           </div>
                         </div>
                       </div>
-                    ))}
+                    ))} */}
+
+                    {products.slice(0, 1).map((product) => {
+                      return <ProductCard key={product.id} product={product} />;
+                    })}
                   </div>
                 </div>
 
@@ -168,124 +174,10 @@ const ProductsSection = () => {
                 <div className="swiper ul-products-slider-2">
                   <div className="swiper-wrapper">
                     {/* product card */}
-                    <div className="swiper-slide">
-                      <div className="ul-product">
-                        <div className="ul-product-heading">
-                          <span className="ul-product-price">$99.00</span>
-                          <span className="ul-product-discount-tag">
-                            25% Off
-                          </span>
-                        </div>
-
-                        <div className="ul-product-img">
-                          <img
-                            src="assets/img/product-img-1.jpg"
-                            alt="Product"
-                          />
-
-                          <div className="ul-product-actions">
-                            <button>
-                              <i className="flaticon-shopping-bag"></i>
-                            </button>
-                            <a href="#">
-                              <i className="flaticon-hide"></i>
-                            </a>
-                            <button>
-                              <i className="flaticon-heart"></i>
-                            </button>
-                          </div>
-                        </div>
-
-                        <div className="ul-product-txt">
-                          <h4 className="ul-product-title">
-                            <a href="/shopdetails">Orange Airsuit</a>
-                          </h4>
-                          <h5 className="ul-product-category">
-                            <a href="/shop">Fashion Bag</a>
-                          </h5>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* product card */}
-                    <div className="swiper-slide">
-                      <div className="ul-product">
-                        <div className="ul-product-heading">
-                          <span className="ul-product-price">$99.00</span>
-                          <span className="ul-product-discount-tag">
-                            25% Off
-                          </span>
-                        </div>
-
-                        <div className="ul-product-img">
-                          <img
-                            src="assets/img/product-img-2.jpg"
-                            alt="Product"
-                          />
-
-                          <div className="ul-product-actions">
-                            <button>
-                              <i className="flaticon-shopping-bag"></i>
-                            </button>
-                            <a href="#">
-                              <i className="flaticon-hide"></i>
-                            </a>
-                            <button>
-                              <i className="flaticon-heart"></i>
-                            </button>
-                          </div>
-                        </div>
-
-                        <div className="ul-product-txt">
-                          <h4 className="ul-product-title">
-                            <a href="/shopdetails">Orange Airsuit</a>
-                          </h4>
-                          <h5 className="ul-product-category">
-                            <a href="/shop">Fashion Bag</a>
-                          </h5>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* product card */}
-                    <div className="swiper-slide">
-                      <div className="ul-product">
-                        <div className="ul-product-heading">
-                          <span className="ul-product-price">$99.00</span>
-                          <span className="ul-product-discount-tag">
-                            25% Off
-                          </span>
-                        </div>
-
-                        <div className="ul-product-img">
-                          <img
-                            src="assets/img/product-img-3.jpg"
-                            alt="Product"
-                          />
-
-                          <div className="ul-product-actions">
-                            <button>
-                              <i className="flaticon-shopping-bag"></i>
-                            </button>
-                            <a href="#">
-                              <i className="flaticon-hide"></i>
-                            </a>
-                            <button>
-                              <i className="flaticon-heart"></i>
-                            </button>
-                          </div>
-                        </div>
-
-                        <div className="ul-product-txt">
-                          <h4 className="ul-product-title">
-                            <a href="/shopdetails">Orange Airsuit</a>
-                          </h4>
-                          <h5 className="ul-product-category">
-                            <a href="/shop">Fashion Bag</a>
-                          </h5>
-                        </div>
-                      </div>
-                    </div>
+                    {/* {"hello world"} */}
+                    {products.slice(0, 1).map((product) => {
+                      return <ProductCard key={product.id} product={product} />;
+                    })}
                   </div>
                 </div>
 
