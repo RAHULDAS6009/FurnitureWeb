@@ -3,9 +3,8 @@ import { Header } from "../components/index/Header";
 import Footer from "../components/index/Footer";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../redux/cartSlice";
-// -----------------------------
-// 🧩 DATA SECTION
-// -----------------------------
+import { useParams } from "react-router";
+import { products } from "./ShopPage";
 
 const sidebarProducts = [
   {
@@ -58,8 +57,16 @@ const reviews = [
   },
 ];
 export const ShopDetailsPage = () => {
+  const { id } = useParams();
+
   const dispatch = useDispatch();
   const headerOffers = Array(10).fill("limited time offer");
+  const product = products.find((item) => item.id === Number(id));
+  console.log(product);
+
+  if (!product) {
+    console.warn(`Product with id ${id} not found`);
+  }
 
   // -----------------------------
   // 🧱 COMPONENT SECTION
@@ -92,11 +99,12 @@ export const ShopDetailsPage = () => {
                 <div className="col">
                   <div className="ul-product-details-img">
                     <div className="swiper-wrapper">
-                      {productImages.map((src, idx) => (
-                        <div key={idx} className="swiper-slide">
-                          <img src={src} alt="Product" />
-                        </div>
-                      ))}
+                      {/* {productImages.map((src, idx) => ( */}
+                      <div className="swiper-slide">
+                        {/* {`../../public/${product.img}`} */}
+                        <img src={product.img} alt="Product" />
+                      </div>
+                      {/* ))} */}
                     </div>
                   </div>
                 </div>
@@ -116,13 +124,14 @@ export const ShopDetailsPage = () => {
                         (2 Customer Reviews)
                       </span>
                     </div>
-                    <span className="ul-product-details-price">$120.00</span>
+                    <span className="ul-product-details-price">
+                      {product.price}
+                    </span>
                     <h3 className="ul-product-details-title">
-                      Front view modern dark sunglasses
+                      {product.title}
                     </h3>
                     <p className="ul-product-details-descr">
-                      Aliquam hendrerit a augue insuscipit. Etiam aliquam massa
-                      quis des mauris commodo...
+                      {product.category}
                     </p>
 
                     <div className="ul-product-details-actions">
