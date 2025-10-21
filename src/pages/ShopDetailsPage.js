@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../redux/cartSlice";
 import { useParams } from "react-router";
 import { products } from "./ShopPage";
+import { products2 } from "../components/index/main/SellingStart";
 
 const sidebarProducts = [
   {
@@ -33,8 +34,8 @@ const sidebarProducts = [
   },
 ];
 const productImages = [
-  "assets/img/product-details-1.jpg",
-  "assets/img/product-details-2.jpg",
+  "/assets/img/product-details-1.jpg",
+  "/assets/img/product-details-2.jpg",
 ];
 const reviews = [
   {
@@ -61,7 +62,9 @@ export const ShopDetailsPage = () => {
 
   const dispatch = useDispatch();
   const headerOffers = Array(10).fill("limited time offer");
-  const product = products.find((item) => item.id === Number(id));
+  const product =
+    products.find((item) => item.id === Number(id)) ||
+    products2.find((item) => item.id === Number(id));
   console.log(product);
 
   if (!product) {
@@ -99,10 +102,9 @@ export const ShopDetailsPage = () => {
                 <div className="col">
                   <div className="ul-product-details-img">
                     <div className="swiper-wrapper">
-                      {/* {productImages.map((src, idx) => ( */}
                       <div className="swiper-slide">
                         {/* {`../../public/${product.img}`} */}
-                        <img src={product.img} alt="Product" />
+                        <img src={"/" + product.img} alt="Product" />
                       </div>
                       {/* ))} */}
                     </div>

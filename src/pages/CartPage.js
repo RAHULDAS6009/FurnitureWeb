@@ -320,10 +320,11 @@ const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
     <tr>
       <td>
         <div className="ul-cart-product">
-          <a href="/shop-details" className="ul-cart-product-img">
-            <img src={image} alt={title} />
+          {/* {image} */}
+          <a href="/shopdetails" className="ul-cart-product-img">
+            <img src={"/" + image} alt={title} />
           </a>
-          <a href="/shop-details" className="ul-cart-product-title">
+          <a href="/shopdetails" className="ul-cart-product-title">
             {title}
           </a>
         </div>
