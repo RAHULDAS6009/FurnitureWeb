@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { addToCart, getCartTotal } from "../redux/cartSlice";
 import { Header } from "../components/index/Header";
 import { useNavigate } from "react-router-dom";
+import Footer from "../components/index/Footer";
 
 export const products = [
   { id: 1, price: "$99.00",  discount: "25% Off", img: "assets/img/product-img-1.jpg", title: "Orange Airsuit",  category: "Fashion Bag",  detailsUrl: "/shopdetails", categoryUrl: "/shop", quantity: 1, color: "black", size: "S",  rating: 5, inStock: true,  onSale: true  },
@@ -117,6 +118,7 @@ export const ShopPage = () => {
   };
 
   return (
+    <>
     <div>
       <Header />
 
@@ -231,7 +233,22 @@ export const ShopPage = () => {
           )}
         </div>
       </section>
-    </div>
+      <div class="ul-pagination">
+                            <ul>
+                                <li><a href="#"><i class="flaticon-left-arrow"></i></a></li>
+                                <li class="pages">
+                                    <a href="#" class="active">01</a>
+                                    <a href="#">02</a>
+                                    <a href="#">03</a>
+                                    <a href="#">04</a>
+                                    <a href="#">05</a>
+                                </li>
+                                <li><a href="#"><i class="flaticon-arrow-point-to-right"></i></a></li>
+                            </ul>
+                        </div>
+    </div> <br></br>
+     <Footer /></>
+    
   );
 };
 
@@ -246,6 +263,7 @@ export const ProductCard = ({ product }) => {
   };
 
   return (
+      
     <div className="col">
       <div
         className="ul-product"
@@ -279,6 +297,12 @@ export const ProductCard = ({ product }) => {
           </h5>
         </div>
       </div>
+      
     </div>
+
+  
+
+    
+    
   );
 };
