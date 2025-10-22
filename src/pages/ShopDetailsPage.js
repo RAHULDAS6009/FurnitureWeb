@@ -1,6 +1,9 @@
 // ShopDetailsPage.js — no Splide/Swiper, wrapped JSX
 import React, { useState } from 'react';
-import Header from '../common/Header';
+
+import { Header } from "../components/index/Header";
+import Footer from "../components/index/Footer";
+
 
 export default function ShopDetailsPage() {
   // Quantity / options
@@ -12,7 +15,8 @@ export default function ShopDetailsPage() {
 
   return (
     <>
-    
+      <Header />
+
       <main>
         {/* BREADCRUMB SECTION START */}
         <div className="ul-container">
@@ -260,6 +264,7 @@ export default function ShopDetailsPage() {
         </div>
         {/* MAIN CONTENT SECTION END */}
       </main>
+       <Footer />
     </>
-  );
+  ); 
 }
