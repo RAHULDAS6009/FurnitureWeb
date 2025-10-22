@@ -69,3 +69,155 @@
   }
 }
 
+
+/* ===== pill inputs / dropdowns ===== */
+.ul-pill {
+  border: 1px solid #e3e6e9;
+  background: #fff;
+  border-radius: 9999px;       /* full round */
+  padding: 10px 14px;
+  font-size: 14px;
+  line-height: 20px;
+  outline: none;
+  min-height: 40px;
+  transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease;
+}
+
+.ul-pill:focus {
+  border-color: #2874f0;       /* Flipkart-ish blue */
+  box-shadow: 0 0 0 3px rgba(40,116,240,.15);
+}
+
+/* make selects look consistent across browsers */
+.ul-select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 12px 8px;
+  padding-right: 34px;         /* room for caret */
+}
+
+/* darker placeholder to match UI */
+.ul-pill::placeholder { color: #8a8f98; }
+
+/* ===== chip checkboxes (colors/sizes/status) ===== */
+.ul-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 9999px;
+  border: 1px solid #e3e6e9;
+  background: #fff;
+  cursor: pointer;
+  user-select: none;
+  font-size: 13px;
+  line-height: 18px;
+  transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease, color .15s ease;
+}
+
+/* hide native checkbox, but keep it accessible */
+.ul-chip > input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* selected state */
+.ul-chip--active {
+  border-color: #2874f0;
+  background: rgba(40,116,240,.06);
+  color: #0b57d0;
+  box-shadow: 0 0 0 3px rgba(40,116,240,.10);
+}
+
+/* tiny color dot */
+.ul-chip .color-prview {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 9999px;
+  border: 1px solid rgba(0,0,0,.08);
+}
+
+/* preset color fills (you already have classes, these are fallbacks) */
+.ul-products-color-filter-colors .black .color-prview { background:#222; }
+.ul-products-color-filter-colors .green .color-prview { background:#22c55e; }
+.ul-products-color-filter-colors .blue .color-prview  { background:#3b82f6; }
+.ul-products-color-filter-colors .red .color-prview   { background:#ef4444; }
+.ul-products-color-filter-colors .yellow .color-prview{ background:#f59e0b; }
+.ul-products-color-filter-colors .brown .color-prview { background:#8b5e3c; }
+.ul-products-color-filter-colors .white .color-prview { background:#fff; }
+
+/* spacing helpers */
+.ul-toolbar-row { gap: 12px; }
+.ul-product-actions {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+}
+
+.ul-product:hover .ul-product-actions {
+  opacity: 1;
+  visibility: visible;
+}
+
+.ul-product {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  transition: box-shadow 0.3s ease;
+}
+
+.ul-product:hover {
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+.ul-product-actions button,
+.ul-product-actions a {
+  border-radius: 50%;
+  background: white;
+  padding: 8px;
+  border: 1px solid #eee;
+}
+/* Mobile-only: single-line horizontal scrolling filter strip WITHOUT outer circle */
+@media (max-width: 576px) {
+  .ul-toolbar-inline {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    overflow-x: auto;         /* Horizontal scroll */
+    overflow-y: hidden;
+    white-space: nowrap;      /* Prevent wrapping */
+    padding: 4px 0;           /* No thick padding */
+    -webkit-overflow-scrolling: touch; /* Smooth iOS scrolling */
+    scrollbar-width: thin;
+  }
+
+  /* Ensure each control remains inline & compact */
+  .ul-toolbar-inline .ul-control,
+  .ul-toolbar-inline .ul-pill,
+  .ul-toolbar-inline .ul-select {
+    flex: 0 0 auto;
+    min-width: 120px;
+    height: 38px;
+    padding: 8px 12px;
+  }
+
+  /* Optional compact text for summary/count */
+  .ul-toolbar-inline .ul-toolbar-count {
+    flex: 0 0 auto;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  /* Optional: nicer mobile scrollbar */
+  .ul-toolbar-inline::-webkit-scrollbar {
+    height: 4px;
+  }
+  .ul-toolbar-inline::-webkit-scrollbar-thumb {
+    background: #d6dbe1;
+    border-radius: 9999px;
+  }
+}

@@ -1,890 +1,281 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+// ShopPage.jsx — One-line Flipkart-style filter bar (pill dropdowns)
+// Exports (named): products, ShopPage, ProductCard
+
+import React, { useMemo, useState } from "react";
+import { useDispatch } from "react-redux";
 import { addToCart, getCartTotal } from "../redux/cartSlice";
 import { Header } from "../components/index/Header";
 import { useNavigate } from "react-router-dom";
+
 export const products = [
-  {
-    id: 1,
-    price: "$99.00",
-    discount: "25% Off",
-    img: "assets/img/product-img-1.jpg",
-    title: "Orange Airsuit",
-    category: "Fashion Bag",
-    detailsUrl: "/shopdetails",
-    categoryUrl: "/shop",
-    quantity: 1,
-  },
-  {
-    id: 2,
-    price: "$89.00",
-    discount: "10% Off",
-    img: "assets/img/product-img-2.jpg",
-    title: "Blue Backpack",
-    category: "Travel Bag",
-    detailsUrl: "/shopdetails",
-    categoryUrl: "/shop",
-    quantity: 1,
-  },
-  {
-    id: 3,
-    price: "$120.00",
-    discount: "30% Off",
-    img: "assets/img/product-img-3.jpg",
-    title: "Leather Handbag",
-    category: "Luxury Bag",
-    detailsUrl: "/shopdetails",
-    categoryUrl: "/shop",
-    quantity: 1,
-  },
-  {
-    id: 4,
-    price: "$70.00",
-    discount: "15% Off",
-    img: "assets/img/product-img-4.jpg",
-    title: "Stylish Tote",
-    category: "Women Bag",
-    detailsUrl: "/shopdetails",
-    categoryUrl: "/shop",
-    quantity: 1,
-  },
-  {
-    id: 5,
-    price: "$60.00",
-    discount: "20% Off",
-    img: "assets/img/product-img-5.jpg",
-    title: "Canvas Shopper",
-    category: "Casual Bag",
-    detailsUrl: "/shopdetails",
-    categoryUrl: "/shop",
-    quantity: 1,
-  },
-  {
-    id: 6,
-    price: "$110.00",
-    discount: "18% Off",
-    img: "assets/img/product-img-6.jpg",
-    title: "Compact Purse",
-    category: "Accessories",
-    detailsUrl: "/shopdetails",
-    categoryUrl: "/shop",
-    quantity: 1,
-  },
+  { id: 1, price: "$99.00",  discount: "25% Off", img: "assets/img/product-img-1.jpg", title: "Orange Airsuit",  category: "Fashion Bag",  detailsUrl: "/shopdetails", categoryUrl: "/shop", quantity: 1, color: "black", size: "S",  rating: 5, inStock: true,  onSale: true  },
+  { id: 2, price: "$89.00",  discount: "10% Off", img: "assets/img/product-img-2.jpg", title: "Blue Backpack",   category: "Travel Bag",  detailsUrl: "/shopdetails", categoryUrl: "/shop", quantity: 1, color: "blue",  size: "M",  rating: 4, inStock: true,  onSale: true  },
+  { id: 3, price: "$120.00", discount: "30% Off", img: "assets/img/product-img-3.jpg", title: "Leather Handbag", category: "Luxury Bag",  detailsUrl: "/shopdetails", categoryUrl: "/shop", quantity: 1, color: "brown", size: "L",  rating: 5, inStock: true,  onSale: true  },
+  { id: 4, price: "$70.00",  discount: "15% Off", img: "assets/img/product-img-4.jpg", title: "Stylish Tote",    category: "Women Bag",   detailsUrl: "/shopdetails", categoryUrl: "/shop", quantity: 1, color: "yellow",size: "XL", rating: 3, inStock: true,  onSale: false },
+  { id: 5, price: "$60.00",  discount: "20% Off", img: "assets/img/product-img-5.jpg", title: "Canvas Shopper",  category: "Casual Bag", detailsUrl: "/shopdetails", categoryUrl: "/shop", quantity: 1, color: "green", size: "S",  rating: 4, inStock: true,  onSale: true  },
+  { id: 6, price: "$110.00", discount: "18% Off", img: "assets/img/product-img-6.jpg", title: "Compact Purse",   category: "Accessories",detailsUrl: "/shopdetails", categoryUrl: "/shop", quantity: 1, color: "white", size: "M",  rating: 4, inStock: false, onSale: false },
 ];
 
+const parsePrice = (p) => {
+  if (typeof p === "number") return p;
+  const n = Number(String(p).replace(/[^0-9.]/g, ""));
+  return Number.isFinite(n) ? n : 0;
+};
+
 export const ShopPage = () => {
-  //   const data = useSelector();
-  //   useEffect(() => {
-  //     console.log(data);
-  //   }, []);
+  // single-line dropdown filter state
+  const [category, setCategory] = useState("");
+  const [priceRange, setPriceRange] = useState(""); // e.g., "0-50", "50-100", "200+"
+  const [sortBy, setSortBy] = useState("relevance");
+  const [color, setColor] = useState(""); // single-select for compactness
+  const [status, setStatus] = useState(""); // "", "in_stock", "on_sale"
+  const [minRating, setMinRating] = useState(0);
+
+  // (optional) keep search but not in the one-line bar; comment out if not needed
+  // const [q, setQ] = useState("");
+
+  const categories = useMemo(
+    () => Array.from(new Set(products.map((p) => p.category))),
+    []
+  );
+  const colorOptions = useMemo(
+    () => Array.from(new Set(products.map((p) => p.color))),
+    []
+  );
+
+  // predefined price ranges for the dropdown
+  const priceRanges = [
+    { key: "", label: "Any Price" },
+    { key: "0-50", label: "Under $50" },
+    { key: "50-100", label: "$50 – $100" },
+    { key: "100-200", label: "$100 – $200" },
+    { key: "200+", label: "$200 & above" },
+  ];
+
+  const filtered = useMemo(() => {
+    let list = [...products];
+
+    // If you want text search, un-comment:
+    // if (q.trim()) {
+    //   const term = q.toLowerCase();
+    //   list = list.filter(
+    //     (p) =>
+    //       p.title.toLowerCase().includes(term) ||
+    //       p.category.toLowerCase().includes(term)
+    //   );
+    // }
+
+    if (category) list = list.filter((p) => p.category === category);
+    if (color) list = list.filter((p) => p.color === color);
+
+    // status
+    if (status === "in_stock") list = list.filter((p) => p.inStock);
+    if (status === "on_sale") list = list.filter((p) => p.onSale);
+
+    // rating
+    if (minRating > 0) list = list.filter((p) => (p.rating || 0) >= minRating);
+
+    // price range
+    if (priceRange) {
+      list = list.filter((p) => {
+        const pr = parsePrice(p.price);
+        if (priceRange === "200+") return pr >= 200;
+        const [lo, hi] = priceRange.split("-").map(Number);
+        return pr >= lo && pr <= hi;
+      });
+    }
+
+    // sort
+    switch (sortBy) {
+      case "price_asc":
+        list.sort((a, b) => parsePrice(a.price) - parsePrice(b.price));
+        break;
+      case "price_desc":
+        list.sort((a, b) => parsePrice(b.price) - parsePrice(a.price));
+        break;
+      case "title_asc":
+        list.sort((a, b) => a.title.localeCompare(b.title));
+        break;
+      case "title_desc":
+        list.sort((a, b) => b.title.localeCompare(a.title));
+        break;
+      default:
+        // relevance = no-op
+        break;
+    }
+
+    return list;
+  }, [category, color, status, minRating, priceRange, sortBy]);
+
+  const clearAll = () => {
+    setCategory("");
+    setPriceRange("");
+    setSortBy("relevance");
+    setColor("");
+    setStatus("");
+    setMinRating(0);
+  };
+
   return (
     <div>
-      {/* SIDEBAR SECTION START  */}
-      <div className="ul-sidebar">
-        {/* header  */}
-        <div className="ul-sidebar-header">
-          <div className="ul-sidebar-header-logo">
-            <a href="index.html">
-              <img src="assets/img/logo.svg" alt="logo" className="logo" />
-            </a>
-          </div>
-          {/* sidebar closer  */}
-          <button className="ul-sidebar-closer">
-            <i className="flaticon-close"></i>
-          </button>
-        </div>
-
-        <div className="ul-sidebar-header-nav-wrapper d-block d-lg-none"></div>
-
-        <div className="ul-sidebar-about d-none d-lg-block">
-          <span className="title">About glamer</span>
-          <p className="mb-0">
-            Phasellus eget fermentum mauris. Suspendisse nec dignissim nulla.
-            Integer non quam commodo, scelerisque felis id, eleifend turpis.
-            Phasellus in nulla quis erat tempor tristique eget vel purus. Nulla
-            pharetra pharetra pharetra. Praesent varius eget justo ut lacinia.
-            Phasellus pharetra, velit viverra lacinia consequat, ipsum odio
-            mollis dolor, nec facilisis arcu arcu ultricies sapien. Quisque ut
-            dapibus nunc. Vivamus sit amet efficitur velit. Phasellus eget
-            fermentum mauris. Suspendisse nec dignissim nulla. Integer non quam
-            commodo, scelerisque felis id, eleifend turpis. Phasellus in nulla
-            quis erat tempor tristique eget vel purus. Nulla pharetra pharetra
-            pharetra. Praesent varius eget justo ut lacinia. Phasellus pharetra
-            velit.
-          </p>
-        </div>
-
-        {/* product slider  */}
-        <div className="ul-sidebar-products-wrapper d-none d-lg-flex">
-          <div className="ul-sidebar-products-slider swiper">
-            <div className="swiper-wrapper">
-              {/* product card  */}
-              <div className="swiper-slide">
-                <div className="ul-product">
-                  <div className="ul-product-heading">
-                    <span className="ul-product-price">$99.00</span>
-                    <span className="ul-product-discount-tag">25% Off</span>
-                  </div>
-
-                  <div className="ul-product-img">
-                    <img
-                      src="assets/img/product-img-1.jpg"
-                      alt="Product Image"
-                    />
-
-                    <div className="ul-product-actions">
-                      <button>
-                        <i className="flaticon-shopping-bag"></i>
-                      </button>
-                      <a href="#">
-                        <i className="flaticon-hide"></i>
-                      </a>
-                      <button>
-                        <i className="flaticon-heart"></i>
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="ul-product-txt">
-                    <h4 className="ul-product-title">
-                      <a href="/shopdetails">Orange Airsuit</a>
-                    </h4>
-                    <h5 className="ul-product-category">
-                      <a href="/shop">Fashion Bag</a>
-                    </h5>
-                  </div>
-                </div>
-              </div>
-
-              {/* product card  */}
-              <div className="swiper-slide">
-                <div className="ul-product">
-                  <div className="ul-product-heading">
-                    <span className="ul-product-price">$99.00</span>
-                    <span className="ul-product-discount-tag">25% Off</span>
-                  </div>
-
-                  <div className="ul-product-img">
-                    <img
-                      src="assets/img/product-img-2.jpg"
-                      alt="Product Image"
-                    />
-
-                    <div className="ul-product-actions">
-                      <button>
-                        <i className="flaticon-shopping-bag"></i>
-                      </button>
-                      <a href="#">
-                        <i className="flaticon-hide"></i>
-                      </a>
-                      <button>
-                        <i className="flaticon-heart"></i>
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="ul-product-txt">
-                    <h4 className="ul-product-title">
-                      <a href="/shopdetails">Orange Airsuit</a>
-                    </h4>
-                    <h5 className="ul-product-category">
-                      <a href="/shop">Fashion Bag</a>
-                    </h5>
-                  </div>
-                </div>
-              </div>
-
-              {/* product card  */}
-              <div className="swiper-slide">
-                <div className="ul-product">
-                  <div className="ul-product-heading">
-                    <span className="ul-product-price">$99.00</span>
-                    <span className="ul-product-discount-tag">25% Off</span>
-                  </div>
-
-                  <div className="ul-product-img">
-                    <img
-                      src="assets/img/product-img-2.jpg"
-                      alt="Product Image"
-                    />
-
-                    <div className="ul-product-actions">
-                      <button>
-                        <i className="flaticon-shopping-bag"></i>
-                      </button>
-                      <a href="#">
-                        <i className="flaticon-hide"></i>
-                      </a>
-                      <button>
-                        <i className="flaticon-heart"></i>
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="ul-product-txt">
-                    <h4 className="ul-product-title">
-                      <a href="/shopdetails">Orange Airsuit</a>
-                    </h4>
-                    <h5 className="ul-product-category">
-                      <a href="/shop">Fashion Bag</a>
-                    </h5>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="ul-sidebar-products-slider-nav flex-shrink-0">
-            <button className="prev">
-              <i className="flaticon-left-arrow"></i>
-            </button>
-            <button className="next">
-              <i className="flaticon-arrow-point-to-right"></i>
-            </button>
-          </div>
-        </div>
-
-        <div className="ul-sidebar-about d-none d-lg-block">
-          <p className="mb-0">
-            Phasellus eget fermentum mauris. Suspendisse nec dignissim nulla.
-            Integer non quam commodo, scelerisque felis id, eleifend turpis.
-            Phasellus in nulla quis erat tempor tristique eget vel purus. Nulla
-            pharetra pharetra pharetra. Praesent varius eget justo ut lacinia.
-            Phasellus pharetra, velit viverra lacinia consequat, ipsum odio
-            mollis dolor, nec facilisis arcu arcu ultricies sapien. Quisque ut
-            dapibus nunc. Vivamus sit amet efficitur velit. Phasellus eget
-            fermentum mauris. Suspendisse nec dignissim nulla. Integer non quam
-            commodo, scelerisque felis id, eleifend turpis. Phasellus in nulla
-            quis erat tempor tristique eget vel purus. Nulla pharetra pharetra
-            pharetra. Praesent varius eget justo ut lacinia. Phasellus pharetra
-            velit.
-          </p>
-        </div>
-
-        {/* sidebar footer  */}
-        <div className="ul-sidebar-footer">
-          <span className="ul-sidebar-footer-title">Follow us</span>
-
-          <div className="ul-sidebar-footer-social">
-            <a href="#">
-              <i className="flaticon-facebook-app-symbol"></i>
-            </a>
-            <a href="#">
-              <i className="flaticon-twitter"></i>
-            </a>
-            <a href="#">
-              <i className="flaticon-instagram"></i>
-            </a>
-            <a href="#">
-              <i className="flaticon-youtube"></i>
-            </a>
-          </div>
-        </div>
-      </div>
-      {/* SIDEBAR SECTION END  */}
-
       <Header />
-      <main>
-        {/* BREADCRUMB SECTION START  */}
-        <div className="ul-container">
-          <div className="ul-breadcrumb">
-            <h2 className="ul-breadcrumb-title">Shop Left Sidebar</h2>
-            <div className="ul-breadcrumb-nav">
-              <a href="index.html">
-                <i className="flaticon-home"></i> Home
-              </a>
-              <i className="flaticon-arrow-point-to-right"></i>
-              <span className="current-page">Shop</span>
-            </div>
-          </div>
+
+      {/* ONE-LINE FILTER BAR */}
+      <section className="ul-container" style={{ marginTop: 20 }}>
+        <div className="ul-toolbar-inline">
+          {/* Category */}
+          <select
+            className="ul-pill ul-select ul-control"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            aria-label="Category"
+            title="Category"
+          >
+            <option value="">All Categories</option>
+            {categories.map((c) => (
+              <option key={c} value={c}>{c}</option>
+            ))}
+          </select>
+
+          {/* Price Range */}
+          <select
+            className="ul-pill ul-select ul-control"
+            value={priceRange}
+            onChange={(e) => setPriceRange(e.target.value)}
+            aria-label="Price"
+            title="Price"
+          >
+            {priceRanges.map((r) => (
+              <option key={r.key} value={r.key}>{r.label}</option>
+            ))}
+          </select>
+
+          {/* Sort By */}
+          <select
+            className="ul-pill ul-select ul-control"
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+            aria-label="Sort by"
+            title="Sort by"
+          >
+            <option value="relevance">Sort: Relevance</option>
+            <option value="price_asc">Price: Low to High</option>
+            <option value="price_desc">Price: High to Low</option>
+            <option value="title_asc">Title: A → Z</option>
+            <option value="title_desc">Title: Z → A</option>
+          </select>
+
+          {/* Colors */}
+          <select
+            className="ul-pill ul-select ul-control"
+            value={color}
+            onChange={(e) => setColor(e.target.value)}
+            aria-label="Color"
+            title="Color"
+          >
+            <option value="">All Colors</option>
+            {colorOptions.map((c) => (
+              <option key={c} value={c}>{c[0].toUpperCase() + c.slice(1)}</option>
+            ))}
+          </select>
+
+          {/* Status */}
+          <select
+            className="ul-pill ul-select ul-control"
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
+            aria-label="Status"
+            title="Status"
+          >
+            <option value="">Any Status</option>
+            <option value="in_stock">In stock</option>
+            <option value="on_sale">On sale</option>
+          </select>
+
+          {/* Min Rating */}
+          <select
+            className="ul-pill ul-select ul-control"
+            value={minRating}
+            onChange={(e) => setMinRating(Number(e.target.value))}
+            aria-label="Min rating"
+            title="Min rating"
+          >
+            <option value={0}>Any Rating</option>
+            <option value={5}>5 only</option>
+            <option value={4}>4 & up</option>
+            <option value={3}>3 & up</option>
+            <option value={2}>2 & up</option>
+            <option value={1}>1 & up</option>
+          </select>
+
+          {/* Clear */}
+          <button type="button" className="ul-pill ul-control" onClick={clearAll}>
+            Clear
+          </button>
+
+          {/* Optional: live count */}
+          <div className="ul-toolbar-count">Showing <strong>{filtered.length}</strong> / {products.length}</div>
         </div>
-        {/* BREADCRUMB SECTION END  */}
+      </section>
 
-        {/* MAIN CONTENT SECTION START  */}
-        <div className="ul-inner-page-container">
-          <div className="ul-inner-products-wrapper">
-            <div className="row ul-bs-row flex-column-reverse flex-md-row">
-              {/* left side bar  */}
-              <div className="col-lg-3 col-md-4">
-                <div className="ul-products-sidebar">
-                  {/* single widget / search  */}
-                  <div className="ul-products-sidebar-widget ul-products-search">
-                    <form action="#" className="ul-products-search-form">
-                      <input
-                        type="text"
-                        name="product-search"
-                        id="ul-products-search-field"
-                        placeholder="Search Items"
-                      />
-                      <button>
-                        <i className="flaticon-search-interface-symbol"></i>
-                      </button>
-                    </form>
-                  </div>
-
-                  {/* single widget / price filter  */}
-                  <div className="ul-products-sidebar-widget ul-products-price-filter">
-                    <h3 className="ul-products-sidebar-widget-title">
-                      Filter by price
-                    </h3>
-                    <form action="#" className="ul-products-price-filter-form">
-                      <div id="ul-products-price-filter-slider"></div>
-                      <span className="filtered-price">$19 - $69</span>
-                    </form>
-                  </div>
-
-                  {/* single widget / categories  */}
-                  <div className="ul-products-sidebar-widget ul-products-categories">
-                    <h3 className="ul-products-sidebar-widget-title">
-                      Categories
-                    </h3>
-
-                    <div className="ul-products-categories-link">
-                      <a href="#">
-                        <span>
-                          <i className="flaticon-arrow-point-to-right"></i>{" "}
-                          Lifestyle
-                        </span>
-                      </a>
-                      <a href="#">
-                        <span>
-                          <i className="flaticon-arrow-point-to-right"></i>{" "}
-                          Beauty &amp; Fashion
-                        </span>
-                      </a>
-                      <a href="#">
-                        <span>
-                          <i className="flaticon-arrow-point-to-right"></i>{" "}
-                          Fitness &amp; Health
-                        </span>
-                      </a>
-                      <a href="#">
-                        <span>
-                          <i className="flaticon-arrow-point-to-right"></i> Food
-                          &amp; Cooking
-                        </span>
-                      </a>
-                      <a href="#">
-                        <span>
-                          <i className="flaticon-arrow-point-to-right"></i> Tech
-                          &amp; Gadgets
-                        </span>
-                      </a>
-                      <a href="#">
-                        <span>
-                          <i className="flaticon-arrow-point-to-right"></i>{" "}
-                          Entertainment
-                        </span>
-                      </a>
-                    </div>
-                  </div>
-
-                  {/* single widget / color filter  */}
-                  <div className="ul-products-sidebar-widget ul-products-color-filter">
-                    <h3 className="ul-products-sidebar-widget-title">
-                      Filter By Color
-                    </h3>
-
-                    <div className="ul-products-color-filter-colors">
-                      <a href="/shop" className="black">
-                        <span className="left">
-                          <span className="color-prview"></span> Black
-                        </span>
-                        <span>14</span>
-                      </a>
-                      <a href="/shop" className="green">
-                        <span className="left">
-                          <span className="color-prview"></span> Green
-                        </span>
-                        <span>14</span>
-                      </a>
-                      <a href="/shop" className="blue">
-                        <span className="left">
-                          <span className="color-prview"></span> Blue
-                        </span>
-                        <span>14</span>
-                      </a>
-                      <a href="/shop" className="red">
-                        <span className="left">
-                          <span className="color-prview"></span> Red
-                        </span>
-                        <span>14</span>
-                      </a>
-                      <a href="/shop" className="yellow">
-                        <span className="left">
-                          <span className="color-prview"></span> Yellow
-                        </span>
-                        <span>14</span>
-                      </a>
-                      <a href="/shop" className="brown">
-                        <span className="left">
-                          <span className="color-prview"></span> Brown
-                        </span>
-                        <span>14</span>
-                      </a>
-                      <a href="/shop" className="white">
-                        <span className="left">
-                          <span className="color-prview"></span> White
-                        </span>
-                        <span>14</span>
-                      </a>
-                    </div>
-                  </div>
-
-                  {/* single widget /product status */}
-                  <div className="ul-products-sidebar-widget">
-                    <h3 className="ul-products-sidebar-widget-title">
-                      Product Status
-                    </h3>
-
-                    <div className="ul-products-categories-link">
-                      <a href="#">
-                        <span>
-                          <i className="flaticon-arrow-point-to-right"></i> In
-                          stock
-                        </span>
-                      </a>
-                      <a href="#">
-                        <span>
-                          <i className="flaticon-arrow-point-to-right"></i> On
-                          Sale
-                        </span>
-                      </a>
-                    </div>
-                  </div>
-
-                  {/* single widget / size filter  */}
-                  <div className="ul-products-sidebar-widget">
-                    <h3 className="ul-products-sidebar-widget-title">
-                      Filter By Sizes
-                    </h3>
-
-                    <div className="ul-products-color-filter-colors">
-                      <a href="/shop">
-                        <span className="left">S</span>
-                        <span>14</span>
-                      </a>
-                      <a href="/shop">
-                        <span className="left">L</span>
-                        <span>14</span>
-                      </a>
-                      <a href="/shop">
-                        <span className="left">M</span>
-                        <span>14</span>
-                      </a>
-                      <a href="/shop">
-                        <span className="left">XL</span>
-                        <span>14</span>
-                      </a>
-                      <a href="/shop">
-                        <span className="left">XXL</span>
-                        <span>14</span>
-                      </a>
-                    </div>
-                  </div>
-
-                  {/* single widget / review  */}
-                  <div className="ul-products-sidebar-widget ul-products-rating-filter">
-                    <h3 className="ul-products-sidebar-widget-title">
-                      Review Star
-                    </h3>
-
-                    <div className="ul-products-rating-filter-ratings">
-                      {/* single rating filter  */}
-                      <div className="single-rating-wrapper">
-                        <label for="ul-products-review-5-star">
-                          <span className="left">
-                            <input
-                              type="checkbox"
-                              name="jo-checkout-agreement"
-                              id="ul-products-review-5-star"
-                              hidden
-                            />
-                            <span className="stars">
-                              <span>
-                                <i className="flaticon-star"></i>
-                              </span>
-                              <span>
-                                <i className="flaticon-star"></i>
-                              </span>
-                              <span>
-                                <i className="flaticon-star"></i>
-                              </span>
-                              <span>
-                                <i className="flaticon-star"></i>
-                              </span>
-                              <span>
-                                <i className="flaticon-star"></i>
-                              </span>
-                            </span>
-                          </span>
-                          <span className="right">5 Only</span>
-                        </label>
-                      </div>
-
-                      {/* single rating filter  */}
-                      <div className="single-rating-wrapper">
-                        <label for="ul-products-review-4-star">
-                          <span className="left">
-                            <input
-                              type="checkbox"
-                              name="jo-checkout-agreement"
-                              id="ul-products-review-4-star"
-                              hidden
-                            />
-                            <span className="stars">
-                              <span>
-                                <i className="flaticon-star"></i>
-                              </span>
-                              <span>
-                                <i className="flaticon-star"></i>
-                              </span>
-                              <span>
-                                <i className="flaticon-star"></i>
-                              </span>
-                              <span>
-                                <i className="flaticon-star"></i>
-                              </span>
-                              <span>
-                                <i className="flaticon-star"></i>
-                              </span>
-                            </span>
-                          </span>
-                          <span className="right">4 & up</span>
-                        </label>
-                      </div>
-
-                      {/* single rating filter  */}
-                      <div className="single-rating-wrapper">
-                        <label for="ul-products-review-3-star">
-                          <span className="left">
-                            <input
-                              type="checkbox"
-                              name="jo-checkout-agreement"
-                              id="ul-products-review-3-star"
-                              hidden
-                            />
-                            <span className="stars">
-                              <span>
-                                <i className="flaticon-star"></i>
-                              </span>
-                              <span>
-                                <i className="flaticon-star"></i>
-                              </span>
-                              <span>
-                                <i className="flaticon-star"></i>
-                              </span>
-                              <span>
-                                <i className="flaticon-star"></i>
-                              </span>
-                              <span>
-                                <i className="flaticon-star"></i>
-                              </span>
-                            </span>
-                          </span>
-                          <span className="right">3 & up</span>
-                        </label>
-                      </div>
-
-                      {/* single rating filter  */}
-                      <div className="single-rating-wrapper">
-                        <label for="ul-products-review-2-star">
-                          <span className="left">
-                            <input
-                              type="checkbox"
-                              name="jo-checkout-agreement"
-                              id="ul-products-review-2-star"
-                              hidden
-                            />
-                            <span className="stars">
-                              <span>
-                                <i className="flaticon-star"></i>
-                              </span>
-                              <span>
-                                <i className="flaticon-star"></i>
-                              </span>
-                            </span>
-                          </span>
-                          <span className="right">2 & up</span>
-                        </label>
-                      </div>
-
-                      {/* single rating filter  */}
-                      <div className="single-rating-wrapper">
-                        <label for="ul-products-review-1-star">
-                          <span className="left">
-                            <input
-                              type="checkbox"
-                              name="jo-checkout-agreement"
-                              id="ul-products-review-1-star"
-                              hidden
-                            />
-                            <span className="stars">
-                              <span>
-                                <i className="flaticon-star"></i>
-                              </span>
-                            </span>
-                          </span>
-                          <span className="right">1 & up</span>
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* right products container  */}
-              <div className="col-lg-9 col-md-8">
-                <div className="row ul-bs-row row-cols-lg-3 row-cols-2 row-cols-xxs-1">
-                  {products.map((product) => (
-                    <ProductCard key={product.id} product={product} />
-                  ))}
-                </div>
-
-                {/* pagination  */}
-                <div className="ul-pagination">
-                  <ul>
-                    <li>
-                      <a href="#">
-                        <i className="flaticon-left-arrow"></i>
-                      </a>
-                    </li>
-                    <li className="pages">
-                      <a href="#" className="active">
-                        01
-                      </a>
-                      <a href="#">02</a>
-                      <a href="#">03</a>
-                      <a href="#">04</a>
-                      <a href="#">05</a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i className="flaticon-arrow-point-to-right"></i>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+      {/* PRODUCT GRID */}
+      <section className="ul-inner-page-container" style={{ marginTop: 12 }}>
+        <div className="row ul-bs-row row-cols-lg-3 row-cols-2 row-cols-xxs-1">
+          {filtered.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+          {filtered.length === 0 && (
+            <div className="col" style={{ padding: 24 }}>
+              <p>No products match your filters.</p>
             </div>
-          </div>
+          )}
         </div>
-        {/* MAIN CONTENT SECTION END  */}
-      </main>
-
-      {/* FOOTER SECTION START  */}
-      <footer className="ul-footer">
-        <div className="ul-inner-container">
-          <div className="ul-footer-top">
-            {/* single links column  */}
-            <div className="ul-footer-top-widget">
-              <h3 className="ul-footer-top-widget-title">Brands</h3>
-
-              <div className="ul-footer-top-widget-links">
-                <a href="#">Zara</a>
-                <a href="#">Guess</a>
-                <a href="#">Mango</a>
-                <a href="#">LCWaikiki</a>
-                <a href="#">Monda</a>
-              </div>
-            </div>
-
-            {/* single links column  */}
-            <div className="ul-footer-top-widget">
-              <h3 className="ul-footer-top-widget-title">Categories</h3>
-
-              <div className="ul-footer-top-widget-links">
-                <a href="#">Watches</a>
-                <a href="#">Watch Accessories</a>
-                <a href="#">Clocks</a>
-                <a href="#">Jewellery</a>
-                <a href="#">Women’s Collection</a>
-              </div>
-            </div>
-
-            {/* single links column  */}
-            <div className="ul-footer-top-widget">
-              <h3 className="ul-footer-top-widget-title">Accessories</h3>
-
-              <div className="ul-footer-top-widget-links">
-                <a href="#">Order Tracking</a>
-                <a href="#">Terms & Conditions</a>
-                <a href="#">Privacy Policy</a>
-                <a href="#">Tutorials</a>
-                <a href="#">FAQ</a>
-              </div>
-            </div>
-
-            {/* single links column  */}
-            <div className="ul-footer-top-widget">
-              <h3 className="ul-footer-top-widget-title">Services</h3>
-
-              <div className="ul-footer-top-widget-links">
-                <a href="#">Sale</a>
-                <a href="#">Quick Ship</a>
-                <a href="#">New Designs</a>
-                <a href="#">Protection Plan</a>
-                <a href="#">Gift Cards</a>
-              </div>
-            </div>
-
-            {/* single links column  */}
-            <div className="ul-footer-top-widget">
-              <h3 className="ul-footer-top-widget-title">Policies</h3>
-
-              <div className="ul-footer-top-widget-links">
-                <a href="#">Policy</a>
-                <a href="#">Dressy Inside</a>
-                <a href="#">About Us</a>
-                <a href="#">Company</a>
-                <a href="#">Careers</a>
-              </div>
-            </div>
-
-            {/* single links column  */}
-            <div className="ul-footer-top-widget">
-              <h3 className="ul-footer-top-widget-title">Help</h3>
-
-              <div className="ul-footer-top-widget-links">
-                <a href="#">Contact us</a>
-                <a href="#">About us</a>
-                <a href="#">Reviews</a>
-                <a href="#">Terms of Service</a>
-                <a href="#">Refund policy</a>
-              </div>
-            </div>
-          </div>
-
-          <div className="ul-footer-middle">
-            {/* single widget  */}
-            <div className="ul-footer-middle-widget">
-              <h3 className="ul-footer-middle-widget-title">
-                Download Our Apps
-              </h3>
-              <div className="ul-footer-middle-widget-content">
-                <div className="app-links">
-                  <a href="#">
-                    <img
-                      src="assets/img/android.png"
-                      alt="Play Store Link Image"
-                    />
-                  </a>
-                  <a href="#">
-                    <img src="assets/img/ios.png" alt="App Store Link Image" />
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            {/* single widget  */}
-            <div className="ul-footer-middle-widget">
-              <h3 className="ul-footer-middle-widget-title">Follow us</h3>
-              <div className="ul-footer-middle-widget-content">
-                <div className="social-links">
-                  <a href="#">
-                    <i className="flaticon-facebook-app-symbol"></i>
-                  </a>
-                  <a href="#">
-                    <i className="flaticon-twitter"></i>
-                  </a>
-                  <a href="#">
-                    <i className="flaticon-linkedin-big-logo"></i>
-                  </a>
-                  <a href="#">
-                    <i className="flaticon-youtube"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            {/* single widget  */}
-            <div className="ul-footer-middle-widget">
-              <h3 className="ul-footer-middle-widget-title">
-                Need help? Call now!
-              </h3>
-              <div className="ul-footer-middle-widget-content">
-                <div className="contact-nums">
-                  <a href="tel:1234567890">(500) 8001 8588</a>,{" "}
-                  <a href="tel:1234567890">(500) 544 6550</a>
-                </div>
-              </div>
-            </div>
-
-            {/*  */}
-
-            {/* single widget  */}
-            <div className="ul-footer-middle-widget align-self-center">
-              <a href="index.html">
-                <img
-                  src="assets/img/logo-white.svg"
-                  alt="logo"
-                  className="logo"
-                />
-              </a>
-            </div>
-          </div>
-
-          <div className="ul-footer-bottom">
-            <p className="copyright-txt">
-              Copyright 2024 ©{" "}
-              <a href="https://temptics.com/" className="ul-footer-bottom-link">
-                Temptics
-              </a>
-            </p>
-            <img
-              src="assets/img/payment-methods.png"
-              alt="payment methods logos"
-            />
-          </div>
-        </div>
-      </footer>
-      {/* FOOTER SECTION END  */}
+      </section>
     </div>
   );
 };
 
 export const ProductCard = ({ product }) => {
-  const { id, price, discount, img, title, category, detailsUrl, categoryUrl } =
-    product;
-
+  const { id, price, discount, img, title, category, detailsUrl, categoryUrl } = product;
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleAddToCart = (product) => {
-    dispatch(addToCart(product));
-    dispatch(getCartTotal()); // update totals
+  const handleAddToCart = (p) => {
+    dispatch(addToCart(p));
+    dispatch(getCartTotal());
   };
 
   return (
-    <div className="col" onClick={() => navigate(`/shopdetails/${id}`)}>
-      <div className="ul-product">
+    <div className="col">
+      <div
+        className="ul-product"
+        onClick={() => navigate(`/shopdetails/${id}`)}
+        style={{ cursor: "pointer" }}
+      >
         <div className="ul-product-heading">
           <span className="ul-product-price">{price}</span>
           <span className="ul-product-discount-tag">{discount}</span>
         </div>
-
         <div className="ul-product-img">
           <img src={img} alt={title} />
-
-          <div className="ul-product-actions">
+          <div className="ul-product-actions" onClick={(e) => e.stopPropagation()}>
             <button onClick={() => handleAddToCart(product)}>
-              <i className="flaticon-shopping-bag"></i>
+              <i className="flaticon-shopping-bag" />
             </button>
-            <a href="#">
-              <i className="flaticon-hide"></i>
+            <a href="#" onClick={(e) => e.preventDefault()}>
+              <i className="flaticon-hide" />
             </a>
             <button>
-              <i className="flaticon-heart"></i>
+              <i className="flaticon-heart" />
             </button>
           </div>
         </div>
-
         <div className="ul-product-txt">
           <h4 className="ul-product-title">
-            <a href={detailsUrl}>{title}</a>
+            <a href={detailsUrl} onClick={(e) => e.preventDefault()}>{title}</a>
           </h4>
           <h5 className="ul-product-category">
-            <a href={categoryUrl}>{category}</a>
+            <a href={categoryUrl} onClick={(e) => e.preventDefault()}>{category}</a>
           </h5>
         </div>
       </div>
