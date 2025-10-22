@@ -1,341 +1,265 @@
-import React from "react";
-import { Header } from "../components/index/Header";
-import Footer from "../components/index/Footer";
-import { useDispatch } from "react-redux";
-import { addToCart } from "../redux/cartSlice";
-import { useParams } from "react-router";
-import { products } from "./ShopPage";
-import { products2 } from "../components/index/main/SellingStart";
+// ShopDetailsPage.js — no Splide/Swiper, wrapped JSX
+import React, { useState } from 'react';
+import Header from '../common/Header';
 
-const sidebarProducts = [
-  {
-    id: 1,
-    price: "$99.00",
-    discount: "25% Off",
-    img: "assets/img/product-img-1.jpg",
-    title: "Orange Airsuit",
-    category: "Fashion Bag",
-  },
-  {
-    id: 2,
-    price: "$99.00",
-    discount: "25% Off",
-    img: "assets/img/product-img-2.jpg",
-    title: "Blue Airsuit",
-    category: "Fashion Bag",
-  },
-  {
-    id: 3,
-    price: "$99.00",
-    discount: "25% Off",
-    img: "assets/img/product-img-3.jpg",
-    title: "classNameic Airsuit",
-    category: "Fashion Bag",
-  },
-];
-const productImages = [
-  "/assets/img/product-details-1.jpg",
-  "/assets/img/product-details-2.jpg",
-];
-const reviews = [
-  {
-    id: 1,
-    name: "Temptics Pro",
-    date: "March 20, 2023 at 2:37 pm",
-    img: "assets/img/reviewer-img-1.png",
-    rating: 4,
-    content:
-      "Phasellus eget fermentum mauris. Suspendisse nec dignissim nulla. Integer non quam commodo...",
-  },
-  {
-    id: 2,
-    name: "John Doe",
-    date: "March 21, 2023 at 1:15 pm",
-    img: "assets/img/reviewer-img-2.png",
-    rating: 5,
-    content:
-      "Aliquam hendrerit a augue insuscipit. Etiam aliquam massa quis des mauris commodo venenatis...",
-  },
-];
-export const ShopDetailsPage = () => {
-  const { id } = useParams();
+export default function ShopDetailsPage() {
+  // Quantity / options
+  const [qty, setQty] = useState(1);
+  const incQty = () => setQty((q) => q + 1);
+  const decQty = () => setQty((q) => (q > 1 ? q - 1 : 1));
+  const [size, setSize] = useState('S');
+  const [color, setColor] = useState('green');
 
-  const dispatch = useDispatch();
-  const headerOffers = Array(10).fill("limited time offer");
-  const product =
-    products.find((item) => item.id === Number(id)) ||
-    products2.find((item) => item.id === Number(id));
-  console.log(product);
-
-  if (!product) {
-    console.warn(`Product with id ${id} not found`);
-  }
-
-  // -----------------------------
-  // 🧱 COMPONENT SECTION
-  // -----------------------------
   return (
-    <div>
-      <Header />
-      {/* ---------------- PRODUCT DETAILS SECTION ---------------- */}
+    <>
+    
       <main>
-        <div classNameName="ul-container">
-          <div classNameName="ul-breadcrumb">
-            <h2 classNameName="ul-breadcrumb-title">Shop Details</h2>
-            <div classNameName="ul-breadcrumb-nav">
-              <a href="/">
-                <i classNameName="flaticon-home"></i> Home
-              </a>
-              <i classNameName="flaticon-arrow-point-to-right"></i>
-              <a href="/shop">Shop</a>
-              <i classNameName="flaticon-arrow-point-to-right"></i>
-              <span classNameName="current-page">Shop Details</span>
+        {/* BREADCRUMB SECTION START */}
+        <div className="ul-container">
+          <div className="ul-breadcrumb">
+            <h2 className="ul-breadcrumb-title">Shop Details</h2>
+            <div className="ul-breadcrumb-nav" aria-label="Breadcrumb">
+              <a href="index.html"><i className="flaticon-home" /> Home</a>
+              <i className="flaticon-arrow-point-to-right" aria-hidden="true" />
+              <a href="shop.html">Shop</a>
+              <i className="flaticon-arrow-point-to-right" aria-hidden="true" />
+              <span className="current-page" aria-current="page">Shop Details</span>
             </div>
           </div>
         </div>
+        {/* BREADCRUMB SECTION END */}
 
-        <div classNameName="ul-inner-page-container">
-          <div classNameName="ul-product-details">
-            <div classNameName="ul-product-details-top">
-              <div classNameName="row ul-bs-row row-cols-lg-2 row-cols-1 align-items-center">
-                {/*Product  Images */}
-                <div classNameName="col">
-                  <div classNameName="ul-product-details-img">
-                    <div classNameName="swiper-wrapper">
-                      <div classNameName="swiper-slide">
-                        {/* {`../../public/${product.img}`} */}
-                        <img src={"/" + product.img} alt="Product" />
-                      </div>
-                      {/* ))} */}
-                    </div>
-                  </div>
+        {/* MAIN CONTENT SECTION START */}
+        <div className="ul-inner-page-container">
+          <div className="ul-product-details">
+            <div className="ul-product-details-top">
+              <div className="row ul-bs-row row-cols-lg-2 row-cols-1 align-items-center">
+                {/* img */}
+                <div className="col">
+                  {/* (you can place an image gallery here later) */}
                 </div>
 
-                {/* Text */}
-                <div classNameName="col">
-                  <div classNameName="ul-product-details-txt">
-                    <div classNameName="ul-product-details-rating">
-                      <span classNameName="rating">
-                        {Array(5)
-                          .fill(0)
-                          .map((_, i) => (
-                            <i key={i} classNameName="flaticon-star"></i>
-                          ))}
+                {/* txt */}
+                <div className="col">
+                  <div className="ul-product-details-txt">
+                    {/* product rating */}
+                    <div className="ul-product-details-rating">
+                      <span className="rating" aria-label="5 out of 5">
+                        <i className="flaticon-star" />
+                        <i className="flaticon-star" />
+                        <i className="flaticon-star" />
+                        <i className="flaticon-star" />
+                        <i className="flaticon-star" />
                       </span>
-                      <span classNameName="review-number">
-                        (2 Customer Reviews)
-                      </span>
+                      <span className="review-number">(2 Customer Reviews)</span>
                     </div>
-                    <span classNameName="ul-product-details-price">
-                      {product.price}
-                    </span>
-                    <h3 classNameName="ul-product-details-title">
-                      {product.title}
-                    </h3>
-                    <p classNameName="ul-product-details-descr">
-                      {product.category}
+
+                    {/* price */}
+                    <span className="ul-product-details-price">$120.00</span>
+
+                    {/* product title */}
+                    <h3 className="ul-product-details-title">Front view modern dark sunglasses</h3>
+
+                    {/* product description */}
+                    <p className="ul-product-details-descr">
+                      Aliquam hendrerit a augue insuscipit. Etiam aliquam massa quis des mauris commodo venenatis ligula commodo
+                      leez sed blandit convallis dignissim onec vel pellentesque neque.
                     </p>
-                    {/* <!-- product options --> */}
+
+                    {/* product options */}
                     <div className="ul-product-details-options">
                       <div className="ul-product-details-option ul-product-details-sizes">
                         <span className="title">Size</span>
-
-                        <form action="#" className="variants">
-                          <label for="ul-product-details-size-1">
-                            <input
-                              type="radio"
-                              name="product-size"
-                              id="ul-product-details-size-1"
-                              checked
-                            />
-                            <span className="size-btn">S</span>
-                          </label>
-
-                          <label for="ul-product-details-size-2">
-                            <input
-                              type="radio"
-                              name="product-size"
-                              id="ul-product-details-size-2"
-                            />
-                            <span className="size-btn">M</span>
-                          </label>
-
-                          <label for="ul-product-details-size-3">
-                            <input
-                              type="radio"
-                              name="product-size"
-                              id="ul-product-details-size-3"
-                            />
-                            <span className="size-btn">L</span>
-                          </label>
-
-                          <label for="ul-product-details-size-4">
-                            <input
-                              type="radio"
-                              name="product-size"
-                              id="ul-product-details-size-4"
-                            />
-                            <span className="size-btn">XL</span>
-                          </label>
-
-                          <label for="ul-product-details-size-5">
-                            <input
-                              type="radio"
-                              name="product-size"
-                              id="ul-product-details-size-5"
-                            />
-                            <span className="size-btn">XXL</span>
-                          </label>
+                        <form className="variants" onSubmit={(e) => e.preventDefault()}>
+                          {['S','M','L','XL','XXL'].map((s) => (
+                            <label key={s} htmlFor={`ul-product-details-size-${s}`}>
+                              <input
+                                type="radio"
+                                name="product-size"
+                                id={`ul-product-details-size-${s}`}
+                                checked={size === s}
+                                onChange={() => setSize(s)}
+                                hidden
+                              />
+                              <span className={`size-btn ${size === s ? 'active' : ''}`}>{s}</span>
+                            </label>
+                          ))}
                         </form>
                       </div>
 
                       <div className="ul-product-details-option ul-product-details-colors">
                         <span className="title">Color</span>
-                        <form action="#" className="variants">
-                          <label for="ul-product-details-color-1">
-                            <input
-                              type="radio"
-                              name="product-color"
-                              id="ul-product-details-color-1"
-                              checked
-                            />
-                            <span className="color-btn green"></span>
-                          </label>
-
-                          <label for="ul-product-details-color-2">
-                            <input
-                              type="radio"
-                              name="product-color"
-                              id="ul-product-details-color-2"
-                            />
-                            <span className="color-btn blue"></span>
-                          </label>
-
-                          <label for="ul-product-details-color-3">
-                            <input
-                              type="radio"
-                              name="product-color"
-                              id="ul-product-details-color-3"
-                            />
-                            <span className="color-btn brown"></span>
-                          </label>
-
-                          <label for="ul-product-details-color-4">
-                            <input
-                              type="radio"
-                              name="product-color"
-                              id="ul-product-details-color-4"
-                            />
-                            <span className="color-btn red"></span>
-                          </label>
+                        <form className="variants" onSubmit={(e) => e.preventDefault()}>
+                          {[
+                            { key: 'green', cls: 'green' },
+                            { key: 'blue', cls: 'blue' },
+                            { key: 'brown', cls: 'brown' },
+                            { key: 'red', cls: 'red' },
+                          ].map((c, idx) => (
+                            <label key={c.key} htmlFor={`ul-product-details-color-${idx + 1}`}>
+                              <input
+                                type="radio"
+                                name="product-color"
+                                id={`ul-product-details-color-${idx + 1}`}
+                                checked={color === c.key}
+                                onChange={() => setColor(c.key)}
+                                hidden
+                              />
+                              <span className={`color-btn ${c.cls} ${color === c.key ? 'active' : ''}`} />
+                            </label>
+                          ))}
                         </form>
                       </div>
                     </div>
 
-                    {/* <!-- product quantity --> */}
+                    {/* product quantity */}
                     <div className="ul-product-details-option ul-product-details-quantity">
                       <span className="title">Quantity</span>
-                      <form action="#" className="ul-product-quantity-wrapper">
+                      <form className="ul-product-quantity-wrapper" onSubmit={(e) => e.preventDefault()}>
                         <input
                           type="number"
-                          name="product-quantity"
-                          id="ul-product-details-quantity"
                           className="ul-product-quantity"
-                          value="1"
-                          min="1"
-                          readonly
+                          value={qty}
+                          min={1}
+                          readOnly
                         />
                         <div className="btns">
-                          <button
-                            type="button"
-                            className="quantityIncreaseButton"
-                          >
-                            <i className="flaticon-plus"></i>
+                          <button type="button" className="quantityIncreaseButton" onClick={incQty} aria-label="Increase quantity">
+                            <i className="flaticon-plus" />
                           </button>
-                          <button
-                            type="button"
-                            className="quantityDecreaseButton"
-                          >
-                            <i className="flaticon-minus-sign"></i>
+                          <button type="button" className="quantityDecreaseButton" onClick={decQty} aria-label="Decrease quantity">
+                            <i className="flaticon-minus-sign" />
                           </button>
                         </div>
                       </form>
                     </div>
 
-                    <div classNameName="ul-product-details-actions">
-                      <button
-                        classNameName="group add-to-cart flex  gap-2 rounded-full px-4 py-1"
-                        onClick={() => {
-                          dispatch(
-                            addToCart({
-                              id: 10,
-                              price: "$120.00",
-                              discount: "25% Off",
-                              img: "assets/img/product-details-1.jpg",
-                              title: "Front view modern dark sunglasses",
-                              category: "Fashion Bag",
-                            })
-                          );
-                        }}
-                      >
-                        Add to Cart
-                        <i classNameName="flaticon-cart  text-white group-hover:animate-bounce"></i>
-                      </button>
-                      <button classNameName="group add-to-wishlist rounded-full px-3 py-1 text-white flex items-center gap-2">
-                        <i classNameName="group-hover:animate-bounce flaticon-heart"></i>{" "}
-                        Add to Wishlist
-                      </button>
+                    {/* product actions */}
+                    <div className="ul-product-details-actions">
+                      <div className="left">
+                        <button
+                          className="add-to-cart"
+                          onClick={() => alert(`Added ${qty} item(s), Size: ${size}, Color: ${color}`)}
+                        >
+                          Add to Cart <span className="icon"><i className="flaticon-cart" /></span>
+                        </button>
+                        <button className="add-to-wishlist">
+                          <span className="icon"><i className="flaticon-heart" /></span> Add to wishlist
+                        </button>
+                      </div>
+                      <div className="share-options">
+                        <button aria-label="Share to Facebook"><i className="flaticon-facebook-app-symbol" /></button>
+                        <button aria-label="Share to Twitter"><i className="flaticon-twitter" /></button>
+                        <button aria-label="Share to LinkedIn"><i className="flaticon-linkedin-big-logo" /></button>
+                        <a href="#" aria-label="YouTube"><i className="flaticon-youtube" /></a>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
+              </div>{/* row */}
+            </div>{/* top */}
 
-            {/* Reviews */}
-            <div classNameName="ul-product-details-reviews">
-              <h3 classNameName="ul-product-details-inner-title">
-                {reviews.length.toString().padStart(2, "0")} Reviews
-              </h3>
-              {reviews.map((r) => (
-                <div key={r.id} classNameName="ul-product-details-review">
-                  <div classNameName="ul-product-details-review-reviewer-img">
-                    <img src={r.img} alt={r.name} />
+            <div className="ul-product-details-bottom">
+              {/* description */}
+              <div className="ul-product-details-long-descr-wrapper">
+                <h3 className="ul-product-details-inner-title">Item Description</h3>
+                <p>
+                  Phasellus eget fermentum mauris. Suspendisse nec dignissim nulla. Integer non quam commodo, scelerisque
+                  felis id, eleifend turpis. … (demo text)
+                </p>
+              </div>
+
+              {/* reviews */}
+              <div className="ul-product-details-reviews">
+                <h3 className="ul-product-details-inner-title">02 Reviews</h3>
+
+                <div className="ul-product-details-review">
+                  <div className="ul-product-details-review-reviewer-img">
+                    <img src="assets/img/reviewer-img-1.png" alt="Reviewer" />
                   </div>
-                  <div classNameName="ul-product-details-review-txt">
-                    <div classNameName="header">
-                      <div classNameName="left">
-                        <h4 classNameName="reviewer-name">{r.name}</h4>
-                        <h5 classNameName="review-date">{r.date}</h5>
+                  <div className="ul-product-details-review-txt">
+                    <div className="header">
+                      <div className="left">
+                        <h4 className="reviewer-name">Temptics Pro</h4>
+                        <h5 className="review-date">March 20, 2023 at 2:37 pm</h5>
                       </div>
-                      <div classNameName="right">
-                        <div classNameName="rating">
-                          {Array(5)
-                            .fill(0)
-                            .map((_, i) => (
-                              <i
-                                key={i}
-                                classNameName={
-                                  i < r.rating
-                                    ? "flaticon-star"
-                                    : "flaticon-star-3"
-                                }
-                              ></i>
-                            ))}
+                      <div className="right">
+                        <div className="rating" aria-label="4 out of 5">
+                          <i className="flaticon-star" /><i className="flaticon-star" />
+                          <i className="flaticon-star" /><i className="flaticon-star" />
+                          <i className="flaticon-star-3" />
                         </div>
                       </div>
                     </div>
-                    <p>{r.content}</p>
-                    <button classNameName="ul-product-details-review-reply-btn">
-                      Reply
-                    </button>
+                    <p>Phasellus eget fermentum mauris…</p>
+                    <button className="ul-product-details-review-reply-btn">Reply</button>
                   </div>
                 </div>
-              ))}
-            </div>
+
+                <div className="ul-product-details-review">
+                  <div className="ul-product-details-review-reviewer-img">
+                    <img src="assets/img/reviewer-img-2.png" alt="Reviewer" />
+                  </div>
+                  <div className="ul-product-details-review-txt">
+                    <div className="header">
+                      <div className="left">
+                        <h4 className="reviewer-name">Temptics Pro</h4>
+                        <h5 className="review-date">March 20, 2023 at 2:37 pm</h5>
+                      </div>
+                      <div className="right">
+                        <div className="rating" aria-label="4 out of 5">
+                          <i className="flaticon-star" /><i className="flaticon-star" />
+                          <i className="flaticon-star" /><i className="flaticon-star" />
+                          <i className="flaticon-star-3" />
+                        </div>
+                      </div>
+                    </div>
+                    <p>Phasellus eget fermentum mauris…</p>
+                    <button className="ul-product-details-review-reply-btn">Reply</button>
+                  </div>
+                </div>
+              </div>
+
+              {/* review form */}
+              <div className="ul-product-details-review-form-wrapper">
+                <h3 className="ul-product-details-inner-title">Write A Review</h3>
+                <span className="note">Your email address will not be published.</span>
+                <form className="ul-product-details-review-form" onSubmit={(e) => e.preventDefault()}>
+                  <div className="form-group rating-field-wrapper">
+                    <span className="title">Rate this product? *</span>
+                    <div className="rating-field">
+                      {Array.from({ length: 5 }).map((_, i) => (
+                        <button type="button" key={i} aria-label={`Rate ${i + 1}`}>
+                          <i className="flaticon-star-3" />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="row row-cols-2 row-cols-xxs-1 ul-bs-row">
+                    <div className="form-group">
+                      <input type="text" name="review-name" id="review-name" placeholder="Your Name" />
+                    </div>
+                    <div className="form-group">
+                      <input type="email" name="review-email" id="review-email" placeholder="Your Email" />
+                    </div>
+                    <div className="form-group col-12">
+                      <textarea name="review-message" id="review-message" placeholder="Your Review" />
+                    </div>
+                  </div>
+
+                  <div className="form-group">
+                    <button type="submit">
+                      Post Review <span><i className="flaticon-up-right-arrow" /></span>
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>{/* bottom */}
           </div>
         </div>
+        {/* MAIN CONTENT SECTION END */}
       </main>
-      <Footer />
-    </div>
+    </>
   );
-};
+}

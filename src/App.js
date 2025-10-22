@@ -2,7 +2,8 @@ import React from "react";
 import "./App.css";
 import Header from "./common/Header";
 import Footer from "./common/Footer";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 import Home from "./pages/Home";
 import Cart from "./pages/Cart";
 import Index from "./pages/index";
@@ -11,12 +12,16 @@ import Shop from "./pages/Shop";
 import ContactUs from "./pages/Contact";
 import AboutUs from "./pages/AboutUs";
 import Sell from "./pages/Sell";
+
+// 👉 Named exports:
 import { CartPage } from "./pages/CartPage";
 import { ShopPage } from "./pages/ShopPage";
-import { ShopDetailsPage } from "./pages/ShopDetailsPage";
 import { CheckoutPage } from "./pages/CheckoutPage";
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
+
+// 👉 Default export:
+import ShopDetailsPage from "./pages/ShopDetailsPage";
 
 const App = () => {
   return (
@@ -36,9 +41,10 @@ const App = () => {
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/about" element={<AboutUs />} />
-          <Route path="/Sell" element={<Sell />} />
+          <Route path="/sell" element={<Sell />} />
           <Route path="/*" element={<NotFoundPage />} />
         </Routes>
+
         {/* <Footer /> */}
       </Router>
       {/* for suggestion we need to hit ctrl + space */}
