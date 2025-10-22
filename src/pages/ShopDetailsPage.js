@@ -29,7 +29,7 @@ const sidebarProducts = [
     price: "$99.00",
     discount: "25% Off",
     img: "assets/img/product-img-3.jpg",
-    title: "Classic Airsuit",
+    title: "classNameic Airsuit",
     category: "Fashion Bag",
   },
 ];
@@ -79,30 +79,30 @@ export const ShopDetailsPage = () => {
       <Header />
       {/* ---------------- PRODUCT DETAILS SECTION ---------------- */}
       <main>
-        <div className="ul-container">
-          <div className="ul-breadcrumb">
-            <h2 className="ul-breadcrumb-title">Shop Details</h2>
-            <div className="ul-breadcrumb-nav">
+        <div classNameName="ul-container">
+          <div classNameName="ul-breadcrumb">
+            <h2 classNameName="ul-breadcrumb-title">Shop Details</h2>
+            <div classNameName="ul-breadcrumb-nav">
               <a href="/">
-                <i className="flaticon-home"></i> Home
+                <i classNameName="flaticon-home"></i> Home
               </a>
-              <i className="flaticon-arrow-point-to-right"></i>
+              <i classNameName="flaticon-arrow-point-to-right"></i>
               <a href="/shop">Shop</a>
-              <i className="flaticon-arrow-point-to-right"></i>
-              <span className="current-page">Shop Details</span>
+              <i classNameName="flaticon-arrow-point-to-right"></i>
+              <span classNameName="current-page">Shop Details</span>
             </div>
           </div>
         </div>
 
-        <div className="ul-inner-page-container">
-          <div className="ul-product-details">
-            <div className="ul-product-details-top">
-              <div className="row ul-bs-row row-cols-lg-2 row-cols-1 align-items-center">
+        <div classNameName="ul-inner-page-container">
+          <div classNameName="ul-product-details">
+            <div classNameName="ul-product-details-top">
+              <div classNameName="row ul-bs-row row-cols-lg-2 row-cols-1 align-items-center">
                 {/*Product  Images */}
-                <div className="col">
-                  <div className="ul-product-details-img">
-                    <div className="swiper-wrapper">
-                      <div className="swiper-slide">
+                <div classNameName="col">
+                  <div classNameName="ul-product-details-img">
+                    <div classNameName="swiper-wrapper">
+                      <div classNameName="swiper-slide">
                         {/* {`../../public/${product.img}`} */}
                         <img src={"/" + product.img} alt="Product" />
                       </div>
@@ -112,33 +112,159 @@ export const ShopDetailsPage = () => {
                 </div>
 
                 {/* Text */}
-                <div className="col">
-                  <div className="ul-product-details-txt">
-                    <div className="ul-product-details-rating">
-                      <span className="rating">
+                <div classNameName="col">
+                  <div classNameName="ul-product-details-txt">
+                    <div classNameName="ul-product-details-rating">
+                      <span classNameName="rating">
                         {Array(5)
                           .fill(0)
                           .map((_, i) => (
-                            <i key={i} className="flaticon-star"></i>
+                            <i key={i} classNameName="flaticon-star"></i>
                           ))}
                       </span>
-                      <span className="review-number">
+                      <span classNameName="review-number">
                         (2 Customer Reviews)
                       </span>
                     </div>
-                    <span className="ul-product-details-price">
+                    <span classNameName="ul-product-details-price">
                       {product.price}
                     </span>
-                    <h3 className="ul-product-details-title">
+                    <h3 classNameName="ul-product-details-title">
                       {product.title}
                     </h3>
-                    <p className="ul-product-details-descr">
+                    <p classNameName="ul-product-details-descr">
                       {product.category}
                     </p>
+                    {/* <!-- product options --> */}
+                    <div className="ul-product-details-options">
+                      <div className="ul-product-details-option ul-product-details-sizes">
+                        <span className="title">Size</span>
 
-                    <div className="ul-product-details-actions">
+                        <form action="#" className="variants">
+                          <label for="ul-product-details-size-1">
+                            <input
+                              type="radio"
+                              name="product-size"
+                              id="ul-product-details-size-1"
+                              checked
+                            />
+                            <span className="size-btn">S</span>
+                          </label>
+
+                          <label for="ul-product-details-size-2">
+                            <input
+                              type="radio"
+                              name="product-size"
+                              id="ul-product-details-size-2"
+                            />
+                            <span className="size-btn">M</span>
+                          </label>
+
+                          <label for="ul-product-details-size-3">
+                            <input
+                              type="radio"
+                              name="product-size"
+                              id="ul-product-details-size-3"
+                            />
+                            <span className="size-btn">L</span>
+                          </label>
+
+                          <label for="ul-product-details-size-4">
+                            <input
+                              type="radio"
+                              name="product-size"
+                              id="ul-product-details-size-4"
+                            />
+                            <span className="size-btn">XL</span>
+                          </label>
+
+                          <label for="ul-product-details-size-5">
+                            <input
+                              type="radio"
+                              name="product-size"
+                              id="ul-product-details-size-5"
+                            />
+                            <span className="size-btn">XXL</span>
+                          </label>
+                        </form>
+                      </div>
+
+                      <div className="ul-product-details-option ul-product-details-colors">
+                        <span className="title">Color</span>
+                        <form action="#" className="variants">
+                          <label for="ul-product-details-color-1">
+                            <input
+                              type="radio"
+                              name="product-color"
+                              id="ul-product-details-color-1"
+                              checked
+                            />
+                            <span className="color-btn green"></span>
+                          </label>
+
+                          <label for="ul-product-details-color-2">
+                            <input
+                              type="radio"
+                              name="product-color"
+                              id="ul-product-details-color-2"
+                            />
+                            <span className="color-btn blue"></span>
+                          </label>
+
+                          <label for="ul-product-details-color-3">
+                            <input
+                              type="radio"
+                              name="product-color"
+                              id="ul-product-details-color-3"
+                            />
+                            <span className="color-btn brown"></span>
+                          </label>
+
+                          <label for="ul-product-details-color-4">
+                            <input
+                              type="radio"
+                              name="product-color"
+                              id="ul-product-details-color-4"
+                            />
+                            <span className="color-btn red"></span>
+                          </label>
+                        </form>
+                      </div>
+                    </div>
+
+                    {/* <!-- product quantity --> */}
+                    <div className="ul-product-details-option ul-product-details-quantity">
+                      <span className="title">Quantity</span>
+                      <form action="#" className="ul-product-quantity-wrapper">
+                        <input
+                          type="number"
+                          name="product-quantity"
+                          id="ul-product-details-quantity"
+                          className="ul-product-quantity"
+                          value="1"
+                          min="1"
+                          readonly
+                        />
+                        <div className="btns">
+                          <button
+                            type="button"
+                            className="quantityIncreaseButton"
+                          >
+                            <i className="flaticon-plus"></i>
+                          </button>
+                          <button
+                            type="button"
+                            className="quantityDecreaseButton"
+                          >
+                            <i className="flaticon-minus-sign"></i>
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+
+                    <div classNameName="ul-product-details-actions">
                       <button
-                        className="group add-to-cart rounded-md px-4 py-1"
+                        classNameName="group add-to-cart flex  gap-2 rounded-full px-4 py-1"
                         onClick={() => {
                           dispatch(
                             addToCart({
@@ -152,11 +278,11 @@ export const ShopDetailsPage = () => {
                           );
                         }}
                       >
-                        Add to Cart{" "}
-                        <i className="flaticon-cart group-hover:animate-bounce"></i>
+                        Add to Cart
+                        <i classNameName="flaticon-cart  text-white group-hover:animate-bounce"></i>
                       </button>
-                      <button className="group add-to-wishlist rounded-md px-4 py-1 text-white flex items-center gap-2">
-                        <i className="group-hover:animate-bounce flaticon-heart"></i>{" "}
+                      <button classNameName="group add-to-wishlist rounded-full px-3 py-1 text-white flex items-center gap-2">
+                        <i classNameName="group-hover:animate-bounce flaticon-heart"></i>{" "}
                         Add to Wishlist
                       </button>
                     </div>
@@ -166,29 +292,29 @@ export const ShopDetailsPage = () => {
             </div>
 
             {/* Reviews */}
-            <div className="ul-product-details-reviews">
-              <h3 className="ul-product-details-inner-title">
+            <div classNameName="ul-product-details-reviews">
+              <h3 classNameName="ul-product-details-inner-title">
                 {reviews.length.toString().padStart(2, "0")} Reviews
               </h3>
               {reviews.map((r) => (
-                <div key={r.id} className="ul-product-details-review">
-                  <div className="ul-product-details-review-reviewer-img">
+                <div key={r.id} classNameName="ul-product-details-review">
+                  <div classNameName="ul-product-details-review-reviewer-img">
                     <img src={r.img} alt={r.name} />
                   </div>
-                  <div className="ul-product-details-review-txt">
-                    <div className="header">
-                      <div className="left">
-                        <h4 className="reviewer-name">{r.name}</h4>
-                        <h5 className="review-date">{r.date}</h5>
+                  <div classNameName="ul-product-details-review-txt">
+                    <div classNameName="header">
+                      <div classNameName="left">
+                        <h4 classNameName="reviewer-name">{r.name}</h4>
+                        <h5 classNameName="review-date">{r.date}</h5>
                       </div>
-                      <div className="right">
-                        <div className="rating">
+                      <div classNameName="right">
+                        <div classNameName="rating">
                           {Array(5)
                             .fill(0)
                             .map((_, i) => (
                               <i
                                 key={i}
-                                className={
+                                classNameName={
                                   i < r.rating
                                     ? "flaticon-star"
                                     : "flaticon-star-3"
@@ -199,7 +325,7 @@ export const ShopDetailsPage = () => {
                       </div>
                     </div>
                     <p>{r.content}</p>
-                    <button className="ul-product-details-review-reply-btn">
+                    <button classNameName="ul-product-details-review-reply-btn">
                       Reply
                     </button>
                   </div>
