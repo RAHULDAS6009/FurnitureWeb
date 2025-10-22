@@ -1,12 +1,12 @@
-// ShopPage.jsx — One-line Flipkart-style filter bar (pill dropdowns)
+// ShopPage.jsx — One-line Flipkart-style filter bar + Add-to-Cart confirm dialog
 // Exports (named): products, ShopPage, ProductCard
 
 import React, { useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { addToCart, getCartTotal } from "../redux/cartSlice";
 import { Header } from "../components/index/Header";
-import { useNavigate } from "react-router-dom";
 import Footer from "../components/index/Footer";
+import { useNavigate } from "react-router-dom";
 
 export const products = [
   { id: 1, price: "$99.00",  discount: "25% Off", img: "assets/img/product-img-1.jpg", title: "Orange Airsuit",  category: "Fashion Bag",  detailsUrl: "/shopdetails", categoryUrl: "/shop", quantity: 1, color: "black", size: "S",  rating: 5, inStock: true,  onSale: true  },
@@ -32,8 +32,32 @@ export const ShopPage = () => {
   const [status, setStatus] = useState(""); // "", "in_stock", "on_sale"
   const [minRating, setMinRating] = useState(0);
 
-  // (optional) keep search but not in the one-line bar; comment out if not needed
-  // const [q, setQ] = useState("");
+  // modal state
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [chosenSize, setChosenSize] = useState("M");
+  const [qty, setQty] = useState(1);
+
+  const dispatch = useDispatch();
+
+  const openConfirm = (product) => {
+    setSelectedProduct(product);
+    setChosenSize(product.size || "M");
+    setQty(1);
+    setConfirmOpen(true);
+  };
+
+  const closeConfirm = () => {
+    setConfirmOpen(false);
+    setSelectedProduct(null);
+  };
+
+  const handleConfirmAdd = () => {
+    if (!selectedProduct) return;
+    dispatch(addToCart({ ...selectedProduct, size: chosenSize, quantity: qty }));
+    dispatch(getCartTotal());
+    setConfirmOpen(false);
+  };
 
   const categories = useMemo(
     () => Array.from(new Set(products.map((p) => p.category))),
@@ -43,6 +67,8 @@ export const ShopPage = () => {
     () => Array.from(new Set(products.map((p) => p.color))),
     []
   );
+
+  const sizeOptions = ["S", "M", "L", "XL", "XXL"];
 
   // predefined price ranges for the dropdown
   const priceRanges = [
@@ -55,16 +81,6 @@ export const ShopPage = () => {
 
   const filtered = useMemo(() => {
     let list = [...products];
-
-    // If you want text search, un-comment:
-    // if (q.trim()) {
-    //   const term = q.toLowerCase();
-    //   list = list.filter(
-    //     (p) =>
-    //       p.title.toLowerCase().includes(term) ||
-    //       p.category.toLowerCase().includes(term)
-    //   );
-    // }
 
     if (category) list = list.filter((p) => p.category === category);
     if (color) list = list.filter((p) => p.color === color);
@@ -119,7 +135,6 @@ export const ShopPage = () => {
 
   return (
     <>
-    <div>
       <Header />
 
       {/* ONE-LINE FILTER BAR */}
@@ -215,7 +230,7 @@ export const ShopPage = () => {
             Clear
           </button>
 
-          {/* Optional: live count */}
+          {/* Live count */}
           <div className="ul-toolbar-count">Showing <strong>{filtered.length}</strong> / {products.length}</div>
         </div>
       </section>
@@ -224,7 +239,7 @@ export const ShopPage = () => {
       <section className="ul-inner-page-container" style={{ marginTop: 12 }}>
         <div className="row ul-bs-row row-cols-lg-3 row-cols-2 row-cols-xxs-1">
           {filtered.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard key={product.id} product={product} onAddClick={() => openConfirm(product)} />
           ))}
           {filtered.length === 0 && (
             <div className="col" style={{ padding: 24 }}>
@@ -233,37 +248,83 @@ export const ShopPage = () => {
           )}
         </div>
       </section>
-      <div class="ul-pagination">
-                            <ul>
-                                <li><a href="#"><i class="flaticon-left-arrow"></i></a></li>
-                                <li class="pages">
-                                    <a href="#" class="active">01</a>
-                                    <a href="#">02</a>
-                                    <a href="#">03</a>
-                                    <a href="#">04</a>
-                                    <a href="#">05</a>
-                                </li>
-                                <li><a href="#"><i class="flaticon-arrow-point-to-right"></i></a></li>
-                            </ul>
-                        </div>
-    </div> <br></br>
-     <Footer /></>
-    
+
+      {/* Pagination (fixed JSX className) */}
+      <div className="ul-pagination">
+        <ul>
+          <li><a href="#"><i className="flaticon-left-arrow" /></a></li>
+          <li className="pages">
+            <a href="#" className="active">01</a>
+            <a href="#">02</a>
+            <a href="#">03</a>
+            <a href="#">04</a>
+            <a href="#">05</a>
+          </li>
+          <li><a href="#"><i className="flaticon-arrow-point-to-right" /></a></li>
+        </ul>
+      </div>
+
+      <Footer />
+
+      {/* Add-to-Cart Confirm Dialog */}
+      {confirmOpen && selectedProduct && (
+        <div className="ul-modal-overlay" role="dialog" aria-modal="true" onClick={closeConfirm}>
+          <div className="ul-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="ul-modal-header">
+              <h4>Add to Cart</h4>
+              <button className="ul-modal-close" onClick={closeConfirm} aria-label="Close">×</button>
+            </div>
+            <div className="ul-modal-body">
+              <div className="ul-modal-product">
+                <img src={selectedProduct.img} alt={selectedProduct.title} />
+                <div>
+                  <h5 className="ul-modal-title">{selectedProduct.title}</h5>
+                  <div className="ul-modal-price">{selectedProduct.price}</div>
+                </div>
+              </div>
+
+              <div className="ul-modal-row">
+                <label>Size</label>
+                <div className="ul-size-pills">
+                  {sizeOptions.map((s) => (
+                    <button
+                      key={s}
+                      className={`ul-size-pill ${chosenSize === s ? "active" : ""}`}
+                      onClick={() => setChosenSize(s)}
+                      type="button"
+                    >{s}</button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="ul-modal-row">
+                <label>Quantity</label>
+                <div className="ul-qty">
+                  <button type="button" onClick={() => setQty(q => Math.max(1, q - 1))}>−</button>
+                  <input type="number" min={1} value={qty} readOnly />
+                  <button type="button" onClick={() => setQty(q => q + 1)}>+</button>
+                </div>
+              </div>
+            </div>
+
+            <div className="ul-modal-footer">
+              <button className="ul-btn-secondary" onClick={closeConfirm}>Cancel</button>
+              <button className="ul-btn-primary" onClick={handleConfirmAdd}>
+                Confirm <i className="flaticon-shopping-bag" />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
-export const ProductCard = ({ product }) => {
+export const ProductCard = ({ product, onAddClick }) => {
   const { id, price, discount, img, title, category, detailsUrl, categoryUrl } = product;
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleAddToCart = (p) => {
-    dispatch(addToCart(p));
-    dispatch(getCartTotal());
-  };
-
   return (
-      
     <div className="col">
       <div
         className="ul-product"
@@ -277,7 +338,7 @@ export const ProductCard = ({ product }) => {
         <div className="ul-product-img">
           <img src={img} alt={title} />
           <div className="ul-product-actions" onClick={(e) => e.stopPropagation()}>
-            <button onClick={() => handleAddToCart(product)}>
+            <button onClick={onAddClick}>
               <i className="flaticon-shopping-bag" />
             </button>
             <a href="#" onClick={(e) => e.preventDefault()}>
@@ -297,12 +358,6 @@ export const ProductCard = ({ product }) => {
           </h5>
         </div>
       </div>
-      
     </div>
-
-  
-
-    
-    
   );
 };
