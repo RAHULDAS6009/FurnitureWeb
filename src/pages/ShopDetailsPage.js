@@ -6,6 +6,7 @@ import Footer from "../components/index/Footer";
 import { products2 } from "../components/index/main/SellingStart";
 import { products } from "./ShopPage";
 import { useParams } from "react-router-dom";
+import Carousel from "../components/Carousel";
 export default function ShopDetailsPage() {
   // Quantity / option
   const { id } = useParams();
@@ -52,10 +53,11 @@ export default function ShopDetailsPage() {
                 <div className="col flex justify-center items-center h-full">
                   {/* (you can place an image gallery here later) */}
                   {/* {product.img} */}
-                  <img
+                  {/* <img
                     src={`/${product.img}`}
                     className="w-full h-full object-cover rounded-lg"
-                  />
+                  /> */}
+                  <Carousel slides={[`/${product.img}`, `/${product.img}`]} />
                 </div>
 
                 {/* txt */}
