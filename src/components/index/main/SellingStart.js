@@ -178,6 +178,7 @@ const MostSellingSection = () => {
             {filteredProducts.map((product, index) => (
               <div
                 onClick={() => {
+                  console.log(`/shopdetails/${product.id}`);
                   navigate(`/shopdetails/${product.id}`);
                 }}
                 key={product.id}
@@ -193,7 +194,7 @@ const MostSellingSection = () => {
                   <div className="ul-product-horizontal-txt">
                     <span className="ul-product-price">{product.price}</span>
                     <h4 className="ul-product-title">
-                      <a href={`/shopdetails${product.id}`}>{product.title}</a>
+                      <a href={`/shopdetails/${product.id}`}>{product.title}</a>
                     </h4>
                     <h5 className="ul-product-category">
                       <a href="/shop">Fashion Bag</a>

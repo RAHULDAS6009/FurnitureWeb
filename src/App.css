@@ -20,6 +20,21 @@
 .ul-header-top:hover .animate-scroll {
   animation-play-state: paused;
 }
+.slide-animation {
+  animation: slideIn 0.5s ease;
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateX(100%);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
 
 @keyframes slide-in {
   from {
