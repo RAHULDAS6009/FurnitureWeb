@@ -4,13 +4,14 @@ import React, { useState } from "react";
 import { Header } from "../components/index/Header";
 import Footer from "../components/index/Footer";
 
-const BASE = import.meta.env.BASE_URL || "/"; // ✅ Add this line
+
 
 
 import { products2 } from "../components/index/main/SellingStart";
 import { products } from "./ShopPage";
 import { useParams } from "react-router-dom";
 import Carousel from "../components/Carousel";
+// const BASE = import.meta.env.BASE_URL || "/"; // ✅ Add this line
 export default function ShopDetailsPage() {
   // Quantity / option
   const { id } = useParams();
