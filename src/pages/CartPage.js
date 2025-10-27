@@ -313,16 +313,17 @@ export const CartPage = () => {
   );
 };
 // src/components/ProductCard.jsx
+// src/components/ProductCard.jsx
 const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
-  const { title, image, price, quantity } = item;
+  const { title, img, price, quantity } = item;
+  const imgSrc = "/" + img.replace(/^\/+/, "");
 
   return (
     <tr>
       <td>
         <div className="ul-cart-product">
-          {/* {image} */}
           <a href="/shopdetails" className="ul-cart-product-img">
-            <img src={"/" + image} alt={title} />
+            <img src={imgSrc} alt={title} />
           </a>
           <a href="/shopdetails" className="ul-cart-product-title">
             {title}
@@ -346,18 +347,10 @@ const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
               readOnly
             />
             <div className="btns">
-              <button
-                type="button"
-                className="quantityIncreaseButton"
-                onClick={onIncrease}
-              >
+              <button type="button" className="quantityIncreaseButton" onClick={onIncrease}>
                 <i className="flaticon-plus"></i>
               </button>
-              <button
-                type="button"
-                className="quantityDecreaseButton"
-                onClick={onDecrease}
-              >
+              <button type="button" className="quantityDecreaseButton" onClick={onDecrease}>
                 <i className="flaticon-minus-sign"></i>
               </button>
             </div>
@@ -367,7 +360,7 @@ const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
 
       <td>
         <span className="ul-cart-item-subtotal">
-          ${price.replace("$", "") * quantity}
+          ${(parseFloat(price.replace("$", "")) * quantity).toFixed(2)}
         </span>
       </td>
 
@@ -381,3 +374,4 @@ const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
     </tr>
   );
 };
+

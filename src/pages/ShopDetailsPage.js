@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import { Header } from "../components/index/Header";
 import Footer from "../components/index/Footer";
 
+const BASE = import.meta.env.BASE_URL || "/"; // ✅ Add this line
+
 
 export default function ShopDetailsPage() {
   // Quantity / options
