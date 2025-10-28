@@ -8,33 +8,31 @@ export const Header = () => {
   const [items, setItem] = useState(0);
   const [open, setOpen] = useState(false);
 
-  // NEW: search state
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("all");
   const navigate = useNavigate();
 
- useEffect(() => {
+  useEffect(() => {
+    
+    setItem(state.length);
+
+   
     const opener = document.querySelector(".ul-header-mobile-search-opener");
     const closer = document.querySelector(".ul-header-mobile-search-closer");
     const searchWrapper = document.querySelector(".ul-header-search-form-wrapper");
 
-    if (opener && searchWrapper) {
-      opener.addEventListener("click", () => searchWrapper.classList.add("active"));
-    }
-    if (closer && searchWrapper) {
-      closer.addEventListener("click", () => searchWrapper.classList.remove("active"));
-    }
+    const openSearch = () => searchWrapper?.classList.add("active");
+    const closeSearch = () => searchWrapper?.classList.remove("active");
 
-    // cleanup (avoids multiple bindings when navigating)
+    if (opener && searchWrapper) opener.addEventListener("click", openSearch);
+    if (closer && searchWrapper) closer.addEventListener("click", closeSearch);
+
+   
     return () => {
-      if (opener && searchWrapper)
-        opener.removeEventListener("click", () => searchWrapper.classList.add("active"));
-      if (closer && searchWrapper)
-        closer.removeEventListener("click", () => searchWrapper.classList.remove("active"));
+      if (opener) opener.removeEventListener("click", openSearch);
+      if (closer) closer.removeEventListener("click", closeSearch);
     };
-  }, []);
-
-
+  }, [state]); 
   const onSubmit = (e) => {
     e.preventDefault();
     const params = new URLSearchParams();
