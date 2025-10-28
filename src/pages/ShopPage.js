@@ -7,6 +7,10 @@ import { addToCart, getCartTotal } from "../redux/cartSlice";
 import { Header } from "../components/index/Header";
 import Footer from "../components/index/Footer";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+
 
 export const products = [
   {
@@ -143,13 +147,26 @@ export const ShopPage = () => {
   };
 
   const handleConfirmAdd = () => {
-    if (!selectedProduct) return;
-    dispatch(
-      addToCart({ ...selectedProduct, size: chosenSize, quantity: qty })
-    );
-    dispatch(getCartTotal());
-    setConfirmOpen(false);
-  };
+  if (!selectedProduct) return;
+
+  dispatch(
+    addToCart({ ...selectedProduct, size: chosenSize, quantity: qty })
+  );
+  dispatch(getCartTotal());
+  setConfirmOpen(false);
+
+  // ✅ show success toast
+  toast.success(`${qty} × ${selectedProduct.title} added to cart`, {
+    position: "top-right",
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    theme: "colored",
+  });
+};
+
 
   const categories = useMemo(
     () => Array.from(new Set(products.map((p) => p.category))),
@@ -381,6 +398,7 @@ export const ShopPage = () => {
           </li>
         </ul>
       </div>
+       <ToastContainer />
 
       <Footer />
 

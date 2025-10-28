@@ -1,34 +1,70 @@
-// ShopDetailsPage.js — no Splide/Swiper, wrapped JSX
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
 import { Header } from "../components/index/Header";
 import Footer from "../components/index/Footer";
-
-
-
-
 import { products2 } from "../components/index/main/SellingStart";
 import { products } from "./ShopPage";
 import { useParams } from "react-router-dom";
 import Carousel from "../components/Carousel";
-// const BASE = import.meta.env.BASE_URL || "/"; // ✅ Add this line
+import { useDispatch } from "react-redux";
+import { addToCart, getCartTotal } from "../redux/cartSlice";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+
+
 export default function ShopDetailsPage() {
-  // Quantity / option
   const { id } = useParams();
   const productId = Number(id);
   const product =
     products.find((item) => item.id === productId) ||
     products2.find((item) => item.id === productId);
+
   const [qty, setQty] = useState(1);
-  const incQty = () => setQty((q) => q + 1);
-  const decQty = () => setQty((q) => (q > 1 ? q - 1 : 1));
   const [size, setSize] = useState("S");
   const [color, setColor] = useState("green");
+  const dispatch = useDispatch();
+
+
+  // ✅ Scroll to top when this page mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const incQty = () => setQty((q) => q + 1);
+  const decQty = () => setQty((q) => (q > 1 ? q - 1 : 1));
+
+  const handleAddToCart = () => {
+  if (!product) return;
+
+  dispatch(
+    addToCart({
+      ...product,
+      size,
+      color,
+      quantity: qty,
+    })
+  );
+  dispatch(getCartTotal());
+
+  // ✅ show success toast
+  toast.success(`${qty} × ${product.title} added to cart`, {
+    position: "top-right",
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    theme: "colored",
+  });
+};
+
+
+
 
   return (
     <>
       <Header />
-
+      <ToastContainer />
       <main>
         {/* BREADCRUMB SECTION START */}
         <div className="ul-container">
@@ -205,19 +241,13 @@ export default function ShopDetailsPage() {
                     {/* product actions */}
                     <div className="ul-product-details-actions">
                       <div className="left">
-                        <button
-                          className="add-to-cart"
-                          onClick={() =>
-                            alert(
-                              `Added ${qty} item(s), Size: ${size}, Color: ${color}`
-                            )
-                          }
-                        >
-                          Add to Cart{" "}
-                          <span className="icon">
-                            <i className="flaticon-cart" />
-                          </span>
-                        </button>
+                        <button className="add-to-cart" onClick={handleAddToCart}>
+  Add to Cart{" "}
+  <span className="icon">
+    <i className="flaticon-cart" />
+  </span>
+</button>
+
                         <button className="add-to-wishlist">
                           <span className="icon">
                             <i className="flaticon-heart" />
