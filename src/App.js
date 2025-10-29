@@ -57,7 +57,7 @@ const App = () => {
           message="Hi! I want to order."
           position="right"                 // "left" or "right"
           offsetX={30}
-          offsetY={90}
+          offsetY={65}
           showLabel={false}               // set true to show small label
           zIndex={9999}                   // above everything
         />
