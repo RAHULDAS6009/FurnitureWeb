@@ -56,7 +56,7 @@ const App = () => {
           phone="919876543210"            // <-- put your number
           message="Hi! I want to order."
           position="right"                 // "left" or "right"
-          offsetX={5}
+          offsetX={10}
           offsetY={65}
           showLabel={false}               // set true to show small label
           zIndex={9999}                   // above everything
