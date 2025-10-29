@@ -130,9 +130,7 @@ export default function ShopDetailsPage() {
 
                     {/* product description */}
                     <p className="ul-product-details-descr">
-                      Aliquam hendrerit a augue insuscipit. Etiam aliquam massa
-                      quis des mauris commodo venenatis ligula commodo leez sed
-                      blandit convallis dignissim onec vel pellentesque neque.
+                      {product.productdescription}
                     </p>
 
                     {/* product options */}

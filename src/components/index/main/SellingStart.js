@@ -11,6 +11,8 @@ export const products2 = [
     detailsUrl: "/shopdetails",
     categoryUrl: "/shop",
     quantity: 1,
+    productdescription: "fherugheruyghuoerhfgvuijfdhguiverhuigyrugherouighjerufhgeruifjghuerhgerhgujerhgu"
+
   },
   {
     id: 32,
@@ -22,6 +24,7 @@ export const products2 = [
     detailsUrl: "/shopdetails",
     categoryUrl: "/shop",
     quantity: 1,
+    productdescription: "kunalsingh"
   },
   {
     id: 33,
