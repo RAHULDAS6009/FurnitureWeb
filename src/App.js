@@ -21,6 +21,8 @@ import { Register } from "./pages/Register";
 import ShopDetailsPage from "./pages/ShopDetailsPage";
 
 import SearchResults from "./common/SearchResults"; // NEW: search results page
+import FloatingWhatsApp from "./components/FloatingWhatsApp";
+import StickyOrderBar from "./components/StickyOrderBar";
 
 
 const App = () => {
@@ -49,6 +51,29 @@ const App = () => {
 
       <Footer />
       {/* for suggestion we need to hit ctrl + space */}
+     {/* WhatsApp bubble (always on top of pages) */}
+        <FloatingWhatsApp
+          phone="919876543210"            // <-- put your number
+          message="Hi! I want to order."
+          position="right"                 // "left" or "right"
+          offsetX={30}
+          offsetY={90}
+          showLabel={false}               // set true to show small label
+          zIndex={9999}                   // above everything
+        />
+
+        {/* Sticky “Order Now — COD” bar (bottom center) */}
+        <StickyOrderBar
+          href="/cart"                    // or "/checkout"
+          ctaText="Order Now – Cash on Delivery"
+          subText="15 days money back guarantee"
+          bg="linear-gradient(90deg, var(--ul-primary) 0%, var(--ul-secondary) 100%)"
+          textColor="#ffffff"
+          zIndex={9998}                   // slightly below WhatsApp
+          showOnScroll={false}             // set false to always visible
+          minScrollPx={120}
+          stickyOnMobileOnly={false}
+        />
     </Router>
   );
 };
