@@ -145,7 +145,7 @@ export const Header = () => {
                 <i className="flaticon-search-interface-symbol"></i>
               </button>
               <a href="/login"><i className="flaticon-user"></i></a>
-              <a href="/wishlist"><i className="flaticon-heart"></i></a>
+              {/* <a href="/wishlist"><i className="flaticon-heart"></i></a> */}
               <a href="/cart">
                 <i className="flaticon-shopping-bag relative">
                   <span className="text-[8px] font-semibold absolute -top-2 -right-1.5 bg-red-500 text-white rounded-full size-3 text-center items-center">

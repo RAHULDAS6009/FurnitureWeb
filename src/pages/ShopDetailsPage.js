@@ -246,12 +246,12 @@ export default function ShopDetailsPage() {
   </span>
 </button>
 
-                        <button className="add-to-wishlist">
+                        {/* <button className="add-to-wishlist">
                           <span className="icon">
                             <i className="flaticon-heart" />
                           </span>{" "}
                           Add to wishlist
-                        </button>
+                        </button> */}
                       </div>
                       <div className="share-options">
                         <button aria-label="Share to Facebook">

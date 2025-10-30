@@ -416,5 +416,93 @@
 
 
 
+/* Outer wrapper full width */
+.category-strip {
+  width: 100%;
+  background: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+}
 
+/* Horizontal scrolling row */
+.category-row {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  gap: 24px;
+  padding: 10px 20px;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+  justify-content: center;
+}
 
+/* Hide scrollbar */
+.category-row::-webkit-scrollbar {
+  display: none;
+}
+.category-row {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Each item */
+.category-item {
+  flex: 0 0 auto;
+  text-align: center;
+}
+
+/* The clickable card (no border) */
+.category-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  background: transparent;
+}
+
+/* Round avatar */
+.category-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
+
+.category-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+
+/* Text below circle */
+.category-text {
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #222;
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 0.4px;
+}
+
+/* Hover + active styles */
+.category-card:hover .category-avatar img {
+  transform: scale(1.05);
+}
+.category-card.active .category-text {
+  color: #ff4b6a;
+}
+.category-card.active .category-avatar {
+  transform: scale(1.08);
+}

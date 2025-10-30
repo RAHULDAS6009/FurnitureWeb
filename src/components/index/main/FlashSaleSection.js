@@ -70,19 +70,19 @@ const FlashSaleSection = () => {
               <div className="ul-flash-sale-countdown-wrapper">
                 <div className="ul-flash-sale-countdown">
                   <div className="days-wrapper">
-                    <div className="days number">00</div>
+                    <div className="days number">3</div>
                     <span className="txt">Days</span>
                   </div>
                   <div className="hours-wrapper">
-                    <div className="hours number">00</div>
+                    <div className="hours number">06</div>
                     <span className="txt">Hours</span>
                   </div>
                   <div className="minutes-wrapper">
-                    <div className="minutes number">00</div>
+                    <div className="minutes number">34</div>
                     <span className="txt">Min</span>
                   </div>
                   <div className="seconds-wrapper">
-                    <div className="seconds number">00</div>
+                    <div className="seconds number">54</div>
                     <span className="txt">Sec</span>
                   </div>
                 </div>
@@ -147,12 +147,12 @@ const FlashSaleSection = () => {
                         <button>
                           <i className="flaticon-shopping-bag"></i>
                         </button>
-                        <a href="#">
+                        {/* <a href="#">
                           <i className="flaticon-hide"></i>
                         </a>
                         <button>
                           <i className="flaticon-heart"></i>
-                        </button>
+                        </button> */}
                       </div>
                     </div>
 

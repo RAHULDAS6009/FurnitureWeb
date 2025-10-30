@@ -9,6 +9,7 @@ import Footer from "../components/index/Footer";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import CategorySection from "../components/index/main/Category";
 
 
 export const products = [
@@ -244,6 +245,7 @@ export const ShopPage = () => {
   return (
     <>
       <Header />
+      <CategorySection />
 
       {/* ONE-LINE FILTER BAR */}
       <section className="ul-container" style={{ marginTop: 20 }}>
@@ -504,12 +506,12 @@ export const ProductCard = ({ product, onAddClick }) => {
             <button onClick={onAddClick}>
               <i className="flaticon-shopping-bag" />
             </button>
-            <a href="#" onClick={(e) => e.preventDefault()}>
+            {/* <a href="#" onClick={(e) => e.preventDefault()}>
               <i className="flaticon-hide" />
             </a>
             <button>
               <i className="flaticon-heart" />
-            </button>
+            </button> */}
           </div>
         </div>
         <div className="ul-product-txt">
