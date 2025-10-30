@@ -9,7 +9,7 @@ import Footer from "../components/index/Footer";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import CategorySection from "../components/index/main/Category";
+import CategorySectionShop from "../components/index/main/categoryshopcircle";
 
 
 export const products = [
@@ -245,13 +245,13 @@ export const ShopPage = () => {
   return (
     <>
       <Header />
-      <CategorySection />
+      <CategorySectionShop />
 
       {/* ONE-LINE FILTER BAR */}
       <section className="ul-container" style={{ marginTop: 20 }}>
         <div className="ul-toolbar-inline">
           {/* Category */}
-          <select
+          {/* <select
             className="ul-pill ul-select ul-control"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
@@ -264,7 +264,7 @@ export const ShopPage = () => {
                 {c}
               </option>
             ))}
-          </select>
+          </select> */}
 
           {/* Price Range */}
           <select
@@ -297,7 +297,7 @@ export const ShopPage = () => {
           </select>
 
           {/* Colors */}
-          <select
+          {/* <select
             className="ul-pill ul-select ul-control"
             value={color}
             onChange={(e) => setColor(e.target.value)}
@@ -310,10 +310,10 @@ export const ShopPage = () => {
                 {c[0].toUpperCase() + c.slice(1)}
               </option>
             ))}
-          </select>
+          </select> */}
 
           {/* Status */}
-          <select
+          {/* <select
             className="ul-pill ul-select ul-control"
             value={status}
             onChange={(e) => setStatus(e.target.value)}
@@ -323,10 +323,10 @@ export const ShopPage = () => {
             <option value="">Any Status</option>
             <option value="in_stock">In stock</option>
             <option value="on_sale">On sale</option>
-          </select>
+          </select> */}
 
           {/* Min Rating */}
-          <select
+          {/* <select
             className="ul-pill ul-select ul-control"
             value={minRating}
             onChange={(e) => setMinRating(Number(e.target.value))}
@@ -339,16 +339,16 @@ export const ShopPage = () => {
             <option value={3}>3 & up</option>
             <option value={2}>2 & up</option>
             <option value={1}>1 & up</option>
-          </select>
+          </select> */}
 
           {/* Clear */}
-          <button
+          {/* <button
             type="button"
             className="ul-pill ul-control"
             onClick={clearAll}
           >
             Clear
-          </button>
+          </button> */}
 
           {/* Live count */}
           <div className="ul-toolbar-count">
