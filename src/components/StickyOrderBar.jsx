@@ -115,7 +115,8 @@ const StickyOrderBar = ({
             Order Now
           </button>
         )} */}
-  
+
+         {/* close button
         <button
           onClick={() => setClosed(true)}
           aria-label="Hide order bar"
@@ -135,9 +136,8 @@ const StickyOrderBar = ({
           title="Close"
         >
           ✕
-        </button>
+        </button> */}
 
-       
         
       </div>
     </div>
