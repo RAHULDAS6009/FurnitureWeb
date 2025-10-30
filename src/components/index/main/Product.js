@@ -25,6 +25,7 @@ const ProductsSection = () => {
     <>
       {/* PRODUCTS SECTION START */}
       <div className="ul-container">
+        <br />
         <section className="ul-products">
           <div className="ul-inner-container">
             {/* header row */}
@@ -116,65 +117,9 @@ const ProductsSection = () => {
                 </div>
               </div>
 
-              {/* ---------- ROW 2 LEFT BANNER ---------- */}
-              <div className="col-lg-3 col-md-4 col-12">
-                <div className="ul-products-sub-banner">
-                  <div className="ul-products-sub-banner-img">
-                    <img
-                      src="assets/img/products-sub-banner-2.jpg"
-                      alt="Sub Banner"
-                    />
-                  </div>
-                  <div className="ul-products-sub-banner-txt">
-                    <h3 className="ul-products-sub-banner-title">
-                      Trending Now Only This Weekend!
-                    </h3>
-                    <a href="/shop" className="ul-btn">
-                      Shop Now <i className="flaticon-up-right-arrow"></i>
-                    </a>
-                  </div>
-                </div>
-              </div>
+             
 
-              {/* ---------- ROW 2 SLIDER ---------- */}
-              <div className="col-lg-9 col-md-8 col-12">
-                <Swiper
-                  className="ul-products-slider-2"
-                  modules={[Navigation]}
-                  spaceBetween={24}
-                  loop={true}
-                  breakpoints={{
-                    0: { slidesPerView: 1 },
-                    576: { slidesPerView: 2 },
-                    992: { slidesPerView: 3 },
-                    1200: { slidesPerView: 4 },
-                  }}
-                  onBeforeInit={(swiper) => {
-                    swiper.params.navigation.prevEl = prevBtn2.current;
-                    swiper.params.navigation.nextEl = nextBtn2.current;
-                  }}
-                  navigation={{
-                    prevEl: prevBtn2.current,
-                    nextEl: nextBtn2.current,
-                  }}
-                >
-                  {products.map((product) => (
-                    <SwiperSlide key={product.id}>
-                      <ProductCard product={product} />
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
-
-                {/* slider navigation row 2 */}
-                <div className="ul-products-slider-nav ul-products-slider-2-nav">
-                  <button className="prev" ref={prevBtn2}>
-                    <i className="flaticon-left-arrow"></i>
-                  </button>
-                  <button className="next" ref={nextBtn2}>
-                    <i className="flaticon-arrow-point-to-right"></i>
-                  </button>
-                </div>
-              </div>
+              
             </div>
           </div>
         </section>

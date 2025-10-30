@@ -416,17 +416,23 @@
 
 
 
-/* Outer wrapper full width */
+/* ===== STRIP WRAPPER ===== */
 .category-strip {
   width: 100%;
   background: #ffffff;
+  padding: 20px 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px 0;
 }
 
-/* Horizontal scrolling row */
+/* ===== DESKTOP/TABLET MODE (manual scroll row) ===== */
+.desktop-row {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 .category-row {
   display: flex;
   flex-wrap: nowrap;
@@ -440,7 +446,7 @@
   justify-content: center;
 }
 
-/* Hide scrollbar */
+/* hide scrollbar */
 .category-row::-webkit-scrollbar {
   display: none;
 }
@@ -449,13 +455,12 @@
   scrollbar-width: none;
 }
 
-/* Each item */
 .category-item {
   flex: 0 0 auto;
   text-align: center;
 }
 
-/* The clickable card (no border) */
+/* clickable bubble */
 .category-card {
   display: flex;
   flex-direction: column;
@@ -464,7 +469,7 @@
   background: transparent;
 }
 
-/* Round avatar */
+/* avatar circle */
 .category-avatar {
   width: 80px;
   height: 80px;
@@ -480,12 +485,12 @@
 .category-avatar img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
   border-radius: 50%;
+  object-fit: cover;
   transition: transform 0.3s ease;
 }
 
-/* Text below circle */
+/* label below */
 .category-text {
   margin-top: 8px;
   font-size: 13px;
@@ -494,9 +499,11 @@
   text-transform: uppercase;
   text-align: center;
   letter-spacing: 0.4px;
+  line-height: 1.2;
+  white-space: nowrap;
 }
 
-/* Hover + active styles */
+/* hover / active */
 .category-card:hover .category-avatar img {
   transform: scale(1.05);
 }
@@ -505,4 +512,53 @@
 }
 .category-card.active .category-avatar {
   transform: scale(1.08);
+}
+
+/* ===== MOBILE MODE (infinite swiper) ===== */
+.mobile-row {
+  display: none; /* hidden by default on desktop */
+  width: 100%;
+  overflow: hidden;
+}
+
+.category-swiper {
+  padding-left: 16px;
+  padding-right: 16px;
+  width: 100%;
+}
+
+/* each swiper slide is auto-width bubble */
+.category-slide {
+  width: auto !important;
+  flex-shrink: 0;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+/* smaller bubble + text on mobile */
+@media (max-width: 768px) {
+  /* show mobile swiper, hide desktop row */
+  .desktop-row {
+    display: none;
+  }
+
+  .mobile-row {
+    display: block;
+  }
+
+  .category-avatar {
+    width: 60px;
+    height: 60px;
+  }
+
+  .category-text {
+    font-size: 11px;
+    margin-top: 6px;
+  }
+
+  .category-row {
+    gap: 16px;
+    padding: 8px 10px;
+  }
 }
