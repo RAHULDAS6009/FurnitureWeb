@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import useIsMobile from "../../hooks/useIsMobile";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Autoplay } from "swiper/modules";
+
+
 export default function SiderBar({ onClose }) {
   const isMobile = useIsMobile();
   return (
@@ -42,143 +46,157 @@ export default function SiderBar({ onClose }) {
         </p>
       </div>
 
-      {/* <!-- product slider --> */}
-      <div className="ul-sidebar-products-wrapper d-none d-lg-flex">
-        <div className="ul-sidebar-products-slider swiper">
-          <div className="swiper-wrapper">
-            {/* <!-- product card --> */}
-            <div className="swiper-slide">
-              <div className="ul-product">
-                <div className="ul-product-heading">
-                  <span className="ul-product-price">$99.00</span>
-                  <span className="ul-product-discount-tag">25% Off</span>
-                </div>
+      <div className="ul-sidebar-products-wrapper d-none d-lg:flex">
+  {/* LEFT: slider */}
+  <div className="ul-sidebar-products-slider flex-1 min-w-0">
+    <Swiper
+      modules={[Navigation, Autoplay]}
+      slidesPerView={1}
+      loop={true}
+      autoplay={{
+        delay: 4000,
+        disableOnInteraction: false,
+      }}
+      navigation={{
+        prevEl: ".prev", // hook to your existing buttons
+        nextEl: ".next",
+      }}
+      className="swiper"
+    >
+      {/* product card 1 */}
+      <SwiperSlide className="swiper-slide">
+        <div className="ul-product">
+          <div className="ul-product-heading">
+            <span className="ul-product-price">$99.00</span>
+            <span className="ul-product-discount-tag">25% Off</span>
+          </div>
 
-                <div className="ul-product-img">
-                  <img src="assets/img/product-img-1.jpg" alt="Product Image" />
+          <div className="ul-product-img">
+            <img src="assets/img/product-img-1.jpg" alt="Product Image" />
 
-                  <div className="ul-product-actions">
-                    <button>
-                      <i className="flaticon-shopping-bag"></i>
-                    </button>
-                    <a href="#">
-                      <i className="flaticon-hide"></i>
-                    </a>
-                    <button>
-                      <i className="flaticon-heart"></i>
-                    </button>
-                  </div>
-                </div>
-
-                <div className="ul-product-txt">
-                  <h4 className="ul-product-title">
-                    <a href="/shopdetails">Orange Airsuit</a>
-                  </h4>
-                  <h5 className="ul-product-category">
-                    <a href="/shop">Fashion Bag</a>
-                  </h5>
-                </div>
-              </div>
-            </div>
-
-            {/* <!-- product card --> */}
-            <div className="swiper-slide">
-              <div className="ul-product">
-                <div className="ul-product-heading">
-                  <span className="ul-product-price">$99.00</span>
-                  <span className="ul-product-discount-tag">25% Off</span>
-                </div>
-
-                <div className="ul-product-img">
-                  <img src="assets/img/product-img-2.jpg" alt="Product Image" />
-
-                  <div className="ul-product-actions">
-                    <button>
-                      <i className="flaticon-shopping-bag"></i>
-                    </button>
-                    <a href="#">
-                      <i className="flaticon-hide"></i>
-                    </a>
-                    <button>
-                      <i className="flaticon-heart"></i>
-                    </button>
-                  </div>
-                </div>
-
-                <div className="ul-product-txt">
-                  <h4 className="ul-product-title">
-                    <a href="/shop-details">Orange Airsuit</a>
-                  </h4>
-                  <h5 className="ul-product-category">
-                    <a href="/shop">Fashion Bag</a>
-                  </h5>
-                </div>
-              </div>
-            </div>
-
-            {/* <!-- product card --> */}
-            <div className="swiper-slide">
-              <div className="ul-product">
-                <div className="ul-product-heading">
-                  <span className="ul-product-price">$99.00</span>
-                  <span className="ul-product-discount-tag">25% Off</span>
-                </div>
-
-                <div className="ul-product-img">
-                  <img src="assets/img/product-img-2.jpg" alt="Product Image" />
-
-                  <div className="ul-product-actions">
-                    <button>
-                      <i className="flaticon-shopping-bag"></i>
-                    </button>
-                    <a href="#">
-                      <i className="flaticon-hide"></i>
-                    </a>
-                    <button>
-                      <i className="flaticon-heart"></i>
-                    </button>
-                  </div>
-                </div>
-
-                <div className="ul-product-txt">
-                  <h4 className="ul-product-title">
-                    <a href="/shopdetails">Orange Airsuit</a>
-                  </h4>
-                  <h5 className="ul-product-category">
-                    <a href="/shop">Fashion Bag</a>
-                  </h5>
-                </div>
-              </div>
+            <div className="ul-product-actions">
+              <button>
+                <i className="flaticon-shopping-bag"></i>
+              </button>
+              <a href="#">
+                <i className="flaticon-hide"></i>
+              </a>
+              <button>
+                <i className="flaticon-heart"></i>
+              </button>
             </div>
           </div>
+
+          <div className="ul-product-txt">
+            <h4 className="ul-product-title">
+              <a href="/shopdetails">Orange Airsuit</a>
+            </h4>
+            <h5 className="ul-product-category">
+              <a href="/shop">Fashion Bag</a>
+            </h5>
+          </div>
         </div>
+      </SwiperSlide>
 
-        <div className="ul-sidebar-products-slider-nav flex-shrink-0">
-          <button className="prev">
-            <i className="flaticon-left-arrow"></i>
-          </button>
-          <button className="next">
-            <i className="flaticon-arrow-point-to-right"></i>
-          </button>
+      {/* product card 2 */}
+      <SwiperSlide className="swiper-slide">
+        <div className="ul-product">
+          <div className="ul-product-heading">
+            <span className="ul-product-price">$99.00</span>
+            <span className="ul-product-discount-tag">25% Off</span>
+          </div>
+
+          <div className="ul-product-img">
+            <img src="assets/img/product-img-2.jpg" alt="Product Image" />
+
+            <div className="ul-product-actions">
+              <button>
+                <i className="flaticon-shopping-bag"></i>
+              </button>
+              <a href="#">
+                <i className="flaticon-hide"></i>
+              </a>
+              <button>
+                <i className="flaticon-heart"></i>
+              </button>
+            </div>
+          </div>
+
+          <div className="ul-product-txt">
+            <h4 className="ul-product-title">
+              <a href="/shop-details">Orange Airsuit</a>
+            </h4>
+            <h5 className="ul-product-category">
+              <a href="/shop">Fashion Bag</a>
+            </h5>
+          </div>
         </div>
-      </div>
+      </SwiperSlide>
 
-      <div className="ul-sidebar-about d-none d-lg-block">
-        <p className="mb-0">
-          Phasellus eget fermentum mauris. Suspendisse nec dignissim nulla.
-          Integer non quam commodo, scelerisque felis id, eleifend turpis.
-          Phasellus in nulla quis erat tempor tristique eget vel purus. Nulla
-          pharetra pharetra pharetra. Praesent varius eget justo ut lacinia.
-          Phasellus pharetra, velit viverra lacinia consequat, ipsum odio mollis
-          dolor, nec facilisis arcu arcu ultricies sapien. Quisque ut dapibus
-          nunc. Vivamus sit amet efficitur velit. Phasellus eget fermentum
-          mauris. Suspendisse nec dignissim nulla. Integer non quam commodo,
-          scelerisque felis id, eleifend turpis. Phasellus in nulla quis erat
-          tempor tristique eget vel purus. Nulla pharetra pharetra pharetra.
-          Praesent varius eget justo ut lacinia. Phasellus pharetra velit.
-        </p>
-      </div>
+      {/* product card 3 */}
+      <SwiperSlide className="swiper-slide">
+        <div className="ul-product">
+          <div className="ul-product-heading">
+            <span className="ul-product-price">$99.00</span>
+            <span className="ul-product-discount-tag">25% Off</span>
+          </div>
 
+          <div className="ul-product-img">
+            <img src="assets/img/product-img-2.jpg" alt="Product Image" />
+
+            <div className="ul-product-actions">
+              <button>
+                <i className="flaticon-shopping-bag"></i>
+              </button>
+              <a href="#">
+                <i className="flaticon-hide"></i>
+              </a>
+              <button>
+                <i className="flaticon-heart"></i>
+              </button>
+            </div>
+          </div>
+
+          <div className="ul-product-txt">
+            <h4 className="ul-product-title">
+              <a href="/shopdetails">Orange Airsuit</a>
+            </h4>
+            <h5 className="ul-product-category">
+              <a href="/shop">Fashion Bag</a>
+            </h5>
+          </div>
+        </div>
+      </SwiperSlide>
+    </Swiper>
+  </div>
+
+  {/* RIGHT: the nav arrows */}
+  <div className="ul-sidebar-products-slider-nav flex-shrink-0 flex flex-col gap-2">
+    <button className="prev">
+      <i className="flaticon-left-arrow"></i>
+    </button>
+    <button className="next">
+      <i className="flaticon-arrow-point-to-right"></i>
+    </button>
+  </div>
+</div>
+
+{/* keep your about section same */}
+<div className="ul-sidebar-about d-none d-lg-block">
+  <p className="mb-0">
+    Phasellus eget fermentum mauris. Suspendisse nec dignissim nulla.
+    Integer non quam commodo, scelerisque felis id, eleifend turpis.
+    Phasellus in nulla quis erat tempor tristique eget vel purus. Nulla
+    pharetra pharetra pharetra. Praesent varius eget justo ut lacinia.
+    Phasellus pharetra, velit viverra lacinia consequat, ipsum odio mollis
+    dolor, nec facilisis arcu arcu ultricies sapien. Quisque ut dapibus
+    nunc. Vivamus sit amet efficitur velit. Phasellus eget fermentum
+    mauris. Suspendisse nec dignissim nulla. Integer non quam commodo,
+    scelerisque felis id, eleifend turpis. Phasellus in nulla quis erat
+    tempor tristique eget vel purus. Nulla pharetra pharetra pharetra.
+    Praesent varius eget justo ut lacinia. Phasellus pharetra velit.
+  </p>
+</div>
       <div>{isMobile && <MobileSidebarNav />}</div>
       {/* <!-- sidebar footer --> */}
       <div className="ul-sidebar-footer">
