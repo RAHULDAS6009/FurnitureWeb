@@ -115,7 +115,29 @@ const StickyOrderBar = ({
             Order Now
           </button>
         )} */}
+  
+        <button
+          onClick={() => setClosed(true)}
+          aria-label="Hide order bar"
+          style={{
+            marginLeft: 6,
+            width: 36,
+            height: 36,
+            borderRadius: "50%",
+            border: "none",
+            background: "rgba(0,0,0,.2)",
+            color: "#fff",
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            cursor: "pointer",
+          }}
+          title="Close"
+        >
+          ✕
+        </button>
 
+       
         
       </div>
     </div>

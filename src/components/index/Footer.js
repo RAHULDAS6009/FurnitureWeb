@@ -162,6 +162,9 @@ export default function Footer() {
           />
         </div>
       </div>
+      <br />
+      <br />
     </div>
+
   );
 }

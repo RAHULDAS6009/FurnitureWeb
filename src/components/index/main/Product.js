@@ -1,46 +1,25 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../redux/cartSlice";
 import { ProductCard } from "../../../pages/ShopPage";
 import { products } from "../../../pages/ShopPage";
-// export const products = [
-//   {
-//     id: 43,
-//     price: "$98.00",
-//     discount: "24% Off",
-//     image: "assets/img/product-img-1.jpg",
-//     title: "Orange Airsuit",
-//     category: "Fashion Bag",
-//     detailsUrl: "/shopdetails",
-//     categoryUrl: "/shop",
-//     quantity: 1,
-//   },
-//   {
-//     id: 44,
-//     price: "$99.00",
-//     discount: "25% Off",
-//     image: "assets/img/product-img-2.jpg",
-//     title: "Orange Airsuit",
-//     category: "Fashion Bag",
-//     detailsUrl: "/shopdetails",
-//     categoryUrl: "/shop",
-//     quantity: 1,
-//   },
-//   {
-//     id: 45,
-//     price: "$99.00",
-//     discount: "25% Off",
-//     image: "assets/img/product-img-3.jpg",
-//     title: "Orange Airsuit",
-//     category: "Fashion Bag",
-//     detailsUrl: "/shopdetails",
-//     categoryUrl: "/shop",
-//     quantity: 1,
-//   },
-// ];
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
+
+import "swiper/css";
+import "swiper/css/navigation";
 
 const ProductsSection = () => {
   const dispatch = useDispatch();
+
+  // refs for row 1 navigation buttons
+  const prevBtn1 = useRef(null);
+  const nextBtn1 = useRef(null);
+
+  // refs for row 2 navigation buttons
+  const prevBtn2 = useRef(null);
+  const nextBtn2 = useRef(null);
 
   return (
     <>
@@ -48,6 +27,7 @@ const ProductsSection = () => {
       <div className="ul-container">
         <section className="ul-products">
           <div className="ul-inner-container">
+            {/* header row */}
             <div className="ul-section-heading">
               <div className="left">
                 <span className="ul-section-sub-title">Summer collection</span>
@@ -61,10 +41,10 @@ const ProductsSection = () => {
               </div>
             </div>
 
+            {/* MAIN GRID (2 rows) */}
             <div className="row ul-bs-row">
-              {/* 1st row */}
+              {/* ---------- ROW 1 LEFT BANNER ---------- */}
               <div className="col-lg-3 col-md-4 col-12">
-                {/* sub banner */}
                 <div className="ul-products-sub-banner">
                   <div className="ul-products-sub-banner-img">
                     <img
@@ -83,74 +63,61 @@ const ProductsSection = () => {
                 </div>
               </div>
 
+              {/* ---------- ROW 1 SLIDER ---------- */}
               <div className="col-lg-9 col-md-8 col-12">
-                {/* products grid */}
-                <div className="swiper ul-products-slider-1">
-                  <div className="swiper-wrapper">
-                    {/* {products.map((product) => (
-                      <div className="swiper-slide" key={product.id}>
-                        <div className="ul-product">
-                          <div className="ul-product-heading">
-                            <span className="ul-product-price">
-                              {product.price}
-                            </span>
-                            <span className="ul-product-discount-tag">
-                              {product.discount}
-                            </span>
-                          </div>
+                <Swiper
+                  className="ul-products-slider-1"
+                  modules={[Navigation]}
+                  spaceBetween={24}
+                  loop={true}
+                  breakpoints={{
+                    0: { slidesPerView: 1 }, // mobile shows 1 product
+                    576: { slidesPerView: 2 }, // sm
+                    992: { slidesPerView: 3 }, // lg
+                    1200: { slidesPerView: 4 }, // xl
+                  }}
+                  onBeforeInit={(swiper) => {
+                    // connect custom buttons
+                    swiper.params.navigation.prevEl = prevBtn1.current;
+                    swiper.params.navigation.nextEl = nextBtn1.current;
+                  }}
+                  navigation={{
+                    prevEl: prevBtn1.current,
+                    nextEl: nextBtn1.current,
+                  }}
+                >
+                  {products.map((product) => (
+                    <SwiperSlide key={product.id}>
+                      {/* If ProductCard itself already returns outer div, just render it */}
+                      <ProductCard product={product} />
 
-                          <div className="ul-product-img">
-                            <img src={product.img} alt={product.title} />
+                      {/* If ProductCard doesn't dispatch addToCart and you still need that button,
+                          you can also drop custom CTA here */}
+                      {/* 
+                      <button
+                        onClick={() => dispatch(addToCart(product))}
+                        className="ul-addtocart-quick"
+                      >
+                        <i className="flaticon-shopping-bag"></i>
+                      </button> 
+                      */}
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
 
-                            <div className="ul-product-actions">
-                              <button
-                                onClick={() => dispatch(addToCart(product))}
-                              >
-                                <i className="flaticon-shopping-bag"></i>
-                              </button>
-                              <a href="#">
-                                <i className="flaticon-hide"></i>
-                              </a>
-                              <button>
-                                <i className="flaticon-heart"></i>
-                              </button>
-                            </div>
-                          </div>
-
-                          <div className="ul-product-txt">
-                            <h4 className="ul-product-title">
-                              <a href={product.detailsUrl}>{product.title}</a>
-                            </h4>
-                            <h5 className="ul-product-category">
-                              <a href={product.categoryUrl}>
-                                {product.category}
-                              </a>
-                            </h5>
-                          </div>
-                        </div>
-                      </div>
-                    ))} */}
-
-                    {products.slice(0, 1).map((product) => {
-                      return <ProductCard key={product.id} product={product} />;
-                    })}
-                  </div>
-                </div>
-
-                {/* slider navigation */}
+                {/* slider navigation row 1 */}
                 <div className="ul-products-slider-nav ul-products-slider-1-nav">
-                  <button className="prev">
+                  <button className="prev" ref={prevBtn1}>
                     <i className="flaticon-left-arrow"></i>
                   </button>
-                  <button className="next">
+                  <button className="next" ref={nextBtn1}>
                     <i className="flaticon-arrow-point-to-right"></i>
                   </button>
                 </div>
               </div>
 
-              {/* 2nd row */}
+              {/* ---------- ROW 2 LEFT BANNER ---------- */}
               <div className="col-lg-3 col-md-4 col-12">
-                {/* sub banner */}
                 <div className="ul-products-sub-banner">
                   <div className="ul-products-sub-banner-img">
                     <img
@@ -169,24 +136,41 @@ const ProductsSection = () => {
                 </div>
               </div>
 
+              {/* ---------- ROW 2 SLIDER ---------- */}
               <div className="col-lg-9 col-md-8 col-12">
-                {/* products grid */}
-                <div className="swiper ul-products-slider-2">
-                  <div className="swiper-wrapper">
-                    {/* product card */}
-                    {/* {"hello world"} */}
-                    {products.slice(0, 1).map((product) => {
-                      return <ProductCard key={product.id} product={product} />;
-                    })}
-                  </div>
-                </div>
+                <Swiper
+                  className="ul-products-slider-2"
+                  modules={[Navigation]}
+                  spaceBetween={24}
+                  loop={true}
+                  breakpoints={{
+                    0: { slidesPerView: 1 },
+                    576: { slidesPerView: 2 },
+                    992: { slidesPerView: 3 },
+                    1200: { slidesPerView: 4 },
+                  }}
+                  onBeforeInit={(swiper) => {
+                    swiper.params.navigation.prevEl = prevBtn2.current;
+                    swiper.params.navigation.nextEl = nextBtn2.current;
+                  }}
+                  navigation={{
+                    prevEl: prevBtn2.current,
+                    nextEl: nextBtn2.current,
+                  }}
+                >
+                  {products.map((product) => (
+                    <SwiperSlide key={product.id}>
+                      <ProductCard product={product} />
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
 
-                {/* slider navigation */}
+                {/* slider navigation row 2 */}
                 <div className="ul-products-slider-nav ul-products-slider-2-nav">
-                  <button className="prev">
+                  <button className="prev" ref={prevBtn2}>
                     <i className="flaticon-left-arrow"></i>
                   </button>
-                  <button className="next">
+                  <button className="next" ref={nextBtn2}>
                     <i className="flaticon-arrow-point-to-right"></i>
                   </button>
                 </div>
@@ -195,7 +179,46 @@ const ProductsSection = () => {
           </div>
         </section>
       </div>
+      
       {/* PRODUCTS SECTION END */}
+       <div className="ul-container">
+      <section className="ul-ad">
+        <div className="ul-inner-container">
+          <div className="ul-ad-content">
+            <div className="ul-ad-txt">
+              <span className="ul-ad-sub-title">Trending Products</span>
+              <h2 className="ul-section-title">Get 30% Discount On All Hudis!</h2>
+
+              <div className="ul-ad-categories">
+                <span className="category">
+                  <span><i className="flaticon-check-mark"></i></span>Zara
+                </span>
+                <span className="category">
+                  <span><i className="flaticon-check-mark"></i></span>Gucie
+                </span>
+                <span className="category">
+                  <span><i className="flaticon-check-mark"></i></span>Publo
+                </span>
+                <span className="category">
+                  <span><i className="flaticon-check-mark"></i></span>Men's
+                </span>
+                <span className="category">
+                  <span><i className="flaticon-check-mark"></i></span>Women's
+                </span>
+              </div>
+            </div>
+
+            <div className="ul-ad-img">
+              <img src="assets/img/ad-img.png" alt="Ad" />
+            </div>
+
+            <a href="shop.html" className="ul-btn">
+              Check Discount <i className="flaticon-up-right-arrow"></i>
+            </a>
+          </div>
+        </div>
+      </section>
+    </div>
     </>
   );
 };

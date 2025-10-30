@@ -1,58 +1,100 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+
+const slides = [
+  {
+    img: "assets/img/banner-slide-1.jpg",
+    subTitle: "Perfect for Summer Evenings",
+    title: "Casual and Stylish for All Seasons",
+    price: 129,
+    link: "/shop",
+    extraClass: "",
+  },
+  {
+    img: "assets/img/banner-slide-2.jpg",
+    subTitle: "Comfort Meets Style",
+    title: "Stay Trendy with Our New Collection",
+    price: 149,
+    link: "/shop",
+    extraClass: "ul-banner-slide--2",
+  },
+  {
+    img: "assets/img/banner-slide-3.jpg",
+    subTitle: "New Arrivals",
+    title: "Upgrade Your Wardrobe Effortlessly",
+    price: 179,
+    link: "/shop",
+    extraClass: "ul-banner-slide--3",
+  },
+];
+
+const initialThumbs = [
+  "assets/img/banner-img-slide-1.jpg",
+  "assets/img/banner-img-slide-2.jpg",
+  "assets/img/banner-img-slide-3.jpg",
+];
 
 const Banner = () => {
-  const slides = [
-    {
-      img: "assets/img/banner-slide-1.jpg",
-      subTitle: "Perfect for Summer Evenings",
-      title: "Casual and Stylish for All Seasons",
-      price: 129,
-      link: "/shop",
-      extraClass: "",
-    },
-    {
-      img: "assets/img/banner-slide-2.jpg",
-      subTitle: "Comfort Meets Style",
-      title: "Stay Trendy with Our New Collection",
-      price: 149,
-      link: "/shop",
-      extraClass: "ul-banner-slide--2",
-    },
-    {
-      img: "assets/img/banner-slide-3.jpg",
-      subTitle: "New Arrivals",
-      title: "Upgrade Your Wardrobe Effortlessly",
-      price: 179,
-      link: "/shop",
-      extraClass: "ul-banner-slide--3",
-    },
-  ];
-
-  const initialBannerImages = [
-    "assets/img/banner-img-slide-1.jpg",
-    "assets/img/banner-img-slide-2.jpg",
-    "assets/img/banner-img-slide-3.jpg",
-  ];
-
-  const [bannerImages, setBannerImages] = useState(initialBannerImages);
   const [mainBannerIndex, setMainBannerIndex] = useState(0);
+  const [thumbs, setThumbs] = useState(initialThumbs);
 
-  // Infinite rotation every 3 seconds
+  // helper: go to next slide
+  const goNext = useCallback(() => {
+    setMainBannerIndex((prev) => {
+      const nextIndex = (prev + 1) % slides.length;
+      return nextIndex;
+    });
+
+    // rotate thumbnails left
+    setThumbs((prev) => {
+      const arr = [...prev];
+      const first = arr.shift();
+      arr.push(first);
+      return arr;
+    });
+  }, []);
+
+  // helper: go prev slide
+  const goPrev = useCallback(() => {
+    setMainBannerIndex((prev) => {
+      const nextIndex = (prev - 1 + slides.length) % slides.length;
+      return nextIndex;
+    });
+
+    // rotate thumbnails right
+    setThumbs((prev) => {
+      const arr = [...prev];
+      const last = arr.pop();
+      arr.unshift(last);
+      return arr;
+    });
+  }, []);
+
+  // autoplay every 5s
   useEffect(() => {
-    const interval = setInterval(() => {
-      setMainBannerIndex((prevIndex) => (prevIndex + 1) % bannerImages.length);
-      setBannerImages((prev) => {
-        const newArr = [...prev];
-        const first = newArr.shift();
-        newArr.push(first);
-        return newArr;
-      });
+    const id = setInterval(() => {
+      goNext();
     }, 5000);
 
-    return () => clearInterval(interval);
-  }, [bannerImages.length]);
+    return () => clearInterval(id);
+  }, [goNext]);
 
-  const mainSlide = slides[mainBannerIndex];
+  // when user clicks a thumbnail
+  const handleThumbClick = (i) => {
+    // i is the visible index in the current rotated thumbs array.
+    // We want that thumbnail to become the ACTIVE main slide,
+    // and also reorder thumbnails so that clicked one becomes first.
+    setMainBannerIndex(i);
+
+    setThumbs((prev) => {
+      // rotate array so index i becomes 0
+      const arr = [...prev];
+      const head = arr.slice(i);
+      const tail = arr.slice(0, i);
+      return [...head, ...tail];
+    });
+  };
+
+  const activeSlide = slides[mainBannerIndex];
 
   return (
     <>
@@ -62,46 +104,21 @@ const Banner = () => {
           <section className="ul-banner">
             {/* Main banner */}
             <div className="ul-banner-slider-wrapper">
-              <div className="ul-banner-slider swiper">
-                <div className="swiper-wrapper">
-                  <BannerSlide {...mainSlide} />
+              {/* This used to say 'swiper', but it's just our custom slider now */}
+              <div className="ul-banner-slider">
+                <div className="ul-banner-slider-track">
+                  <BannerSlide {...activeSlide} />
                 </div>
 
                 {/* Navigation */}
                 <div className="ul-banner-slider-nav-wrapper">
                   <div className="ul-banner-slider-nav">
-                    <button
-                      className="prev"
-                      onClick={() => {
-                        setMainBannerIndex(
-                          (prev) => (prev - 1 + slides.length) % slides.length
-                        );
-                        setBannerImages((prev) => {
-                          const newArr = [...prev];
-                          const last = newArr.pop();
-                          newArr.unshift(last);
-                          return newArr;
-                        });
-                      }}
-                    >
+                    <button className="prev" onClick={goPrev}>
                       <span className="icon">
                         <i className="flaticon-down"></i>
                       </span>
                     </button>
-                    <button
-                      className="next"
-                      onClick={() => {
-                        setMainBannerIndex(
-                          (prev) => (prev + 1) % slides.length
-                        );
-                        setBannerImages((prev) => {
-                          const newArr = [...prev];
-                          const first = newArr.shift();
-                          newArr.push(first);
-                          return newArr;
-                        });
-                      }}
-                    >
+                    <button className="next" onClick={goNext}>
                       <span className="icon">
                         <i className="flaticon-down"></i>
                       </span>
@@ -111,17 +128,18 @@ const Banner = () => {
               </div>
             </div>
 
-            {/* Thumbnail slider */}
+            {/* Thumbnail strip */}
             <div className="ul-banner-img-slider-wrapper">
-              <div className="ul-banner-img-slider swiper">
+              {/* again dropping 'swiper' class, using flex */}
+              <div className="ul-banner-img-slider">
                 <div className="flex h-full w-[220%] gap-5">
-                  {bannerImages.map((img, i) => (
-                    <div key={i} className="">
+                  {thumbs.map((img, i) => (
+                    <div key={i} className="cursor-pointer">
                       <img
                         src={img}
                         alt={`Banner ${i}`}
-                        className="cursor-pointer"
-                        onClick={() => setMainBannerIndex(i)}
+                        
+                        onClick={() => handleThumbClick(i)}
                       />
                     </div>
                   ))}
@@ -138,7 +156,7 @@ const Banner = () => {
 
 function BannerSlide({ img, subTitle, title, price, link, extraClass = "" }) {
   return (
-    <div className={`swiper-slide ul-banner-slide ${extraClass} `}>
+    <div className={`ul-banner-slide ${extraClass}`}>
       <div className="ul-banner-slide-img">
         <img src={img} alt="Banner" />
       </div>

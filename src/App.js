@@ -49,7 +49,7 @@ const App = () => {
         <Route path="/*" element={<NotFoundPage />} />
       </Routes>
 
-      <Footer />
+    
       {/* for suggestion we need to hit ctrl + space */}
      {/* WhatsApp bubble (always on top of pages) */}
         <FloatingWhatsApp

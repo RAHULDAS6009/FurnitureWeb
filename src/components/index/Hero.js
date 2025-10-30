@@ -16,11 +16,12 @@ export default function Hero() {
     <div>
       <Banner />
       <CategorySection />
+      <FlashSaleSection />
       <ProductsSection />
       <MostSellingSection />
       <VideoSection />
       <SubBannerSection />
-      <FlashSaleSection />
+      
       <ReviewsSection />
       <NewsletterSubscription />
       <BlogSection />
