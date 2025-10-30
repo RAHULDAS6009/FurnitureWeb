@@ -241,32 +241,37 @@
   .ul-toolbar-inline {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 4px; /* tighter gap */
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
-    padding: 4px 0;
+    padding: 2px 0;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;
   }
 
+  /* 💊 ultra-compact pills, inputs, selects */
   .ul-toolbar-inline .ul-control,
   .ul-toolbar-inline .ul-pill,
   .ul-toolbar-inline .ul-select {
     flex: 0 0 auto;
-    min-width: 120px;
-    height: 38px;
-    padding: 8px 12px;
+    min-width: 70px;         /* narrower pills */
+    height: 26px;            /* smaller height */
+    padding: 4px 8px;        /* tighter padding */
+    font-size: 10.5px;       /* smaller text */
+    border-radius: 9999px;
+    line-height: 1.2;
   }
 
+  /* count text smaller too */
   .ul-toolbar-inline .ul-toolbar-count {
     flex: 0 0 auto;
-    font-size: 12px;
+    font-size: 10px;
     white-space: nowrap;
   }
 
   .ul-toolbar-inline::-webkit-scrollbar {
-    height: 4px;
+    height: 2px;
   }
   .ul-toolbar-inline::-webkit-scrollbar-thumb {
     background: #d6dbe1;
@@ -274,7 +279,7 @@
   }
 }
 
-/* --- Pill inputs / selects --- */
+/* --- Pill Base Styles (stay same for desktop) --- */
 .ul-pill {
   border: 1px solid #e3e6e9;
   background: #fff;
@@ -284,21 +289,21 @@
   line-height: 20px;
   outline: none;
   min-height: 40px;
-  transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
 }
 .ul-pill:focus {
   border-color: #2874f0;
-  box-shadow: 0 0 0 3px rgba(40,116,240,.15);
-}
-.ul-select {
-  -webkit-appearance: none; -moz-appearance: none; appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  background-size: 12px 8px;
-  padding-right: 34px;
+  box-shadow: 0 0 0 3px rgba(40, 116, 240, 0.15);
 }
 
+.ul-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 12 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 10px 6px;
+  padding-right: 22px;
+}
 /* --- Product card borders + hover shadow --- */
 .ul-product {
   border: 1px solid #ddd;
