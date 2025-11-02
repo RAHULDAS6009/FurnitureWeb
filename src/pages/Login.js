@@ -3,16 +3,35 @@ import { Header } from "../components/index/Header";
 import Footer from "../components/index/Footer";
 
 export const Login = () => {
+  // handle form submission
+  const handleSubmit = (e) => {
+    e.preventDefault(); // prevent ?email=... reload
+
+    const email = e.target.email.value.trim();
+    const password = e.target.password.value.trim();
+
+    if (!email || !password) {
+      alert("⚠️ Please enter both email and password.");
+      return;
+    }
+
+    const user = { email, password };
+    localStorage.setItem("user", JSON.stringify(user));
+
+    alert("✅ User saved in localStorage!");
+    e.target.reset(); // optional: clear form after submit
+  };
+
   return (
     <div>
       <Header />
       <main>
-        {/* BREADCRUMB SECTION START   */}
+        {/* BREADCRUMB SECTION START */}
         <div className="ul-container">
           <div className="ul-breadcrumb">
             <h2 className="ul-breadcrumb-title">Log In</h2>
             <div className="ul-breadcrumb-nav">
-              <a href="index.html">
+              <a href="/">
                 <i className="flaticon-home"></i> Home
               </a>
               <i className="flaticon-arrow-point-to-right"></i>
@@ -20,22 +39,24 @@ export const Login = () => {
             </div>
           </div>
         </div>
-        {/* BREADCRUMB SECTION END   */}
+        {/* BREADCRUMB SECTION END */}
 
         <div className="ul-container">
           <div className="ul-login">
             <div className="ul-inner-page-container">
               <div className="row justify-content-evenly align-items-center flex-column-reverse flex-md-row">
+                {/* Left image */}
                 <div className="col-md-5">
                   <div className="ul-login-img text-center">
-                    <img src="assets/img/login-img.svg" alt="Login Image" />
+                    <img src="assets/img/login-img.svg" alt="Login" />
                   </div>
                 </div>
 
+                {/* Login form */}
                 <div className="col-xl-4 col-md-7">
-                  <form action="#" className="ul-contact-form">
+                  <form onSubmit={handleSubmit} className="ul-contact-form">
                     <div className="row">
-                      {/* email   */}
+                      {/* Email input */}
                       <div className="form-group">
                         <div className="position-relative">
                           <input
@@ -46,8 +67,8 @@ export const Login = () => {
                           />
                         </div>
                       </div>
-                      {/*  */}
-                      {/* password   */}
+
+                      {/* Password input */}
                       <div className="form-group">
                         <div className="position-relative">
                           <input
@@ -59,12 +80,13 @@ export const Login = () => {
                         </div>
                       </div>
                     </div>
-                    {/* submit btn   */}
+
+                    {/* Submit button */}
                     <button type="submit">Log In</button>
                   </form>
 
                   <p className="text-center mt-4 mb-0">
-                    Already have an account? <a href="/register">Sign Up</a>
+                    Don’t have an account? <a href="/register">Sign Up</a>
                   </p>
                 </div>
               </div>

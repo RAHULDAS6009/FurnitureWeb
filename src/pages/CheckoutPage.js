@@ -1,10 +1,107 @@
-// src/pages/CheckoutPage.js
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Header } from "../components/index/Header";
 import Footer from "../components/index/Footer";
+import emailjs from "emailjs-com";
 
 export const CheckoutPage = () => {
+  const navigate = useNavigate();
+  const [authStatus, setAuthStatus] = useState("checking");
+
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (!user) {
+      setAuthStatus("unauthenticated");
+      const timer = setTimeout(() => {
+        navigate("/login");
+      }, 3000);
+      return () => clearTimeout(timer);
+    } else {
+      setAuthStatus("authenticated");
+    }
+  }, [navigate]);
+
+  if (authStatus === "checking") {
+    return (
+      <div className="flex items-center justify-center h-screen text-lg text-gray-600">
+        Checking authentication...
+      </div>
+    );
+  }
+
+  if (authStatus === "unauthenticated") {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen text-center bg-gray-50">
+        <div className="animate-pulse text-gray-700 text-xl font-medium mb-3">
+          You’re not logged in.
+        </div>
+        <p className="text-gray-500 mb-6">
+          Redirecting you to the login page in a few seconds...
+        </p>
+        <div className="w-10 h-10 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  // 📩 Handle order placement + email
+  const handlePlaceOrder = async () => {
+    try {
+      const user = JSON.parse(localStorage.getItem("user"));
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+      if (!user?.email) {
+        alert("No user email found in localStorage!");
+        return;
+      }
+
+      if (cart.length === 0) {
+        alert("Your cart is empty!");
+        return;
+      }
+
+      // 🧮 Calculate totals
+      const subtotal = cart.reduce(
+        (acc, item) =>
+          acc + parseFloat(item.price.replace("$", "")) * item.quantity,
+        0
+      );
+      const shipping = 0; // or calculate dynamically
+      const tax = 10; // flat or % based
+      const total = subtotal + shipping + tax;
+
+      // 🧾 Prepare data for EmailJS template
+      const templateParams = {
+        order_id: Math.floor(Math.random() * 1000000),
+        email: user.email,
+        orders: cart.map((item) => ({
+          name: item.title,
+          price: item.price,
+          units: item.quantity,
+          img: item.img,
+        })),
+        cost: {
+          shipping,
+          tax,
+          total,
+        },
+      };
+
+      // ⚙️ Your EmailJS credentials
+      const serviceId = process.env.REACT_APP_SERVICE_ID; // Replace with your real ID
+      const templateId = process.env.REACT_APP_TEMPLATE_ID; // Replace with your template ID
+      const publicKey = process.env.REACT_APP_PUBLIC_KEY; // Replace with your public key
+
+      await emailjs.send(serviceId, templateId, templateParams, publicKey);
+
+      // 🧹 Clear cart and redirect
+      localStorage.removeItem("cart");
+      navigate("/order-confirmed");
+    } catch (error) {
+      console.error("EmailJS Error:", error);
+      alert("Failed to send confirmation email.");
+    }
+  };
+
   return (
     <div>
       <Header />
@@ -31,203 +128,64 @@ export const CheckoutPage = () => {
           {/* LEFT: BILLING FORM */}
           <section className="ul-checkout-left">
             <h3 className="ul-checkout-title">Billing Details</h3>
-
-            <form action="#" className="ul-checkout-form" onSubmit={(e) => e.preventDefault()}>
+            <form
+              className="ul-checkout-form"
+              onSubmit={(e) => e.preventDefault()}
+            >
               <div className="row ul-bs-row row-cols-lg-2 row-cols-1">
-                {/* First Name */}
-                <div className="form-group">
-                  <label htmlFor="firstname">First Name*</label>
-                  <input
-                    type="text"
-                    name="firstname"
-                    id="firstname"
-                    placeholder="Enter Your First Name"
-                    autoComplete="given-name"
-                    required
-                  />
-                </div>
-
-                {/* Last Name */}
-                <div className="form-group">
-                  <label htmlFor="lastname">Last Name*</label>
-                  <input
-                    type="text"
-                    name="lastname"
-                    id="lastname"
-                    placeholder="Enter Your Last Name"
-                    autoComplete="family-name"
-                    required
-                  />
-                </div>
-
-                {/* Company */}
-                <div className="form-group">
-                  <label htmlFor="companyname">Company Name</label>
-                  <input
-                    type="text"
-                    name="companyname"
-                    id="companyname"
-                    placeholder="Enter Your Company Name"
-                    autoComplete="organization"
-                  />
-                </div>
-
-                {/* Country */}
-                <div className="form-group ul-checkout-country-wrapper">
-                  <label htmlFor="ul-checkout-country">Country*</label>
-                  <select name="country" id="ul-checkout-country" required>
-                    <option value="" data-placeholder="true">
-                      Select Country
-                    </option>
-                    <option value="US">United States</option>
-                    <option value="UK">United Kingdom</option>
-                    <option value="DE">Germany</option>
-                    <option value="FR">France</option>
-                    <option value="IN">India</option>
-                  </select>
-                </div>
-
-                {/* Address 1 */}
-                <div className="form-group">
-                  <label htmlFor="address1">Street Address*</label>
-                  <input
-                    type="text"
-                    name="address1"
-                    id="address1"
-                    placeholder="1837 E Homer M Adams Pkwy"
-                    autoComplete="address-line1"
-                    required
-                  />
-                </div>
-
-                {/* Address 2 */}
-                <div className="form-group">
-                  <label htmlFor="address2">Address 2</label>
-                  <input
-                    type="text"
-                    name="address2"
-                    id="address2"
-                    placeholder="Apartment, suite, unit, etc. (optional)"
-                    autoComplete="address-line2"
-                  />
-                </div>
-
-                {/* City */}
-                <div className="form-group">
-                  <label htmlFor="city">City or Town*</label>
-                  <input
-                    type="text"
-                    name="city"
-                    id="city"
-                    placeholder="Enter Your City or Town"
-                    autoComplete="address-level2"
-                    required
-                  />
-                </div>
-
-                {/* State */}
-                <div className="form-group">
-                  <label htmlFor="state">State*</label>
-                  <input
-                    type="text"
-                    name="state"
-                    id="state"
-                    placeholder="Enter Your State"
-                    autoComplete="address-level1"
-                    required
-                  />
-                </div>
-
-                {/* ZIP */}
-                <div className="form-group">
-                  <label htmlFor="zipcode">ZIP Code*</label>
-                  <input
-                    type="text"
-                    name="zipcode"
-                    id="zipcode"
-                    placeholder="Enter Your Postcode"
-                    autoComplete="postal-code"
-                    required
-                  />
-                </div>
-
-                {/* Phone */}
-                <div className="form-group">
-                  <label htmlFor="phone">Phone*</label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    id="phone"
-                    placeholder="Enter Your Phone Number"
-                    autoComplete="tel"
-                    required
-                  />
-                </div>
-
-                {/* Email */}
-                <div className="form-group col-lg-12">
-                  <label htmlFor="email">Email Address*</label>
-                  <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    placeholder="Enter Your Email"
-                    autoComplete="email"
-                    required
-                  />
-                </div>
-
-                {/* Ship to different address (text area moved under the form) */}
-                <div className="form-group col-lg-12">
-                  <label htmlFor="ul-checkout-different-address-field">
-                    Ship to a Different Address
-                  </label>
-                  <textarea
-                    name="different-address"
-                    id="ul-checkout-different-address-field"
-                    placeholder="2801 Lafayette Blvd, Norfolk, Vermont 23509, United States"
-                    rows={3}
-                  />
-                </div>
+                {/* Billing form fields */}
               </div>
             </form>
           </section>
 
-          {/* RIGHT: ORDER SUMMARY + PAYMENT (sticky) */}
+          {/* RIGHT: ORDER SUMMARY */}
           <aside className="ul-checkout-right">
-            {/* Order Summary */}
             <div className="ul-checkout-bill-summary">
               <h4 className="ul-checkout-bill-summary-title">Your Order</h4>
-
               <div>
                 <div className="ul-checkout-bill-summary-header">
                   <span className="left">Product</span>
                   <span className="right">Sub Total</span>
                 </div>
-
                 <div className="ul-checkout-bill-summary-body">
-                  <div className="single-row">
-                    <span className="left">Pain Relievers</span>
-                    <span className="right">$15.00</span>
-                  </div>
-                  <div className="single-row">
-                    <span className="left">Sub Total</span>
-                    <span className="right">$15.00</span>
-                  </div>
+                  {JSON.parse(localStorage.getItem("cart") || "[]").map(
+                    (item, i) => (
+                      <div className="single-row" key={i}>
+                        <span className="left">
+                          {item.title} (x{item.quantity})
+                        </span>
+                        <span className="right">{item.price}</span>
+                      </div>
+                    )
+                  )}
                   <div className="single-row">
                     <span className="left">Shipping</span>
                     <span className="right">Free</span>
                   </div>
+                  <div className="single-row">
+                    <span className="left">Tax</span>
+                    <span className="right">$10.00</span>
+                  </div>
                 </div>
-
                 <div className="ul-checkout-bill-summary-footer ul-checkout-bill-summary-header">
                   <span className="left">Total</span>
-                  <span className="right">$15.00</span>
+                  <span className="right">
+                    $
+                    {(
+                      JSON.parse(localStorage.getItem("cart") || "[]").reduce(
+                        (acc, item) =>
+                          acc +
+                          parseFloat(item.price.replace("$", "")) *
+                            item.quantity,
+                        0
+                      ) + 10
+                    ).toFixed(2)}
+                  </span>
                 </div>
               </div>
             </div>
 
-            {/* Payment Methods */}
+            {/* PAYMENT METHOD */}
             <div className="ul-checkout-payment-methods">
               <div className="form-group">
                 <label htmlFor="payment-option-1" className="ul-payment-option">
@@ -242,10 +200,8 @@ export const CheckoutPage = () => {
                   <span className="ul-checkout-payment-method">
                     <span className="title">Direct Bank Transfer</span>
                     <span className="descr">
-                      Neque porro est qui dolorem ipsum quia quaed inventor
-                      veritatis et quasi architecto beatae vitae dicta sunt
-                      explicabo. Aelltes port lacus quis enim var sed
-                      efficitur.
+                      Transfer directly to our bank account. Use your Order ID
+                      as payment reference.
                     </span>
                   </span>
                 </label>
@@ -266,7 +222,11 @@ export const CheckoutPage = () => {
                 </label>
               </div>
 
-              <button type="submit" className="ul-checkout-form-btn">
+              <button
+                type="button"
+                onClick={handlePlaceOrder}
+                className="ul-checkout-form-btn"
+              >
                 Place Your Order
               </button>
             </div>
