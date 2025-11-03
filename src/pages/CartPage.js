@@ -74,6 +74,8 @@ export const CartPage = () => {
                     <th>Product</th>
                     <th>Price</th>
                     <th>Quantity</th>
+                    <th>Size</th>
+                    <th>Color</th>
                     <th>Subtotal</th>
                     <th>Remove</th>
                   </tr>
@@ -315,11 +317,12 @@ export const CartPage = () => {
 // src/components/ProductCard.jsx
 // src/components/ProductCard.jsx
 const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
-  const { title, img, price, quantity } = item;
+  const { title, img, price, quantity, size, color } = item;
   const imgSrc = "/" + img.replace(/^\/+/, "");
 
   return (
     <tr>
+      {/* Product */}
       <td>
         <div className="ul-cart-product">
           <a href="/shopdetails" className="ul-cart-product-img">
@@ -331,10 +334,12 @@ const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
         </div>
       </td>
 
+      {/* Price */}
       <td>
         <span className="ul-cart-item-price">{price}</span>
       </td>
 
+      {/* Quantity */}
       <td>
         <div className="ul-product-details-quantity mt-0">
           <form action="#" className="ul-product-quantity-wrapper">
@@ -347,10 +352,18 @@ const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
               readOnly
             />
             <div className="btns">
-              <button type="button" className="quantityIncreaseButton" onClick={onIncrease}>
+              <button
+                type="button"
+                className="quantityIncreaseButton"
+                onClick={onIncrease}
+              >
                 <i className="flaticon-plus"></i>
               </button>
-              <button type="button" className="quantityDecreaseButton" onClick={onDecrease}>
+              <button
+                type="button"
+                className="quantityDecreaseButton"
+                onClick={onDecrease}
+              >
                 <i className="flaticon-minus-sign"></i>
               </button>
             </div>
@@ -358,12 +371,40 @@ const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
         </div>
       </td>
 
+      {/* Size */}
+      <td>
+        <span className="ul-cart-item-size">{size ? size : <em>—</em>}</span>
+      </td>
+
+      {/* Color */}
+      <td>
+        {color ? (
+          <div className="ul-cart-item-color">
+            <span
+              style={{
+                display: "inline-block",
+                width: "20px",
+                height: "20px",
+                borderRadius: "50%",
+                backgroundColor: color,
+                border: "1px solid #ccc",
+              }}
+            ></span>
+            {/* <span style={{ marginLeft: "8px" }}>{color}</span> */}
+          </div>
+        ) : (
+          <em>—</em>
+        )}
+      </td>
+
+      {/* Subtotal */}
       <td>
         <span className="ul-cart-item-subtotal">
           ${(parseFloat(price.replace("$", "")) * quantity).toFixed(2)}
         </span>
       </td>
 
+      {/* Remove */}
       <td>
         <div className="ul-cart-item-remove">
           <button onClick={onRemove}>
@@ -374,4 +415,3 @@ const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
     </tr>
   );
 };
-
