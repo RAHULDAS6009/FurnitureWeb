@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import SiderBar from "./SiderBar";
 
+
 export const Header = () => {
   const state = useSelector((state) => state.cart.data);
   const [items, setItem] = useState(0);
@@ -72,7 +73,7 @@ export const Header = () => {
             <div className="header-bottom-left">
               <div className="logo-container">
                 <a href="/" className="d-inline-block">
-                  <img src="assets/img/logo.svg" alt="logo" className="logo" />
+                  <img src="/assets/img/logo.svg" alt="logo" className="logo" />
                 </a>
               </div>
 
@@ -126,15 +127,15 @@ export const Header = () => {
                   <a href="/shop">Shop</a>
                   <a href="/shop">Women</a>
                   <a href="/shop">Men's</a>
-                  <a href="/shop">Kids</a>
-                  <a href="/blog">Blog</a>
+                  {/* <a href="/shop">Kids</a>
+                  <a href="/blog">Blog</a> */}
 
-                  <div className="has-sub-menu has-mega-menu">
+                  {/* <div className="has-sub-menu has-mega-menu">
                     <a role="button">Pages</a>
                     <div className="ul-header-submenu ul-header-megamenu">
-                      {/* ... keep your mega menu columns ... */}
+                     
                     </div>
-                  </div>
+                  </div> */}
                 </nav>
               </div>
             </div>

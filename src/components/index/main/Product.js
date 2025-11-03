@@ -17,9 +17,43 @@ const ProductsSection = () => {
   const prevBtn1 = useRef(null);
   const nextBtn1 = useRef(null);
 
-  // refs for row 2 navigation buttons
+  // (unused for now, keeping if you plan a second row)
   const prevBtn2 = useRef(null);
   const nextBtn2 = useRef(null);
+
+  // Normalize & dispatch to cart
+  const handleAdd = (rawProduct, e) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    if (!rawProduct) return;
+
+    const product = {
+      id: rawProduct.id,
+      title: rawProduct.title,
+      price: rawProduct.price, // "$99.00" — parse in slice or wherever you compute totals
+      img: rawProduct.img || rawProduct.image || rawProduct.thumbnail,
+      category: rawProduct.category,
+      size: rawProduct.size,
+      color: rawProduct.color,
+      inStock: rawProduct.inStock ?? true,
+      onSale: rawProduct.onSale ?? false,
+      discount: rawProduct.discount,
+      detailsUrl: rawProduct.detailsUrl || "/shopdetails",
+      categoryUrl: rawProduct.categoryUrl || "/shop",
+      quantity:
+        rawProduct.quantity && rawProduct.quantity > 0
+          ? rawProduct.quantity
+          : 1,
+    };
+
+    if (!product.id) {
+      console.warn("addToCart: product.id missing", product);
+      return;
+    }
+    dispatch(addToCart(product));
+  };
 
   return (
     <>
@@ -89,19 +123,25 @@ const ProductsSection = () => {
                 >
                   {products.map((product) => (
                     <SwiperSlide key={product.id}>
-                      {/* If ProductCard itself already returns outer div, just render it */}
-                      <ProductCard product={product} />
+                      {/* Wrap so we can layer our quick add button on top */}
+                      <div className="ul-product-card-wrap">
+                        {/* Your existing card */}
+                        <ProductCard
+                          product={product}
+                          // If ProductCard supports onAdd, pass it:
+                          onAdd={(e) => handleAdd(product, e)}
+                        />
 
-                      {/* If ProductCard doesn't dispatch addToCart and you still need that button,
-                          you can also drop custom CTA here */}
-                      {/* 
-                      <button
-                        onClick={() => dispatch(addToCart(product))}
-                        className="ul-addtocart-quick"
-                      >
-                        <i className="flaticon-shopping-bag"></i>
-                      </button> 
-                      */}
+                        {/* Quick Add button overlay (works even if ProductCard ignores onAdd) */}
+                        <button
+                          className="ul-addtocart-quick"
+                          onClick={(e) => handleAdd(product, e)}
+                          aria-label="Add to Cart"
+                          title="Add to Cart"
+                        >
+                          <i className="flaticon-shopping-bag"></i>
+                        </button>
+                      </div>
                     </SwiperSlide>
                   ))}
                 </Swiper>
@@ -116,54 +156,97 @@ const ProductsSection = () => {
                   </button>
                 </div>
               </div>
-
-             
-
-              
             </div>
           </div>
         </section>
       </div>
-      
+
       {/* PRODUCTS SECTION END */}
-       <div className="ul-container">
-      <section className="ul-ad">
-        <div className="ul-inner-container">
-          <div className="ul-ad-content">
-            <div className="ul-ad-txt">
-              <span className="ul-ad-sub-title">Trending Products</span>
-              <h2 className="ul-section-title">Get 30% Discount On All Hudis!</h2>
+      <div className="ul-container">
+        <section className="ul-ad">
+          <div className="ul-inner-container">
+            <div className="ul-ad-content">
+              <div className="ul-ad-txt">
+                <span className="ul-ad-sub-title">Trending Products</span>
+                <h2 className="ul-section-title">
+                  Get 30% Discount On All Hudis!
+                </h2>
 
-              <div className="ul-ad-categories">
-                <span className="category">
-                  <span><i className="flaticon-check-mark"></i></span>Zara
-                </span>
-                <span className="category">
-                  <span><i className="flaticon-check-mark"></i></span>Gucie
-                </span>
-                <span className="category">
-                  <span><i className="flaticon-check-mark"></i></span>Publo
-                </span>
-                <span className="category">
-                  <span><i className="flaticon-check-mark"></i></span>Men's
-                </span>
-                <span className="category">
-                  <span><i className="flaticon-check-mark"></i></span>Women's
-                </span>
+                <div className="ul-ad-categories">
+                  <span className="category">
+                    <span>
+                      <i className="flaticon-check-mark"></i>
+                    </span>
+                    Zara
+                  </span>
+                  <span className="category">
+                    <span>
+                      <i className="flaticon-check-mark"></i>
+                    </span>
+                    Gucie
+                  </span>
+                  <span className="category">
+                    <span>
+                      <i className="flaticon-check-mark"></i>
+                    </span>
+                    Publo
+                  </span>
+                  <span className="category">
+                    <span>
+                      <i className="flaticon-check-mark"></i>
+                    </span>
+                    Men's
+                  </span>
+                  <span className="category">
+                    <span>
+                      <i className="flaticon-check-mark"></i>
+                    </span>
+                    Women's
+                  </span>
+                </div>
               </div>
-            </div>
 
-            <div className="ul-ad-img">
-              <img src="assets/img/ad-img.png" alt="Ad" />
-            </div>
+              <div className="ul-ad-img">
+                <img src="assets/img/ad-img.png" alt="Ad" />
+              </div>
 
-            <a href="shop.html" className="ul-btn">
-              Check Discount <i className="flaticon-up-right-arrow"></i>
-            </a>
+              <a href="shop.html" className="ul-btn">
+                Check Discount <i className="flaticon-up-right-arrow"></i>
+              </a>
+            </div>
           </div>
-        </div>
-      </section>
-    </div>
+        </section>
+      </div>
+
+      {/* Click-through safety CSS */}
+      <style>{`
+        .ul-product-card-wrap {
+          position: relative;
+        }
+        .ul-addtocart-quick {
+          position: absolute;
+          right: 12px;
+          bottom: 12px;
+          z-index: 5;
+          width: 40px;
+          height: 40px;
+          border: none;
+          border-radius: 999px;
+          background: #ef2853
+          color: #fff;
+          display: grid;
+          place-items: center;
+          cursor: pointer;
+          opacity: 0.92;
+        }
+        .ul-addtocart-quick:hover { opacity: 1; }
+
+        /* If your card has hover overlays, make them ignore clicks so button receives it */
+        .ul-product .ul-product-actions,
+        .ul-product .ul-product-img::after {
+          pointer-events: none;
+        }
+      `}</style>
     </>
   );
 };
