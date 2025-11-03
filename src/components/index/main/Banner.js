@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 
 const slides = [
   {
-    img: "assets/img/banner-slide-1.jpg",
+    img: "assets/img/banner-slide-1.png",
     subTitle: "Perfect for Summer Evenings",
     title: "Casual and Stylish for All Seasons",
     price: 129,
@@ -10,7 +10,7 @@ const slides = [
     extraClass: "",
   },
   {
-    img: "assets/img/banner-slide-2.jpg",
+    img: "assets/img/banner-slide-2.png",
     subTitle: "Comfort Meets Style",
     title: "Stay Trendy with Our New Collection",
     price: 149,
@@ -18,7 +18,7 @@ const slides = [
     extraClass: "ul-banner-slide--2",
   },
   {
-    img: "assets/img/banner-slide-3.jpg",
+    img: "assets/img/banner-slide-3.png",
     subTitle: "New Arrivals",
     title: "Upgrade Your Wardrobe Effortlessly",
     price: 179,
