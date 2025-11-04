@@ -18,7 +18,7 @@ export const CheckoutPage = () => {
     zipcode: "",
     country: "",
     phone: "",
-    email: "",
+    email: "kunalbossr15@gmail.com",
   });
 
   const cart = JSON.parse(localStorage.getItem("cart") || "[]");
@@ -155,14 +155,14 @@ export const CheckoutPage = () => {
                 onChange={(e) => handleChange("phone", e.target.value)}
               />
             </div>
-            <div className="form-group col-lg-12">
+            {/* <div className="form-group col-lg-12">
               <label>Email*</label>
               <input
                 type="email"
                 value={billing.email}
                 onChange={(e) => handleChange("email", e.target.value)}
               />
-            </div>
+            </div> */}
           </div>
 
           <button
