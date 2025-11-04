@@ -249,7 +249,10 @@ export const ShopPage = () => {
             </div>
             <div className="ul-modal-body">
               <div className="ul-modal-product">
-                <img src={selectedProduct.img} alt={selectedProduct.title} />
+                <img
+                  src={selectedProduct.images[0]}
+                  alt={selectedProduct.title}
+                />
                 <div>
                   <h5 className="ul-modal-title">{selectedProduct.title}</h5>
                   <div className="ul-modal-price">{selectedProduct.price}</div>
