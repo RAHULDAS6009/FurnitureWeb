@@ -268,7 +268,7 @@ const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
   const pct = pctFromDiscount(discount);
   const mrpUnit = pct ? unit / (1 - pct / 100) : unit;
 
-  const imgSrc = "/" + String(images[0] || "").replace(/^\/+/, "");
+  // const imgSrc = "/" + String(images[0] || "").replace(/^\/+/, "");
 
   // ETA text
   const eta = new Date();
@@ -287,7 +287,7 @@ const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
       <div className="cart-row">
         {/* image */}
         <a href="/shopdetails" aria-label={title}>
-          <img className="cart-img" src={imgSrc} alt={title} />
+          <img className="cart-img" src={images[0]} alt={title} />
         </a>
 
         {/* details */}
