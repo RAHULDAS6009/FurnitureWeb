@@ -132,7 +132,10 @@ export const CartPage = () => {
             {/* reset button (kept from your functionality) */}
             {cart.length > 0 && (
               <div style={{ marginTop: 10, display: "flex", gap: 10 }}>
-                <button className="ul-cart-update-cart-btn" onClick={handleResetCart}>
+                <button
+                  className="ul-cart-update-cart-btn"
+                  onClick={handleResetCart}
+                >
                   Reset Cart
                 </button>
               </div>
@@ -153,24 +156,39 @@ export const CartPage = () => {
               </h3>
 
               <div className="middle">
-                <div className="single-row" style={{ display: "flex", justifyContent: "space-between" }}>
+                <div
+                  className="single-row"
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
                   <span className="inner-title">MRP (incl. taxes)</span>
                   <span className="number">₹{totalMRP.toLocaleString()}</span>
                 </div>
 
-                <div className="single-row" style={{ display: "flex", justifyContent: "space-between" }}>
+                <div
+                  className="single-row"
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
                   <span className="inner-title">Savings</span>
-                  <span className="number" style={{ color: "#16a34a", fontWeight: 700 }}>
+                  <span
+                    className="number"
+                    style={{ color: "#16a34a", fontWeight: 700 }}
+                  >
                     − ₹{totalSavings.toLocaleString()}
                   </span>
                 </div>
 
-                <div className="single-row" style={{ display: "flex", justifyContent: "space-between" }}>
+                <div
+                  className="single-row"
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
                   <span className="inner-title">Subtotal</span>
                   <span className="number">₹{subtotal.toLocaleString()}</span>
                 </div>
 
-                <div className="single-row" style={{ display: "flex", justifyContent: "space-between" }}>
+                <div
+                  className="single-row"
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
                   <span className="inner-title">Shipping</span>
                   <span className="number">
                     {shipping === 0 ? "Free" : `₹${shipping.toLocaleString()}`}
@@ -195,50 +213,45 @@ export const CartPage = () => {
                 <span className="number" style={{ fontWeight: 800 }}>
                   ₹{grandTotal.toLocaleString()}
                 </span>
-                
               </div>
               <div>
-       <button
-      onClick={() => navigate("/checkout")}
-      style={{
-        display: "block",
-        width: "100%",
-        background: "linear-gradient(90deg, #ff5a5f, #ff8a00)",
-        color: "white",
-        fontWeight: "700",
-        fontSize: "16px",
-        border: "none",
-        borderRadius: "8px",
-        padding: "14px 0",
-        cursor: "pointer",
-       
-        transition: "0.3s ease",
-        paddingBottom: "20px",
-        marginBottom: "40px",
-        marginTop:"25px"
-      }}
-      onMouseEnter={(e) =>
-        (e.currentTarget.style.background = "linear-gradient(90deg, #ff8a00, #ff5a5f)")
-      }
-      onMouseLeave={(e) =>
-        (e.currentTarget.style.background = "linear-gradient(90deg, #ff5a5f, #ff8a00)")
-      }
-    >
-      Proceed to Checkout
-    </button>
-    </div>
+                <button
+                  onClick={() => navigate("/checkout")}
+                  style={{
+                    display: "block",
+                    width: "100%",
+                    background: "linear-gradient(90deg, #ff5a5f, #ff8a00)",
+                    color: "white",
+                    fontWeight: "700",
+                    fontSize: "16px",
+                    border: "none",
+                    borderRadius: "8px",
+                    padding: "14px 0",
+                    cursor: "pointer",
+
+                    transition: "0.3s ease",
+                    paddingBottom: "20px",
+                    marginBottom: "40px",
+                    marginTop: "25px",
+                  }}
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.background =
+                      "linear-gradient(90deg, #ff8a00, #ff5a5f)")
+                  }
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.background =
+                      "linear-gradient(90deg, #ff5a5f, #ff8a00)")
+                  }
+                >
+                  Proceed to Checkout
+                </button>
+              </div>
             </div>
-            
           )}
         </div>
-
-       
-        
       </main>
-      
-   <Footer />
 
-      
+      <Footer />
     </div>
   );
 };
@@ -292,8 +305,7 @@ const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
             {size && color ? " • " : ""}
             {color && (
               <>
-                Color:{" "}
-                <b style={{ textTransform: "capitalize" }}>{color}</b>
+                Color: <b style={{ textTransform: "capitalize" }}>{color}</b>
               </>
             )}
           </div>
@@ -322,14 +334,17 @@ const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
         <div className="price-box">
           {pct > 0 && <span className="disc-chip">-{pct}%</span>}
           <div>
-            <span className="price-now">₹{Math.round(unit).toLocaleString()}</span>
+            <span className="price-now">
+              ₹{Math.round(unit).toLocaleString()}
+            </span>
             {pct > 0 && (
-              <span className="price-mrp">₹{Math.round(mrpUnit).toLocaleString()}</span>
+              <span className="price-mrp">
+                ₹{Math.round(mrpUnit).toLocaleString()}
+              </span>
             )}
           </div>
           <div className="subtotal">
-            Subtotal:{" "}
-            <b>₹{Math.round(unit * qty).toLocaleString()}</b>
+            Subtotal: <b>₹{Math.round(unit * qty).toLocaleString()}</b>
           </div>
         </div>
       </div>

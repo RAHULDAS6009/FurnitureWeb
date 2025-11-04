@@ -10,15 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CategorySectionShop from "../components/index/main/categoryshopcircle";
-
-export const products = [
-  { id: 1, price: "$99.00", discount: "25% Off", img: "assets/img/product-img-1.jpg", title: "Orange Airsuit", category: "Fashion Bag", detailsUrl: "/shopdetails", categoryUrl: "/shop", quantity: 1, color: "black", size: "S", rating: 5, inStock: true, onSale: true },
-  { id: 2, price: "$89.00", discount: "10% Off", img: "assets/img/product-img-2.jpg", title: "Blue Backpack", category: "Travel Bag", detailsUrl: "/shopdetails", categoryUrl: "/shop", quantity: 1, color: "blue", size: "M", rating: 4, inStock: true, onSale: true },
-  { id: 3, price: "$120.00", discount: "30% Off", img: "assets/img/product-img-3.jpg", title: "Leather Handbag", category: "Luxury Bag", detailsUrl: "/shopdetails", categoryUrl: "/shop", quantity: 1, color: "brown", size: "L", rating: 5, inStock: true, onSale: true },
-  { id: 4, price: "$70.00", discount: "15% Off", img: "assets/img/product-img-4.jpg", title: "Stylish Tote", category: "Women Bag", detailsUrl: "/shopdetails", categoryUrl: "/shop", quantity: 1, color: "yellow", size: "XL", rating: 3, inStock: true, onSale: false },
-  { id: 5, price: "$60.00", discount: "20% Off", img: "assets/img/product-img-5.jpg", title: "Canvas Shopper", category: "Casual Bag", detailsUrl: "/shopdetails", categoryUrl: "/shop", quantity: 1, color: "green", size: "S", rating: 4, inStock: true, onSale: true },
-  { id: 6, price: "$110.00", discount: "18% Off", img: "assets/img/product-img-6.jpg", title: "Compact Purse", category: "Accessories", detailsUrl: "/shopdetails", categoryUrl: "/shop", quantity: 1, color: "white", size: "M", rating: 4, inStock: false, onSale: false },
-];
+import { products } from "../data/Data";
 
 const parsePrice = (p) => {
   if (typeof p === "number") return p;
@@ -57,10 +49,16 @@ export const ShopPage = () => {
 
   const handleConfirmAdd = () => {
     if (!selectedProduct) return;
-    dispatch(addToCart({ ...selectedProduct, size: chosenSize, quantity: qty }));
+    dispatch(
+      addToCart({ ...selectedProduct, size: chosenSize, quantity: qty })
+    );
     dispatch(getCartTotal());
     setConfirmOpen(false);
-    toast.success(`${qty} × ${selectedProduct.title} added to cart`, { position: "top-right", autoClose: 2000, theme: "colored" });
+    toast.success(`${qty} × ${selectedProduct.title} added to cart`, {
+      position: "top-right",
+      autoClose: 2000,
+      theme: "colored",
+    });
   };
 
   // quick add (no modal)
@@ -73,11 +71,21 @@ export const ShopPage = () => {
     };
     dispatch(addToCart(payload));
     dispatch(getCartTotal());
-    toast.success(`${payload.title} added to cart`, { position: "top-right", autoClose: 1500, theme: "colored" });
+    toast.success(`${payload.title} added to cart`, {
+      position: "top-right",
+      autoClose: 1500,
+      theme: "colored",
+    });
   };
 
-  const categories = useMemo(() => Array.from(new Set(products.map((p) => p.category))), []);
-  const colorOptions = useMemo(() => Array.from(new Set(products.map((p) => p.color))), []);
+  const categories = useMemo(
+    () => Array.from(new Set(products.map((p) => p.category))),
+    []
+  );
+  const colorOptions = useMemo(
+    () => Array.from(new Set(products.map((p) => p.color))),
+    []
+  );
   const sizeOptions = ["S", "M", "L", "XL", "XXL"];
 
   const priceRanges = [
@@ -104,18 +112,31 @@ export const ShopPage = () => {
       });
     }
     switch (sortBy) {
-      case "price_asc": list.sort((a, b) => parsePrice(a.price) - parsePrice(b.price)); break;
-      case "price_desc": list.sort((a, b) => parsePrice(b.price) - parsePrice(a.price)); break;
-      case "title_asc": list.sort((a, b) => a.title.localeCompare(b.title)); break;
-      case "title_desc": list.sort((a, b) => b.title.localeCompare(a.title)); break;
-      default: break;
+      case "price_asc":
+        list.sort((a, b) => parsePrice(a.price) - parsePrice(b.price));
+        break;
+      case "price_desc":
+        list.sort((a, b) => parsePrice(b.price) - parsePrice(a.price));
+        break;
+      case "title_asc":
+        list.sort((a, b) => a.title.localeCompare(b.title));
+        break;
+      case "title_desc":
+        list.sort((a, b) => b.title.localeCompare(a.title));
+        break;
+      default:
+        break;
     }
     return list;
   }, [category, color, status, minRating, priceRange, sortBy]);
 
   const clearAll = () => {
-    setCategory(""); setPriceRange(""); setSortBy("relevance");
-    setColor(""); setStatus(""); setMinRating(0);
+    setCategory("");
+    setPriceRange("");
+    setSortBy("relevance");
+    setColor("");
+    setStatus("");
+    setMinRating(0);
   };
 
   return (
@@ -126,11 +147,27 @@ export const ShopPage = () => {
       {/* ONE-LINE FILTER BAR */}
       <section className="ul-container" style={{ marginTop: 20 }}>
         <div className="ul-toolbar-inline">
-          <select className="ul-pill ul-select ul-control" value={priceRange} onChange={(e) => setPriceRange(e.target.value)} aria-label="Price" title="Price">
-            {priceRanges.map((r) => (<option key={r.key} value={r.key}>{r.label}</option>))}
+          <select
+            className="ul-pill ul-select ul-control"
+            value={priceRange}
+            onChange={(e) => setPriceRange(e.target.value)}
+            aria-label="Price"
+            title="Price"
+          >
+            {priceRanges.map((r) => (
+              <option key={r.key} value={r.key}>
+                {r.label}
+              </option>
+            ))}
           </select>
 
-          <select className="ul-pill ul-select ul-control" value={sortBy} onChange={(e) => setSortBy(e.target.value)} aria-label="Sort by" title="Sort by">
+          <select
+            className="ul-pill ul-select ul-control"
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+            aria-label="Sort by"
+            title="Sort by"
+          >
             <option value="relevance">Sort: Relevance</option>
             <option value="price_asc">Price: Low to High</option>
             <option value="price_desc">Price: High to Low</option>
@@ -138,7 +175,9 @@ export const ShopPage = () => {
             <option value="title_desc">Title: Z → A</option>
           </select>
 
-          <div className="ul-toolbar-count">Showing <strong>{filtered.length}</strong> / {products.length}</div>
+          <div className="ul-toolbar-count">
+            Showing <strong>{filtered.length}</strong> / {products.length}
+          </div>
         </div>
       </section>
 
@@ -149,8 +188,8 @@ export const ShopPage = () => {
             <ProductCard
               key={product.id}
               product={product}
-              onAddClick={() => openConfirm(product)}          // opens confirm dialog
-              onQuickAdd={(e) => handleQuickAdd(product, e)}   // direct add (bag icon)
+              onAddClick={() => openConfirm(product)} // opens confirm dialog
+              onQuickAdd={(e) => handleQuickAdd(product, e)} // direct add (bag icon)
             />
           ))}
           {filtered.length === 0 && (
@@ -164,12 +203,25 @@ export const ShopPage = () => {
       {/* Pagination (visual only) */}
       <div className="ul-pagination">
         <ul>
-          <li><a href="#"><i className="flaticon-left-arrow" /></a></li>
-          <li className="pages">
-            <a href="#" className="active">01</a>
-            <a href="#">02</a><a href="#">03</a><a href="#">04</a><a href="#">05</a>
+          <li>
+            <a href="#">
+              <i className="flaticon-left-arrow" />
+            </a>
           </li>
-          <li><a href="#"><i className="flaticon-arrow-point-to-right" /></a></li>
+          <li className="pages">
+            <a href="#" className="active">
+              01
+            </a>
+            <a href="#">02</a>
+            <a href="#">03</a>
+            <a href="#">04</a>
+            <a href="#">05</a>
+          </li>
+          <li>
+            <a href="#">
+              <i className="flaticon-arrow-point-to-right" />
+            </a>
+          </li>
         </ul>
       </div>
 
@@ -178,11 +230,22 @@ export const ShopPage = () => {
 
       {/* Add-to-Cart Confirm Dialog */}
       {confirmOpen && selectedProduct && (
-        <div className="ul-modal-overlay" role="dialog" aria-modal="true" onClick={closeConfirm}>
+        <div
+          className="ul-modal-overlay"
+          role="dialog"
+          aria-modal="true"
+          onClick={closeConfirm}
+        >
           <div className="ul-modal" onClick={(e) => e.stopPropagation()}>
             <div className="ul-modal-header">
               <h4>Add to Cart</h4>
-              <button className="ul-modal-close" onClick={closeConfirm} aria-label="Close">×</button>
+              <button
+                className="ul-modal-close"
+                onClick={closeConfirm}
+                aria-label="Close"
+              >
+                ×
+              </button>
             </div>
             <div className="ul-modal-body">
               <div className="ul-modal-product">
@@ -197,7 +260,14 @@ export const ShopPage = () => {
                 <label>Size</label>
                 <div className="ul-size-pills">
                   {sizeOptions.map((s) => (
-                    <button key={s} className={`ul-size-pill ${chosenSize === s ? "active" : ""}`} onClick={() => setChosenSize(s)} type="button">
+                    <button
+                      key={s}
+                      className={`ul-size-pill ${
+                        chosenSize === s ? "active" : ""
+                      }`}
+                      onClick={() => setChosenSize(s)}
+                      type="button"
+                    >
                       {s}
                     </button>
                   ))}
@@ -207,15 +277,24 @@ export const ShopPage = () => {
               <div className="ul-modal-row">
                 <label>Quantity</label>
                 <div className="ul-qty">
-                  <button type="button" onClick={() => setQty((q) => Math.max(1, q - 1))}>−</button>
+                  <button
+                    type="button"
+                    onClick={() => setQty((q) => Math.max(1, q - 1))}
+                  >
+                    −
+                  </button>
                   <input type="number" min={1} value={qty} readOnly />
-                  <button type="button" onClick={() => setQty((q) => q + 1)}>+</button>
+                  <button type="button" onClick={() => setQty((q) => q + 1)}>
+                    +
+                  </button>
                 </div>
               </div>
             </div>
 
             <div className="ul-modal-footer">
-              <button className="ul-btn-secondary" onClick={closeConfirm}>Cancel</button>
+              <button className="ul-btn-secondary" onClick={closeConfirm}>
+                Cancel
+              </button>
               <button className="ul-btn-primary" onClick={handleConfirmAdd}>
                 Confirm <i className="flaticon-shopping-bag" />
               </button>
@@ -242,7 +321,16 @@ export const ShopPage = () => {
 
 // ProductCard now supports BOTH: onAddClick (modal) and onQuickAdd (direct bag icon)
 export const ProductCard = ({ product, onAddClick, onQuickAdd }) => {
-  const { id, price, discount, img, title, category, detailsUrl, categoryUrl } = product;
+  const {
+    id,
+    price,
+    discount,
+    images,
+    title,
+    category,
+    detailsUrl,
+    categoryUrl,
+  } = product;
   const navigate = useNavigate();
 
   return (
@@ -254,36 +342,57 @@ export const ProductCard = ({ product, onAddClick, onQuickAdd }) => {
       >
         <div className="ul-product-heading">
           <span className="ul-product-price">{price}</span>
-          <span className="ul-product-discount-tag">{discount}</span>
+          {/* <span className="ul-product-discount-tag">{discount}</span> */}
         </div>
 
-        <div className="ul-product-img">
-          <img src={img} alt={title} />
-          {/* hover actions (open modal add) */}
-          <div
-            className="ul-product-actions"
-            onClick={(e) => e.stopPropagation()}
-            style={{ pointerEvents: "auto" }}  // override global pointer-events none
+        <img
+          src={images[0]}
+          alt={title}
+          style={{
+            objectFit: "cover",
+            width: "100%",
+            height: "100%",
+            marginTop: "10px",
+          }}
+        />
+        {/* hover actions (open modal add) */}
+        <div
+          className="ul-product-actions"
+          onClick={(e) => e.stopPropagation()}
+          style={{ pointerEvents: "auto" }} // override global pointer-events none
+        >
+          {/* <button
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onAddClick?.();
+            }}
           >
-            <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); onAddClick?.(); }}>
-              <i className="flaticon-shopping-bag" />
-            </button>
-          </div>
+            <i className="flaticon-shopping-bag" />
+          </button> */}
         </div>
 
         <div className="ul-product-txt">
           <h4 className="ul-product-title">
-            <a href={detailsUrl} onClick={(e) => e.preventDefault()}>{title}</a>
+            <a href={detailsUrl} onClick={(e) => e.preventDefault()}>
+              {title}
+            </a>
           </h4>
           <h5 className="ul-product-category">
-            <a href={categoryUrl} onClick={(e) => e.preventDefault()}>{category}</a>
+            <a href={categoryUrl} onClick={(e) => e.preventDefault()}>
+              {category}
+            </a>
           </h5>
         </div>
 
         {/* floating quick add (always visible in bottom-right) */}
         <button
           className="ul-quick-add-btn"
-          onClick={(e) => onQuickAdd?.(e)}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            onAddClick?.();
+          }}
           aria-label="Add to cart"
           title="Add to cart"
         >

@@ -2,13 +2,14 @@ import React, { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../redux/cartSlice";
 import { ProductCard } from "../../../pages/ShopPage";
-import { products } from "../../../pages/ShopPage";
+// import { products } from "../../../pages/ShopPage";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 
 import "swiper/css";
 import "swiper/css/navigation";
+import { products } from "../../../data/Data";
 
 const FlashSaleSection = () => {
   const dispatch = useDispatch();
@@ -36,7 +37,10 @@ const FlashSaleSection = () => {
       discount: rawProduct.discount,
       detailsUrl: rawProduct.detailsUrl || "/shopdetails",
       categoryUrl: rawProduct.categoryUrl || "/shop",
-      quantity: rawProduct.quantity && rawProduct.quantity > 0 ? rawProduct.quantity : 1,
+      quantity:
+        rawProduct.quantity && rawProduct.quantity > 0
+          ? rawProduct.quantity
+          : 1,
     };
 
     if (!product.id) {

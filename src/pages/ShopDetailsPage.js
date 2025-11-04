@@ -2,14 +2,15 @@
 import React, { useState, useEffect } from "react";
 import { Header } from "../components/index/Header";
 import Footer from "../components/index/Footer";
-import { products2 } from "../components/index/main/SellingStart";
-import { products } from "./ShopPage";
+// import { products2 } from "../components/index/main/SellingStart";
+// import { products } from "./ShopPage";
 import { useParams } from "react-router-dom";
 import Carousel from "../components/Carousel";
 import { useDispatch } from "react-redux";
 import { addToCart, getCartTotal } from "../redux/cartSlice";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { products } from "../data/Data";
 
 /* -------------------------------------------------------
    DYNAMIC REVIEWS STORE (per product)
@@ -23,11 +24,31 @@ const reviewsByProduct = {
     count: 60559,
     highlights: ["Comfortable fit", "Value for money", "Good build quality"],
     media: [
-      { type: "image", src: "/assets/reviews/p1_img1.jpg", alt: "Customer photo 1" },
-      { type: "image", src: "/assets/reviews/p1_img2.jpg", alt: "Customer photo 2" },
-      { type: "video", src: "/assets/reviews/p1_video.mp4", poster: "/assets/reviews/p1_video_poster.jpg" },
-      { type: "image", src: "/assets/reviews/p1_img3.jpg", alt: "Customer photo 3" },
-      { type: "image", src: "/assets/reviews/p1_img4.jpg", alt: "Customer photo 4" },
+      {
+        type: "image",
+        src: "/assets/reviews/p1_img1.jpg",
+        alt: "Customer photo 1",
+      },
+      {
+        type: "image",
+        src: "/assets/reviews/p1_img2.jpg",
+        alt: "Customer photo 2",
+      },
+      {
+        type: "video",
+        src: "/assets/reviews/p1_video.mp4",
+        poster: "/assets/reviews/p1_video_poster.jpg",
+      },
+      {
+        type: "image",
+        src: "/assets/reviews/p1_img3.jpg",
+        alt: "Customer photo 3",
+      },
+      {
+        type: "image",
+        src: "/assets/reviews/p1_img4.jpg",
+        alt: "Customer photo 4",
+      },
       // add more if you like; grid shows first 5 and overlays +N
     ],
     reviews: [
@@ -51,11 +72,30 @@ const reviewsByProduct = {
     count: 1289,
     highlights: ["Lightweight", "Looks premium"],
     media: [
-      { type: "image", src: "/assets/reviews/p2_img1.jpg", alt: "Customer photo 1" },
-      { type: "video", src: "/assets/reviews/p2_vid.mp4", poster: "/assets/reviews/p2_vid_poster.jpg" },
-      { type: "image", src: "/assets/reviews/p2_img2.jpg", alt: "Customer photo 2" },
+      {
+        type: "image",
+        src: "/assets/reviews/p2_img1.jpg",
+        alt: "Customer photo 1",
+      },
+      {
+        type: "video",
+        src: "/assets/reviews/p2_vid.mp4",
+        poster: "/assets/reviews/p2_vid_poster.jpg",
+      },
+      {
+        type: "image",
+        src: "/assets/reviews/p2_img2.jpg",
+        alt: "Customer photo 2",
+      },
     ],
-    reviews: [{ user: "Kunal", stars: 4, date: "Jan 05, 2025", text: "Worth the price." }],
+    reviews: [
+      {
+        user: "Kunal",
+        stars: 4,
+        date: "Jan 05, 2025",
+        text: "Worth the price.",
+      },
+    ],
   },
   // more product ids...
 };
@@ -84,14 +124,25 @@ const Lightbox = ({ open, item, onClose }) => {
       onClick={onClose}
       style={{ backdropFilter: "blur(2px)" }}
     >
-      <div className="ul-modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 900 }}>
+      <div
+        className="ul-modal"
+        onClick={(e) => e.stopPropagation()}
+        style={{ maxWidth: 900 }}
+      >
         <div className="ul-modal-header">
           <h4>Preview</h4>
-          <button className="ul-modal-close" onClick={onClose} aria-label="Close">
+          <button
+            className="ul-modal-close"
+            onClick={onClose}
+            aria-label="Close"
+          >
             ×
           </button>
         </div>
-        <div className="ul-modal-body" style={{ display: "flex", justifyContent: "center" }}>
+        <div
+          className="ul-modal-body"
+          style={{ display: "flex", justifyContent: "center" }}
+        >
           {item.type === "image" ? (
             <img
               src={item.src}
@@ -130,7 +181,11 @@ const ReviewMediaGrid = ({ media = [] }) => {
     <>
       <div
         className="ul-review-media-grid"
-        style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 8 }}
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(5, 1fr)",
+          gap: 8,
+        }}
       >
         {firstFive.map((m, idx) => {
           const isLastWithExtra = idx === 4 && extraCount > 0;
@@ -147,13 +202,21 @@ const ReviewMediaGrid = ({ media = [] }) => {
                 overflow: "hidden",
                 background: "#f3f4f6",
               }}
-              aria-label={m.type === "video" ? "Play review video" : "Open review image"}
+              aria-label={
+                m.type === "video" ? "Play review video" : "Open review image"
+              }
             >
               {m.type === "image" ? (
                 <img
                   src={m.src}
                   alt={m.alt || "Review media"}
-                  style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                  }}
                   loading="lazy"
                 />
               ) : (
@@ -161,7 +224,13 @@ const ReviewMediaGrid = ({ media = [] }) => {
                   <img
                     src={m.poster}
                     alt="Video preview"
-                    style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
                     loading="lazy"
                   />
                   <span
@@ -220,12 +289,22 @@ const ReviewsSection = ({ pid }) => {
     );
   }
 
-  const { rating, verdict, count, media = [], highlights = [], reviews = [] } = data;
+  const {
+    rating,
+    verdict,
+    count,
+    media = [],
+    highlights = [],
+    reviews = [],
+  } = data;
 
   return (
     <section className="ul-product-details-reviews" style={{ marginTop: 24 }}>
       {/* Summary Header (Flipkart-like) */}
-      <div className="flex items-center gap-3" style={{ display: "flex", alignItems: "center", gap: 12 }}>
+      <div
+        className="flex items-center gap-3"
+        style={{ display: "flex", alignItems: "center", gap: 12 }}
+      >
         <div
           style={{
             display: "inline-flex",
@@ -242,7 +321,8 @@ const ReviewsSection = ({ pid }) => {
           <span style={{ marginLeft: 6, fontWeight: 600 }}>{verdict}</span>
         </div>
         <span style={{ color: "#6b7280" }}>
-          based on {count.toLocaleString()} ratings by <span title="Verified Buyers">✔</span> Verified Buyers
+          based on {count.toLocaleString()} ratings by{" "}
+          <span title="Verified Buyers">✔</span> Verified Buyers
         </span>
       </div>
 
@@ -256,12 +336,30 @@ const ReviewsSection = ({ pid }) => {
       {/* Highlights */}
       {highlights.length > 0 && (
         <div style={{ marginTop: 16 }}>
-          <h4 className="ul-product-details-inner-title" style={{ marginBottom: 8, fontSize: 16 }}>
+          <h4
+            className="ul-product-details-inner-title"
+            style={{ marginBottom: 8, fontSize: 16 }}
+          >
             Features customers loved
           </h4>
-          <ul style={{ display: "flex", flexWrap: "wrap", gap: 8, listStyle: "none", padding: 0 }}>
+          <ul
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              gap: 8,
+              listStyle: "none",
+              padding: 0,
+            }}
+          >
             {highlights.map((h, i) => (
-              <li key={i} style={{ background: "#f3f4f6", padding: "6px 10px", borderRadius: 999 }}>
+              <li
+                key={i}
+                style={{
+                  background: "#f3f4f6",
+                  padding: "6px 10px",
+                  borderRadius: 999,
+                }}
+              >
                 {h}
               </li>
             ))}
@@ -273,12 +371,29 @@ const ReviewsSection = ({ pid }) => {
       {reviews.length > 0 && (
         <div style={{ marginTop: 16 }}>
           {reviews.map((r, i) => (
-            <article key={i} className="ul-product-details-review" style={{ display: "flex", gap: 12 }}>
-              <div className="ul-product-details-review-txt" style={{ flex: 1 }}>
-                <div className="header" style={{ display: "flex", justifyContent: "space-between" }}>
+            <article
+              key={i}
+              className="ul-product-details-review"
+              style={{ display: "flex", gap: 12 }}
+            >
+              <div
+                className="ul-product-details-review-txt"
+                style={{ flex: 1 }}
+              >
+                <div
+                  className="header"
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
                   <div className="left">
-                    <h4 className="reviewer-name" style={{ margin: 0 }}>{r.user}</h4>
-                    <h5 className="review-date" style={{ margin: 0, color: "#6b7280" }}>{r.date}</h5>
+                    <h4 className="reviewer-name" style={{ margin: 0 }}>
+                      {r.user}
+                    </h4>
+                    <h5
+                      className="review-date"
+                      style={{ margin: 0, color: "#6b7280" }}
+                    >
+                      {r.date}
+                    </h5>
                   </div>
                   <div className="right">
                     <StarRow value={r.stars} />
@@ -297,10 +412,9 @@ const ReviewsSection = ({ pid }) => {
 /* ====================== MAIN PAGE ====================== */
 export default function ShopDetailsPage() {
   const { id } = useParams();
-  const productId = Number(id);
-  const product =
-    products.find((item) => item.id === productId) ||
-    products2.find((item) => item.id === productId);
+  const productId = id;
+  const product = products.find((item) => item.id === productId);
+  // products2.find((item) => item.id === productId);
 
   const [qty, setQty] = useState(1);
   const [size, setSize] = useState("S");
@@ -369,7 +483,7 @@ export default function ShopDetailsPage() {
               <div className="row ul-bs-row row-cols-lg-2 row-cols-1 align-items-center">
                 {/* img */}
                 <div className="col flex justify-center items-center h-full">
-                  <Carousel slides={[`/${product.img}`, `/${product.img}`]} />
+                  <Carousel slides={product.images} />
                 </div>
 
                 {/* txt */}
@@ -384,25 +498,39 @@ export default function ShopDetailsPage() {
                         <i className="flaticon-star" />
                         <i className="flaticon-star" />
                       </span>
-                      <span className="review-number">(2 Customer Reviews)</span>
+                      <span className="review-number">
+                        (2 Customer Reviews)
+                      </span>
                     </div>
 
                     {/* price */}
-                    <span className="ul-product-details-price">{product.price}</span>
+                    <span className="ul-product-details-price">
+                      {product.price}
+                    </span>
 
                     {/* product title */}
-                    <h3 className="ul-product-details-title">{product.title}</h3>
+                    <h3 className="ul-product-details-title">
+                      {product.title}
+                    </h3>
 
                     {/* product description */}
-                    <p className="ul-product-details-descr">{product.productdescription}</p>
+                    <p className="ul-product-details-descr">
+                      {product.productdescription}
+                    </p>
 
                     {/* product options */}
                     <div className="ul-product-details-options">
                       <div className="ul-product-details-option ul-product-details-sizes">
                         <span className="title">Size</span>
-                        <form className="variants" onSubmit={(e) => e.preventDefault()}>
+                        <form
+                          className="variants"
+                          onSubmit={(e) => e.preventDefault()}
+                        >
                           {["S", "M", "L", "XL", "XXL"].map((s) => (
-                            <label key={s} htmlFor={`ul-product-details-size-${s}`}>
+                            <label
+                              key={s}
+                              htmlFor={`ul-product-details-size-${s}`}
+                            >
                               <input
                                 type="radio"
                                 name="product-size"
@@ -411,7 +539,13 @@ export default function ShopDetailsPage() {
                                 onChange={() => setSize(s)}
                                 hidden
                               />
-                              <span className={`size-btn ${size === s ? "active" : ""}`}>{s}</span>
+                              <span
+                                className={`size-btn ${
+                                  size === s ? "active" : ""
+                                }`}
+                              >
+                                {s}
+                              </span>
                             </label>
                           ))}
                         </form>
@@ -419,14 +553,20 @@ export default function ShopDetailsPage() {
 
                       <div className="ul-product-details-option ul-product-details-colors">
                         <span className="title">Color</span>
-                        <form className="variants" onSubmit={(e) => e.preventDefault()}>
+                        <form
+                          className="variants"
+                          onSubmit={(e) => e.preventDefault()}
+                        >
                           {[
                             { key: "green", cls: "green" },
                             { key: "blue", cls: "blue" },
                             { key: "brown", cls: "brown" },
                             { key: "red", cls: "red" },
                           ].map((c, idx) => (
-                            <label key={c.key} htmlFor={`ul-product-details-color-${idx + 1}`}>
+                            <label
+                              key={c.key}
+                              htmlFor={`ul-product-details-color-${idx + 1}`}
+                            >
                               <input
                                 type="radio"
                                 name="product-color"
@@ -435,7 +575,11 @@ export default function ShopDetailsPage() {
                                 onChange={() => setColor(c.key)}
                                 hidden
                               />
-                              <span className={`color-btn ${c.cls} ${color === c.key ? "active" : ""}`} />
+                              <span
+                                className={`color-btn ${c.cls} ${
+                                  color === c.key ? "active" : ""
+                                }`}
+                              />
                             </label>
                           ))}
                         </form>
@@ -445,8 +589,17 @@ export default function ShopDetailsPage() {
                     {/* product quantity */}
                     <div className="ul-product-details-option ul-product-details-quantity">
                       <span className="title">Quantity</span>
-                      <form className="ul-product-quantity-wrapper" onSubmit={(e) => e.preventDefault()}>
-                        <input type="number" className="ul-product-quantity" value={qty} min={1} readOnly />
+                      <form
+                        className="ul-product-quantity-wrapper"
+                        onSubmit={(e) => e.preventDefault()}
+                      >
+                        <input
+                          type="number"
+                          className="ul-product-quantity"
+                          value={qty}
+                          min={1}
+                          readOnly
+                        />
                         <div className="btns">
                           <button
                             type="button"
@@ -471,7 +624,10 @@ export default function ShopDetailsPage() {
                     {/* product actions */}
                     <div className="ul-product-details-actions">
                       <div className="left">
-                        <button className="add-to-cart" onClick={handleAddToCart}>
+                        <button
+                          className="add-to-cart"
+                          onClick={handleAddToCart}
+                        >
                           Add to Cart{" "}
                           <span className="icon">
                             <i className="flaticon-cart" />
@@ -510,12 +666,14 @@ export default function ShopDetailsPage() {
             <div className="ul-product-details-bottom">
               {/* description */}
               <div className="ul-product-details-long-descr-wrapper">
-                <h3 className="ul-product-details-inner-title">Item Description</h3>
-                <p>{product.productdescription || "No description."}</p>
+                <h3 className="ul-product-details-inner-title">
+                  {product.title}
+                </h3>
+                <p>{product.description || "No description."}</p>
               </div>
 
               {/* ✅ DYNAMIC ratings + media + text reviews */}
-              <ReviewsSection pid={productId} />
+              <ReviewsSection pid={productId} reviews={product.reviews} />
 
               {/* (optional) keep your review form below if you want */}
             </div>

@@ -30,26 +30,28 @@ const Carousel = ({ slides }) => {
     <div className="w-full flex gap-2 relative overflow-hidden">
       <img
         key={slide} // force re-render for animation
-        className="slide-animation w-full object-cover"
+        className="slide-animation w-full object-cover rounded-md"
         // slide from left
         src={slides[slide]}
         alt=""
       />
 
-      <div className="absolute  inset-0 flex justify-between items-center p-2">
-        <div
-          onClick={prev}
-          className="rounded-full size-8 border-2 bg-gray-50 hover:bg-white flex justify-center items-center cursor-pointer"
-        >
-          <LeftChevron />
+      {slides.length > 1 && (
+        <div className="absolute  inset-0 flex justify-between items-center p-2">
+          <div
+            onClick={prev}
+            className="rounded-full size-8 border-2 bg-gray-50 hover:bg-white flex justify-center items-center cursor-pointer"
+          >
+            <LeftChevron />
+          </div>
+          <div
+            onClick={next}
+            className="rounded-full size-8 border-2 bg-gray-50 hover:bg-white flex justify-center items-center cursor-pointer"
+          >
+            <RightChevron />
+          </div>
         </div>
-        <div
-          onClick={next}
-          className="rounded-full size-8 border-2 bg-gray-50 hover:bg-white flex justify-center items-center cursor-pointer"
-        >
-          <RightChevron />
-        </div>
-      </div>
+      )}
     </div>
   );
 };

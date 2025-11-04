@@ -3,7 +3,6 @@ import { products } from "../data/Data";
 import { BiCart } from "react-icons/bi";
 import Modal from "../common/Modal";
 import Heading from "../common/Heading";
-import { IoMdHeartEmpty, IoMdSearch } from "react-icons/io";
 
 const FlashSale = () => {
   const [isModalOpen, setIsModalOpen] = useState(null);
@@ -21,13 +20,22 @@ const FlashSale = () => {
         <div className="grid grid-cols-4 gap-3">
           {products.map((item, index) => (
             <div key={index} className="mt-8">
+              {/* {item.images[0]} */}
               <div className="overflow-hidden relative">
                 <div className="image-container relative">
                   <div className="rounded-3xl">
-                    <img src={item.img} alt="img" className="rounded-3xl" />
+                    {/* {item.images.map((item) => {
+                      return ( */}
+                    <img
+                      //
+                      src={item.images[0]}
+                      alt="img"
+                      className="rounded-3xl"
+                    />
+                    {/* ); */}
+                    {/* })} */}
                   </div>
 
-                 
                   <div className="opacity-0 absolute -bottom-3 right-0 bg-white p-4 rounded-s-2xl">
                     <div className="bg-black text-white h-10 w-10 grid place-items-center rounded-3xl">
                       <button
