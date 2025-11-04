@@ -100,187 +100,55 @@ const reviewsByProduct = {
   // more product ids...
 };
 
-/* ------------------ Small helpers ------------------ */
-const StarRow = ({ value = 0 }) => (
-  <span className="rating" aria-label={`${value} out of 5`}>
-    {Array.from({ length: 5 }).map((_, i) => (
-      <i
-        key={i}
-        className={i < Math.round(value) ? "flaticon-star" : "flaticon-star-3"}
-        aria-hidden="true"
-      />
-    ))}
-  </span>
-);
-
-/* ------------------ Lightbox Modal ------------------ */
-const Lightbox = ({ open, item, onClose }) => {
-  if (!open || !item) return null;
+const StarRow = ({ value }) => {
+  const stars = Array.from({ length: 5 }, (_, i) => i + 1);
   return (
-    <div
-      className="ul-modal-overlay"
-      role="dialog"
-      aria-modal="true"
-      onClick={onClose}
-      style={{ backdropFilter: "blur(2px)" }}
-    >
-      <div
-        className="ul-modal"
-        onClick={(e) => e.stopPropagation()}
-        style={{ maxWidth: 900 }}
-      >
-        <div className="ul-modal-header">
-          <h4>Preview</h4>
-          <button
-            className="ul-modal-close"
-            onClick={onClose}
-            aria-label="Close"
-          >
-            ×
-          </button>
-        </div>
-        <div
-          className="ul-modal-body"
-          style={{ display: "flex", justifyContent: "center" }}
+    <div style={{ display: "flex", gap: 2 }}>
+      {stars.map((s, i) => (
+        <span
+          key={i}
+          style={{
+            color: s <= value ? "#fbbf24" : "#d1d5db",
+            fontSize: 14,
+          }}
         >
-          {item.type === "image" ? (
-            <img
-              src={item.src}
-              alt={item.alt || "Review media"}
-              style={{ maxHeight: "70vh", width: "auto", maxWidth: "100%" }}
-            />
-          ) : (
-            <video
-              src={item.src}
-              poster={item.poster}
-              controls
-              style={{ maxHeight: "70vh", width: "100%" }}
-            />
-          )}
-        </div>
-      </div>
+          ★
+        </span>
+      ))}
     </div>
   );
 };
 
-/* ------------------ Media Grid (thumbs) ------------------ */
-const ReviewMediaGrid = ({ media = [] }) => {
-  const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [activeItem, setActiveItem] = useState(null);
-
-  const open = (m) => {
-    setActiveItem(m);
-    setLightboxOpen(true);
-  };
-  const close = () => setLightboxOpen(false);
-
-  const firstFive = media.slice(0, 5);
-  const extraCount = Math.max(media.length - 5, 0);
-
+const ReviewMediaGrid = ({ media }) => {
+  if (!media.length) return null;
   return (
-    <>
-      <div
-        className="ul-review-media-grid"
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(5, 1fr)",
-          gap: 8,
-        }}
-      >
-        {firstFive.map((m, idx) => {
-          const isLastWithExtra = idx === 4 && extraCount > 0;
-          return (
-            <button
-              type="button"
-              key={idx}
-              onClick={() => open(m)}
-              style={{
-                position: "relative",
-                width: "100%",
-                paddingTop: "100%",
-                borderRadius: 8,
-                overflow: "hidden",
-                background: "#f3f4f6",
-              }}
-              aria-label={
-                m.type === "video" ? "Play review video" : "Open review image"
-              }
-            >
-              {m.type === "image" ? (
-                <img
-                  src={m.src}
-                  alt={m.alt || "Review media"}
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                  }}
-                  loading="lazy"
-                />
-              ) : (
-                <>
-                  <img
-                    src={m.poster}
-                    alt="Video preview"
-                    style={{
-                      position: "absolute",
-                      inset: 0,
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                    }}
-                    loading="lazy"
-                  />
-                  <span
-                    style={{
-                      position: "absolute",
-                      inset: "auto 8px 8px auto",
-                      background: "rgba(0,0,0,.65)",
-                      color: "#fff",
-                      padding: "2px 6px",
-                      borderRadius: 6,
-                      fontSize: 12,
-                    }}
-                  >
-                    ▶
-                  </span>
-                </>
-              )}
-
-              {isLastWithExtra && (
-                <span
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    background: "rgba(0,0,0,.45)",
-                    color: "#fff",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontWeight: 700,
-                    fontSize: 16,
-                  }}
-                >
-                  +{extraCount}
-                </span>
-              )}
-            </button>
-          );
-        })}
-      </div>
-
-      <Lightbox open={lightboxOpen} item={activeItem} onClose={close} />
-    </>
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fill, 100px)",
+        gap: 8,
+      }}
+    >
+      {media.map((src, i) => (
+        <img
+          key={i}
+          src={src}
+          alt={`Review media ${i + 1}`}
+          style={{
+            width: 100,
+            height: 100,
+            objectFit: "cover",
+            borderRadius: 8,
+            cursor: "pointer",
+          }}
+        />
+      ))}
+    </div>
   );
 };
 
-/* ------------------ Reviews Section (dynamic) ------------------ */
-const ReviewsSection = ({ pid }) => {
-  const data = reviewsByProduct[pid];
-
-  if (!data) {
+export const ReviewsSection = ({ pid, reviews = [] }) => {
+  if (!reviews.length) {
     return (
       <section className="ul-product-details-reviews" style={{ marginTop: 24 }}>
         <h3 className="ul-product-details-inner-title">Ratings and reviews</h3>
@@ -289,18 +157,24 @@ const ReviewsSection = ({ pid }) => {
     );
   }
 
-  const {
-    rating,
-    verdict,
-    count,
-    media = [],
-    highlights = [],
-    reviews = [],
-  } = data;
+  // Calculate average rating & summary
+  const averageRating =
+    reviews.reduce((acc, r) => acc + r.rating, 0) / reviews.length;
+
+  const ratingText =
+    averageRating >= 4.5
+      ? "Excellent"
+      : averageRating >= 3.5
+      ? "Good"
+      : averageRating >= 2.5
+      ? "Average"
+      : "Poor";
+
+  const allMedia = reviews.flatMap((r) => r.images || []);
 
   return (
     <section className="ul-product-details-reviews" style={{ marginTop: 24 }}>
-      {/* Summary Header (Flipkart-like) */}
+      {/* Header Summary */}
       <div
         className="flex items-center gap-3"
         style={{ display: "flex", alignItems: "center", gap: 12 }}
@@ -317,94 +191,56 @@ const ReviewsSection = ({ pid }) => {
             fontWeight: 700,
           }}
         >
-          {rating.toFixed(1)} <span style={{ fontSize: 12 }}>★</span>
-          <span style={{ marginLeft: 6, fontWeight: 600 }}>{verdict}</span>
+          {averageRating.toFixed(1)} <span style={{ fontSize: 12 }}>★</span>
+          <span style={{ marginLeft: 6, fontWeight: 600 }}>{ratingText}</span>
         </div>
         <span style={{ color: "#6b7280" }}>
-          based on {count.toLocaleString()} ratings by{" "}
-          <span title="Verified Buyers">✔</span> Verified Buyers
+          based on {reviews.length} reviews
         </span>
       </div>
 
       {/* Media Grid */}
-      {media.length > 0 && (
+      {allMedia.length > 0 && (
         <div style={{ marginTop: 12 }}>
-          <ReviewMediaGrid media={media} />
-        </div>
-      )}
-
-      {/* Highlights */}
-      {highlights.length > 0 && (
-        <div style={{ marginTop: 16 }}>
-          <h4
-            className="ul-product-details-inner-title"
-            style={{ marginBottom: 8, fontSize: 16 }}
-          >
-            Features customers loved
-          </h4>
-          <ul
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              gap: 8,
-              listStyle: "none",
-              padding: 0,
-            }}
-          >
-            {highlights.map((h, i) => (
-              <li
-                key={i}
-                style={{
-                  background: "#f3f4f6",
-                  padding: "6px 10px",
-                  borderRadius: 999,
-                }}
-              >
-                {h}
-              </li>
-            ))}
-          </ul>
+          <ReviewMediaGrid media={allMedia} />
         </div>
       )}
 
       {/* Individual Reviews */}
-      {reviews.length > 0 && (
-        <div style={{ marginTop: 16 }}>
-          {reviews.map((r, i) => (
-            <article
-              key={i}
-              className="ul-product-details-review"
-              style={{ display: "flex", gap: 12 }}
+      <div style={{ marginTop: 20 }}>
+        {reviews.map((r, i) => (
+          <article
+            key={i}
+            className="ul-product-details-review"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 6,
+              borderBottom: "1px solid #e5e7eb",
+              paddingBottom: 12,
+              marginBottom: 12,
+            }}
+          >
+            <div
+              className="header"
+              style={{ display: "flex", justifyContent: "space-between" }}
             >
-              <div
-                className="ul-product-details-review-txt"
-                style={{ flex: 1 }}
-              >
-                <div
-                  className="header"
-                  style={{ display: "flex", justifyContent: "space-between" }}
-                >
-                  <div className="left">
-                    <h4 className="reviewer-name" style={{ margin: 0 }}>
-                      {r.user}
-                    </h4>
-                    <h5
-                      className="review-date"
-                      style={{ margin: 0, color: "#6b7280" }}
-                    >
-                      {r.date}
-                    </h5>
-                  </div>
-                  <div className="right">
-                    <StarRow value={r.stars} />
-                  </div>
-                </div>
-                <p style={{ marginTop: 6 }}>{r.text}</p>
+              <div>
+                <h4 style={{ margin: 0 }}>{r.user}</h4>
               </div>
-            </article>
-          ))}
-        </div>
-      )}
+              <StarRow value={r.rating} />
+            </div>
+
+            <p style={{ margin: "4px 0", color: "#374151" }}>{r.comment}</p>
+
+            {r.images?.length > 0 && (
+              <div style={{ marginTop: 6 }}>
+                <ReviewMediaGrid media={r.images} />
+              </div>
+            )}
+          </article>
+        ))}
+      </div>
     </section>
   );
 };
@@ -491,15 +327,53 @@ export default function ShopDetailsPage() {
                   <div className="ul-product-details-txt">
                     {/* product rating (static display) */}
                     <div className="ul-product-details-rating">
-                      <span className="rating" aria-label="5 out of 5">
-                        <i className="flaticon-star" />
-                        <i className="flaticon-star" />
-                        <i className="flaticon-star" />
-                        <i className="flaticon-star" />
-                        <i className="flaticon-star" />
+                      <span
+                        className="rating"
+                        aria-label={`${product.rating} out of 5`}
+                      >
+                        {Array.from({ length: 5 }, (_, index) => {
+                          const starValue = index + 1;
+                          if (product.rating >= starValue) {
+                            // full star
+                            return (
+                              <i
+                                key={index}
+                                className="flaticon-star"
+                                style={{ color: "#FFD700" }}
+                              />
+                            );
+                          } else if (product.rating >= starValue - 0.5) {
+                            // half star
+                            return (
+                              <i
+                                key={index}
+                                className="flaticon-star"
+                                style={{
+                                  background:
+                                    "linear-gradient(90deg, #FFD700 50%, #ccc 50%)",
+                                  WebkitBackgroundClip: "text",
+                                  color: "transparent",
+                                }}
+                              />
+                            );
+                          } else {
+                            // empty star
+                            return (
+                              <i
+                                key={index}
+                                className="flaticon-star"
+                                style={{ color: "#ccc" }}
+                              />
+                            );
+                          }
+                        })}
+                        <span style={{ marginLeft: 6, fontWeight: 500 }}>
+                          {product.rating.toFixed(1)}
+                        </span>
                       </span>
+
                       <span className="review-number">
-                        (2 Customer Reviews)
+                        ({product.reviews.length} customer reviews)
                       </span>
                     </div>
 
@@ -515,7 +389,7 @@ export default function ShopDetailsPage() {
 
                     {/* product description */}
                     <p className="ul-product-details-descr">
-                      {product.productdescription}
+                      {product.description}
                     </p>
 
                     {/* product options */}

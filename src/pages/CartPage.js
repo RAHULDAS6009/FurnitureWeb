@@ -260,14 +260,15 @@ export const CartPage = () => {
    Compact Flipkart-style Cart Item card (UI only)
    ========================================================= */
 const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
-  const { title, img, price, quantity, size, color, discount, onSale } = item;
+  const { title, images, price, quantity, size, color, discount, onSale } =
+    item;
 
   const unit = parsePrice(price);
   const qty = Number(quantity) || 1;
   const pct = pctFromDiscount(discount);
   const mrpUnit = pct ? unit / (1 - pct / 100) : unit;
 
-  const imgSrc = "/" + String(img || "").replace(/^\/+/, "");
+  const imgSrc = "/" + String(images[0] || "").replace(/^\/+/, "");
 
   // ETA text
   const eta = new Date();
@@ -283,7 +284,6 @@ const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
       {/* <div className="cart-card-head">
         {onSale && <span className="badge-deal">SUPER DEALS</span>}
       </div> */}
-
       <div className="cart-row">
         {/* image */}
         <a href="/shopdetails" aria-label={title}>

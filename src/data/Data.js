@@ -413,7 +413,7 @@ export const products = [
         rating: 5,
         comment:
           "Excellent fit and great quality fabric. Looks very premium and is comfortable to wear all day. Received many compliments!",
-        images: ["/products/review-img-rs-01.jpg"],
+        images: ["/products/product-1.jpg"],
         videos: [],
       },
       {
@@ -421,7 +421,7 @@ export const products = [
         rating: 4,
         comment:
           "Good waistcoat for the price. The grey color is exactly as shown in the picture. The fit is slightly on the regular side, not slim fit, but still looks good.",
-        images: [],
+        images: ["/products/product-1.jpg"],
         videos: [],
       },
       {
@@ -429,7 +429,7 @@ export const products = [
         rating: 4.5,
         comment:
           "Very stylish and versatile. I paired it with a white shirt and blue jeans, just like the photo, and it looked great for a family function.",
-        images: ["/products/review-img-ak-01.jpg"],
+        images: ["/products/product-1.jpg"],
         videos: [],
       },
     ],
@@ -454,7 +454,7 @@ export const products = [
         rating: 5,
         comment:
           "The beige color is very elegant and the material feels high quality. The buttons add a nice premium touch. Very happy with this purchase.",
-        images: ["/products/review-img-mp-01.jpg"],
+        images: ["/products/product-2.jpg"],
         videos: [],
       },
       {
@@ -462,7 +462,7 @@ export const products = [
         rating: 4,
         comment:
           "Fits well and is very comfortable. It's a versatile jacket that works for both casual and semi-formal occasions. Good value for money.",
-        images: [],
+        images: ["/products/product-2.jpg"],
         videos: [],
       },
       {
@@ -470,18 +470,15 @@ export const products = [
         rating: 4.5,
         comment:
           "I bought this for a friend's engagement party and it looked fantastic. The solid beige color is easy to pair with different shirts. Recommended.",
-        images: [
-          "/products/review-img-ds-01.jpg",
-          "/products/review-img-ds-02.jpg",
-        ],
-        videos: ["/products/review-vid-ds-01.mp4"],
+        images: ["/products/product-2.jpg"],
+        videos: [],
       },
       {
         user: "Vikram",
         rating: 4,
         comment:
           "The jacket is nice, but the fit is a bit more 'regular' than 'slim'. If you are looking for a tight fit, order a size down. Quality is good otherwise.",
-        images: [],
+        images: ["/products/product-2.jpg"],
         videos: [],
       },
     ],
@@ -511,7 +508,12 @@ export const products = [
         rating: 5,
         comment:
           "Love this shirt! The fit is perfect, and the fabric is really soft and breathable. The stripes look even better in person. Great for a casual day out.",
-        images: ["/products/review-img-kt-01.jpg"],
+        images: [
+          "/products/product-3.1.jpg",
+          "/products/product-3.4.jpg",
+          "/products/product-3.3.jpg",
+          "/products/product-3.2.jpg",
+        ],
         videos: [],
       },
       {
@@ -519,7 +521,12 @@ export const products = [
         rating: 4.5,
         comment:
           "Finally found a striped shirt that fits my build well. It's not too tight and not too baggy. The quality is solid for the price. A classic look.",
-        images: [],
+        images: [
+          "/products/product-3.1.jpg",
+          "/products/product-3.4.jpg",
+          "/products/product-3.3.jpg",
+          "/products/product-3.2.jpg",
+        ],
         videos: [],
       },
       {
@@ -527,7 +534,12 @@ export const products = [
         rating: 4,
         comment:
           "Good shirt, but the material is a bit thinner than I expected. It's great for summer, but maybe not for cooler weather. Still looks good and the color is nice.",
-        images: ["/products/review-img-anil-01.jpg"],
+        images: [
+          "/products/product-3.1.jpg",
+          "/products/product-3.4.jpg",
+          "/products/product-3.3.jpg",
+          "/products/product-3.2.jpg",
+        ],
         videos: [],
       },
       {
@@ -535,8 +547,13 @@ export const products = [
         rating: 5,
         comment:
           "A classic shirt that everyone should have. Easy to wash, and it doesn't wrinkle too much. I've worn it to the office on a casual Friday and also for a Sunday brunch. Very versatile.",
-        images: [],
-        videos: ["/products/review-vid-pb-01.mp4"],
+        images: [
+          "/products/product-3.1.jpg",
+          "/products/product-3.4.jpg",
+          "/products/product-3.3.jpg",
+          "/products/product-3.2.jpg",
+        ],
+        videos: [],
       },
     ],
   },
@@ -564,7 +581,11 @@ export const products = [
         rating: 5,
         comment:
           "The olive color is fantastic, exactly as pictured. Fabric is sturdy and feels like it will last a long time. Great fit for a casual look.",
-        images: ["/products/review-img-sy-01.jpg"],
+        images: [
+          "/products/product-4.1.jpg",
+          "/products/product-4.2.jpg",
+          "/products/product-4.3.jpg",
+        ],
         videos: [],
       },
       {
@@ -572,7 +593,11 @@ export const products = [
         rating: 4,
         comment:
           "Good solid shirt for daily wear. The material is a bit stiff at first but gets softer after a wash. Happy with the purchase.",
-        images: [],
+        images: [
+          "/products/product-4.1.jpg",
+          "/products/product-4.2.jpg",
+          "/products/product-4.3.jpg",
+        ],
         videos: [],
       },
       {
@@ -581,8 +606,9 @@ export const products = [
         comment:
           "I'm very particular about the shade of olive green, and this one is perfect. It's not too bright and not too dull. Fit is also comfortable.",
         images: [
-          "/products/review-img-ns-01.jpg",
-          "/products/review-img-ns-02.jpg",
+          "/products/product-4.1.jpg",
+          "/products/product-4.2.jpg",
+          "/products/product-4.3.jpg",
         ],
         videos: [],
       },
@@ -591,7 +617,11 @@ export const products = [
         rating: 4,
         comment:
           "A decent shirt for the price. The pocket is useful and the stitching is clean. A good staple item.",
-        images: [],
+        images: [
+          "/products/product-4.1.jpg",
+          "/products/product-4.2.jpg",
+          "/products/product-4.3.jpg",
+        ],
         videos: [],
       },
     ],
@@ -616,7 +646,7 @@ export const products = [
         rating: 5,
         comment:
           "Fantastic jacket! The black is very sharp, and I love the flap pockets. It gives it a slightly different look than the usual waistcoats. Great fit and quality.",
-        images: ["/products/review-img-ar-01.jpg"],
+        images: ["/products/product-5.jpg"],
         videos: [],
       },
       {
@@ -624,7 +654,7 @@ export const products = [
         rating: 4.5,
         comment:
           "A very stylish and practical waistcoat. The pockets are functional, and the fit is comfortable. Looks great over a kurta or a shirt.",
-        images: ["/products/review-img-mk-01.jpg"],
+        images: ["/products/product-5.jpg"],
         videos: [],
       },
       {
@@ -632,7 +662,7 @@ export const products = [
         rating: 4,
         comment:
           "Good product. The fabric is a bit thick, which is good for mild winters but maybe not for hot summer days. Overall, a solid purchase.",
-        images: [],
+        images: ["/products/product-5.jpg"],
         videos: [],
       },
       {
@@ -640,8 +670,8 @@ export const products = [
         rating: 5,
         comment:
           "Bought this for a wedding event, and it was perfect. The black is deep and rich, and it looks very elegant. Fits true to size.",
-        images: [],
-        videos: ["/products/review-vid-san-01.mp4"],
+        images: ["/products/product-5.jpg"],
+        videos: [],
       },
     ],
   },
@@ -669,7 +699,11 @@ export const products = [
         rating: 5,
         comment:
           "Love the texture of this shirt! The color is unique and I've gotten several compliments. It's very soft and comfortable too. A great buy.",
-        images: ["/products/review-img-rk-01.jpg"],
+        images: [
+          "/products/product-6.2.jpg",
+          "/products/product-6.1.jpg",
+          "/products/product-6.3.jpg",
+        ],
         videos: [],
       },
       {
@@ -677,7 +711,11 @@ export const products = [
         rating: 4,
         comment:
           "Nice shirt, the color is as shown. The texture is interesting. Only thing is the fabric is a bit on the thinner side, good for summer. Fit is as expected.",
-        images: [],
+        images: [
+          "/products/product-6.2.jpg",
+          "/products/product-6.1.jpg",
+          "/products/product-6.3.jpg",
+        ],
         videos: [],
       },
       {
@@ -685,15 +723,23 @@ export const products = [
         rating: 4.5,
         comment:
           "This is my new favorite casual shirt. The textured material looks premium, and the fit is just right. It's perfect for a day out with friends.",
-        images: ["/products/review-img-av-01.jpg"],
-        videos: ["/products/review-vid-av-01.mp4"],
+        images: [
+          "/products/product-6.2.jpg",
+          "/products/product-6.1.jpg",
+          "/products/product-6.3.jpg",
+        ],
+        videos: [],
       },
       {
         user: "Manoj",
         rating: 4.5,
         comment:
           "Good quality and great style. The fabric feels different in a good way. Recommended.",
-        images: [],
+        images: [
+          "/products/product-6.2.jpg",
+          "/products/product-6.1.jpg",
+          "/products/product-6.3.jpg",
+        ],
         videos: [],
       },
     ],
@@ -722,7 +768,11 @@ export const products = [
         rating: 5,
         comment:
           "Perfect navy shirt. The button-down collar gives it a smart look. Fabric is comfortable and the fit is spot on.",
-        images: ["/products/review-img-vg-01.jpg"],
+        images: [
+          "/products/product-7.1.jpg",
+          "/products/product-7.2.jpg",
+          "/products/product-7.3.jpg",
+        ],
         videos: [],
       },
       {
@@ -730,7 +780,11 @@ export const products = [
         rating: 4.5,
         comment:
           "Great shirt for the price. The color is a deep navy, just what I wanted. It's become my go-to shirt for casual Fridays.",
-        images: [],
+        images: [
+          "/products/product-7.1.jpg",
+          "/products/product-7.2.jpg",
+          "/products/product-7.3.jpg",
+        ],
         videos: [],
       },
       {
@@ -738,7 +792,11 @@ export const products = [
         rating: 4,
         comment:
           "Solid shirt, good quality. It does wrinkle a bit after washing, but that's expected with cotton. Otherwise, no complaints.",
-        images: ["/products/review-img-sp-01.jpg"],
+        images: [
+          "/products/product-7.1.jpg",
+          "/products/product-7.2.jpg",
+          "/products/product-7.3.jpg",
+        ],
         videos: [],
       },
       {
@@ -746,8 +804,12 @@ export const products = [
         rating: 5,
         comment:
           "Excellent fit and classic style. The material feels durable. Highly recommend this.",
-        images: [],
-        videos: ["/products/review-vid-jp-01.mp4"],
+        images: [
+          "/products/product-7.1.jpg",
+          "/products/product-7.2.jpg",
+          "/products/product-7.3.jpg",
+        ],
+        videos: [],
       },
     ],
   },
@@ -771,7 +833,7 @@ export const products = [
         rating: 5,
         comment:
           "The fabric texture is amazing! It's lightweight and very comfortable, perfect for summer. The light yellow color is very pleasant.",
-        images: ["/products/review-img-nd-01.jpg"],
+        images: ["/products/product-8.1.jpg", "/products/product-8.2.jpg"],
         videos: [],
       },
       {
@@ -779,7 +841,7 @@ export const products = [
         rating: 4,
         comment:
           "Nice shirt, the color and texture are exactly as shown. I just wish I had a front picture before buying, but it's a standard button-down. Happy with it.",
-        images: [],
+        images: ["/products/product-8.1.jpg", "/products/product-8.2.jpg"],
         videos: [],
       },
       {
@@ -787,7 +849,7 @@ export const products = [
         rating: 4.5,
         comment:
           "A very elegant and comfortable shirt. The material feels like a soft cotton or linen blend. Great for casual outings. Fit is true to size.",
-        images: ["/products/review-img-rohit-01.jpg"],
+        images: ["/products/product-8.1.jpg", "/products/product-8.2.jpg"],
         videos: [],
       },
     ],
