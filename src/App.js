@@ -29,6 +29,11 @@ import FloatingWhatsApp from "./components/FloatingWhatsApp";
 import StickyOrderBar from "./components/StickyOrderBar";
 import { OrderConfirmation } from "./components/OrderConfirmation";
 
+import { TermsPage } from "./pages/Tandc";
+import { PrivacyPage } from "./pages/PrivacyPolicy";
+import { ContactPage } from "./pages/Contactus";
+import { ShippingPage } from "./pages/Shopping";
+
 const App = () => {
   return (
     <Router>
@@ -46,6 +51,11 @@ const App = () => {
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/sell" element={<Sell />} />
+
+        <Route path="/t&c" element={<TermsPage />} />
+        <Route path="/shipping" element={<ShippingPage />} />
+        <Route path="/contactus" element={<ContactPage />} />
+        <Route path="/privacypolicy" element={<PrivacyPage />} />
 
         {/* 🔎 NEW: search route */}
         <Route path="/search" element={<SearchResults />} />
