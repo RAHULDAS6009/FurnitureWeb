@@ -284,10 +284,15 @@ const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
       {/* <div className="cart-card-head">
         {onSale && <span className="badge-deal">SUPER DEALS</span>}
       </div> */}
+      {images[0]}
       <div className="cart-row">
         {/* image */}
         <a href="/shopdetails" aria-label={title}>
-          <img className="cart-img" src={images[0]} alt={title} />
+          <img
+            className="cart-img"
+            src={images?.[0] || "/products/placeholder.png"} // fallback image
+            alt={title || "Product image"}
+          />
         </a>
 
         {/* details */}
