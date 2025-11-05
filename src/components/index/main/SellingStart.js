@@ -1,141 +1,130 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-export const products2 = [
-  {
-    id: 31,
-    price: "$99.00",
-    discount: "25% Off",
-    img: "assets/img/product-img-sm-1.jpg",
-    title: "Orange Airsuit",
-    category: "best-selling",
-    detailsUrl: "/shopdetails",
-    categoryUrl: "/shop",
-    quantity: 1,
-    productdescription: "fherugheruyghuoerhfgvuijfdhguiverhuigyrugherouighjerufhgeruifjghuerhgerhgujerhgu"
-
-  },
-  {
-    id: 32,
-    price: "$89.00",
-    discount: "10% Off",
-    img: "assets/img/product-img-sm-2.jpg",
-    title: "Blue Backpack",
-    category: "on-selling",
-    detailsUrl: "/shopdetails",
-    categoryUrl: "/shop",
-    quantity: 1,
-    productdescription: "kunalsingh"
-  },
-  {
-    id: 33,
-    price: "$120.00",
-    discount: "30% Off",
-    img: "assets/img/product-img-sm-3.jpg",
-    title: "Leather Handbag",
-    category: "top-rating",
-    detailsUrl: "/shopdetails",
-    categoryUrl: "/shop",
-    quantity: 1,
-  },
-  {
-    id: 34,
-    price: "$70.00",
-    discount: "15% Off",
-    img: "assets/img/product-img-sm-4.jpg",
-    title: "Stylish Tote",
-    category: "best-selling",
-    detailsUrl: "/shopdetails",
-    categoryUrl: "/shop",
-    quantity: 1,
-  },
-  {
-    id: 35,
-    price: "$60.00",
-    discount: "20% Off",
-    img: "assets/img/product-img-sm-5.jpg",
-    title: "Canvas Shopper",
-    category: "on-selling",
-    detailsUrl: "/shopdetails",
-    categoryUrl: "/shop",
-    quantity: 1,
-  },
-  {
-    id: 36,
-    price: "$110.00",
-    discount: "18% Off",
-    img: "assets/img/product-img-sm-6.jpg",
-    title: "Compact Purse",
-    category: "top-rating",
-    detailsUrl: "/shopdetails",
-    categoryUrl: "/shop",
-    quantity: 1,
-  },
-  {
-    id: 37,
-    price: "$95.00",
-    discount: "12% Off",
-    img: "assets/img/product-img-sm-7.jpg",
-    title: "Classic Satchel",
-    category: "best-selling",
-    detailsUrl: "/shopdetails",
-    categoryUrl: "/shop",
-    quantity: 1,
-  },
-  {
-    id: 38,
-    price: "$80.00",
-    discount: "8% Off",
-    img: "assets/img/product-img-sm-8.jpg",
-    title: "Urban Crossbody",
-    category: "on-selling",
-    detailsUrl: "/shopdetails",
-    categoryUrl: "/shop",
-    quantity: 1,
-  },
-  {
-    id: 39,
-    price: "$95.00",
-    discount: "10% Off",
-    img: "assets/img/product-img-sm-9.jpg",
-    title: "Slim Laptop Bag",
-    category: "top-rating",
-    detailsUrl: "/shopdetails",
-    categoryUrl: "/shop",
-    quantity: 1,
-  },
-  {
-    id: 40,
-    price: "$105.00",
-    discount: "15% Off",
-    img: "assets/img/product-img-sm-10.jpg",
-    title: "Sport Duffel",
-    category: "best-selling",
-    detailsUrl: "/shopdetails",
-    categoryUrl: "/shop",
-    quantity: 1,
-  },
-];
+import { products } from "../../../data/Data";
+// export const products2 = [
+//   {
+//     id: 31,
+//     price: "$99.00",
+//     discount: "25% Off",
+//     img: "assets/img/product-img-sm-1.jpg",
+//     title: "Orange Airsuit",
+//     category: "best-selling",
+//     detailsUrl: "/shopdetails",
+//     categoryUrl: "/shop",
+//     quantity: 1,
+//     productdescription:
+//       "fherugheruyghuoerhfgvuijfdhguiverhuigyrugherouighjerufhgeruifjghuerhgerhgujerhgu",
+//   },
+//   {
+//     id: 32,
+//     price: "$89.00",
+//     discount: "10% Off",
+//     img: "assets/img/product-img-sm-2.jpg",
+//     title: "Blue Backpack",
+//     category: "on-selling",
+//     detailsUrl: "/shopdetails",
+//     categoryUrl: "/shop",
+//     quantity: 1,
+//     productdescription: "kunalsingh",
+//   },
+//   {
+//     id: 33,
+//     price: "$120.00",
+//     discount: "30% Off",
+//     img: "assets/img/product-img-sm-3.jpg",
+//     title: "Leather Handbag",
+//     category: "top-rating",
+//     detailsUrl: "/shopdetails",
+//     categoryUrl: "/shop",
+//     quantity: 1,
+//   },
+//   {
+//     id: 34,
+//     price: "$70.00",
+//     discount: "15% Off",
+//     img: "assets/img/product-img-sm-4.jpg",
+//     title: "Stylish Tote",
+//     category: "best-selling",
+//     detailsUrl: "/shopdetails",
+//     categoryUrl: "/shop",
+//     quantity: 1,
+//   },
+//   {
+//     id: 35,
+//     price: "$60.00",
+//     discount: "20% Off",
+//     img: "assets/img/product-img-sm-5.jpg",
+//     title: "Canvas Shopper",
+//     category: "on-selling",
+//     detailsUrl: "/shopdetails",
+//     categoryUrl: "/shop",
+//     quantity: 1,
+//   },
+//   {
+//     id: 36,
+//     price: "$110.00",
+//     discount: "18% Off",
+//     img: "assets/img/product-img-sm-6.jpg",
+//     title: "Compact Purse",
+//     category: "top-rating",
+//     detailsUrl: "/shopdetails",
+//     categoryUrl: "/shop",
+//     quantity: 1,
+//   },
+//   {
+//     id: 37,
+//     price: "$95.00",
+//     discount: "12% Off",
+//     img: "assets/img/product-img-sm-7.jpg",
+//     title: "Classic Satchel",
+//     category: "best-selling",
+//     detailsUrl: "/shopdetails",
+//     categoryUrl: "/shop",
+//     quantity: 1,
+//   },
+//   {
+//     id: 38,
+//     price: "$80.00",
+//     discount: "8% Off",
+//     img: "assets/img/product-img-sm-8.jpg",
+//     title: "Urban Crossbody",
+//     category: "on-selling",
+//     detailsUrl: "/shopdetails",
+//     categoryUrl: "/shop",
+//     quantity: 1,
+//   },
+//   {
+//     id: 39,
+//     price: "$95.00",
+//     discount: "10% Off",
+//     img: "assets/img/product-img-sm-9.jpg",
+//     title: "Slim Laptop Bag",
+//     category: "top-rating",
+//     detailsUrl: "/shopdetails",
+//     categoryUrl: "/shop",
+//     quantity: 1,
+//   },
+//   {
+//     id: 40,
+//     price: "$105.00",
+//     discount: "15% Off",
+//     img: "assets/img/product-img-sm-10.jpg",
+//     title: "Sport Duffel",
+//     category: "best-selling",
+//     detailsUrl: "/shopdetails",
+//     categoryUrl: "/shop",
+//     quantity: 1,
+//   },
+// ];
 
 const MostSellingSection = () => {
   const [activeFilter, setActiveFilter] = useState("all");
   const navigate = useNavigate();
-  // const products = [
-  //   { id: 1, img: "product-img-sm-1.jpg", category: "best-selling" },
-  //   { id: 2, img: "product-img-sm-2.jpg", category: "on-selling" },
-  //   { id: 3, img: "product-img-sm-3.jpg", category: "top-rating" },
-  //   { id: 4, img: "product-img-sm-4.jpg", category: "best-selling" },
-  //   { id: 5, img: "product-img-sm-5.jpg", category: "on-selling" },
-  //   { id: 6, img: "product-img-sm-6.jpg", category: "top-rating" },
-  //   { id: 7, img: "product-img-sm-7.jpg", category: "best-selling" },
-  //   { id: 8, img: "product-img-sm-8.jpg", category: "on-selling" },
-  //   { id: 9, img: "product-img-sm-9.jpg", category: "top-rating" },
-  //   { id: 10, img: "product-img-sm-10.jpg", category: "best-selling" },
-  // ];
 
   const filteredProducts =
     activeFilter === "all"
-      ? products2
-      : products2.filter((p) => p.category === activeFilter);
+      ? products
+      : products.filter((p) => p.productSellingCategory === activeFilter);
 
   const handleFilterChange = (filter) => {
     setActiveFilter(filter);
@@ -185,13 +174,23 @@ const MostSellingSection = () => {
                   navigate(`/shopdetails/${product.id}`);
                 }}
                 key={product.id}
-                className={`mix col ${product.category} fade-in-up`}
+                className={`mix col ${product.productSellingCategory} fade-in-up `}
                 style={{ animationDelay: `${index * 0.05}s` }}
               >
                 {/* {product.img} */}
-                <div className="ul-product-horizontal">
+                <div className="ul-product-horizontal h-48">
                   <div className="ul-product-horizontal-img">
-                    <img src={`${product.img}`} alt="Product" loading="lazy" />
+                    <img
+                      src={`${product.images[0]}`}
+                      alt="Product"
+                      loading="lazy"
+                      style={{
+                        objectFit: "cover",
+                        width: "100px",
+                        height: "100px",
+                        // height: "px",
+                      }}
+                    />
                   </div>
 
                   <div className="ul-product-horizontal-txt">

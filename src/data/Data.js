@@ -406,6 +406,7 @@ export const products = [
     inStock: true,
     OnSale: true,
     category: "men",
+    productSellingCategory: "top-rating",
     rating: 4.5,
     reviews: [
       {
@@ -447,6 +448,7 @@ export const products = [
     inStock: true,
     OnSale: true,
     category: "men",
+    productSellingCategory: "on-selling",
     rating: 4.4,
     reviews: [
       {
@@ -501,6 +503,7 @@ export const products = [
     inStock: true,
     OnSale: true,
     category: "men",
+    productSellingCategory: "top-rating",
     rating: 4.6,
     reviews: [
       {
@@ -574,6 +577,7 @@ export const products = [
     inStock: true,
     OnSale: true,
     category: "men",
+    productSellingCategory: "best-selling",
     rating: 4.4,
     reviews: [
       {
@@ -639,6 +643,7 @@ export const products = [
     inStock: true,
     OnSale: true,
     category: "men",
+    productSellingCategory: "best-selling",
     rating: 4.5,
     reviews: [
       {
@@ -692,6 +697,7 @@ export const products = [
     inStock: true,
     OnSale: true,
     category: "men",
+    productSellingCategory: "top-rating",
     rating: 4.5,
     reviews: [
       {
@@ -761,6 +767,7 @@ export const products = [
     inStock: true,
     OnSale: true,
     category: "men",
+    productSellingCategory: "top-rating",
     rating: 4.6,
     reviews: [
       {
@@ -826,6 +833,7 @@ export const products = [
     inStock: true,
     OnSale: true,
     category: "men",
+    productSellingCategory: "on-selling",
     rating: 4.4,
     reviews: [
       {

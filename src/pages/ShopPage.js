@@ -351,10 +351,11 @@ export const ProductCard = ({ product, onAddClick, onQuickAdd }) => {
         <img
           src={images[0]}
           alt={title}
+          className="rounded-md"
           style={{
             objectFit: "cover",
-            width: "100%",
-            height: "100%",
+            width: "300px",
+            height: "350px",
             marginBottom: "30px",
           }}
         />

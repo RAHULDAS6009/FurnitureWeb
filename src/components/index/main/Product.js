@@ -125,7 +125,7 @@ const ProductsSection = () => {
                   {products.map((product) => (
                     <SwiperSlide key={product.id}>
                       {/* Wrap so we can layer our quick add button on top */}
-                      <div className="ul-product-card-wrap">
+                      <div className="ul-product-card-wrap h-full">
                         {/* Your existing card */}
                         <ProductCard
                           product={product}
