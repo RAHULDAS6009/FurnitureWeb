@@ -38,8 +38,8 @@ export default function Footer() {
             </h3>
             <div className="ul-footer-middle-widget-content">
               <div className="contact-nums">
-                <a href="tel:1234567890">(500) 8001 8588</a>,{" "}
-                <a href="tel:1234567890">(500) 544 6550</a>
+                <a href="tel:+918791676705">+91 8791676705</a>,{" "}
+                <a href="mailto:montoaklyn@gmail.com">montoaklyn@gmail.com</a>
               </div>
             </div>
           </div>

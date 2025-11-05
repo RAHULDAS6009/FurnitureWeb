@@ -66,8 +66,8 @@ const App = () => {
       {/* for suggestion we need to hit ctrl + space */}
       {/* WhatsApp bubble (always on top of pages) */}
       <FloatingWhatsApp
-        phone="919876543210" // <-- put your number
-        message="Hi! I want to order."
+        phone="+918791676705" // <-- put your number
+        message="Hi! I want to order..."
         position="right" // "left" or "right"
         offsetX={10}
         offsetY={65}
