@@ -377,8 +377,8 @@ export const ProductCard = ({ product, onAddClick, onQuickAdd }) => {
           alt={title}
           className="rounded-md"
           style={{
-            objectFit: "cover",
-            width: "300px",
+            objectFit: "fill",
+            width: "98%",
             height: "350px",
             marginBottom: "30px",
           }}
