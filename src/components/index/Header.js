@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import SiderBar from "./SiderBar";
 
-
 export const Header = () => {
   const state = useSelector((state) => state.cart.data);
   const [items, setItem] = useState(0);
@@ -73,7 +72,7 @@ export const Header = () => {
             <div className="header-bottom-left">
               <div className="logo-container">
                 <a href="/" className="d-inline-block">
-                  <img src="/assets/img/logo.svg" alt="logo" className="logo" />
+                  <img src="assets/img/logo.svg" alt="logo" className="logo" />
                 </a>
               </div>
 
@@ -127,15 +126,9 @@ export const Header = () => {
                   <a href="/shop">Shop</a>
                   <a href="/shop">Women</a>
                   <a href="/shop">Men's</a>
-                  {/* <a href="/shop">Kids</a>
-                  <a href="/blog">Blog</a> */}
+                 
 
-                  {/* <div className="has-sub-menu has-mega-menu">
-                    <a role="button">Pages</a>
-                    <div className="ul-header-submenu ul-header-megamenu">
-                     
-                    </div>
-                  </div> */}
+                  
                 </nav>
               </div>
             </div>
@@ -145,7 +138,7 @@ export const Header = () => {
               <button className="ul-header-mobile-search-opener d-xxl-none">
                 <i className="flaticon-search-interface-symbol"></i>
               </button>
-              <a href="/login"><i className="flaticon-user"></i></a>
+              {/* <a href="/login"><i className="flaticon-user"></i></a> */}
               {/* <a href="/wishlist"><i className="flaticon-heart"></i></a> */}
               <a href="/cart">
                 <i className="flaticon-shopping-bag relative">

@@ -2,8 +2,6 @@
 import React, { useState, useEffect } from "react";
 import { Header } from "../components/index/Header";
 import Footer from "../components/index/Footer";
-// import { products2 } from "../components/index/main/SellingStart";
-// import { products } from "./ShopPage";
 import { useParams } from "react-router-dom";
 import Carousel from "../components/Carousel";
 import { useDispatch } from "react-redux";
@@ -11,95 +9,12 @@ import { addToCart, getCartTotal } from "../redux/cartSlice";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { products } from "../data/Data";
+import { useNavigate } from "react-router-dom";
 
-/* -------------------------------------------------------
-   DYNAMIC REVIEWS STORE (per product)
-   - Edit/add entries by product id
-   - Replace sample media paths with your real assets
-------------------------------------------------------- */
-const reviewsByProduct = {
-  1: {
-    rating: 4.3,
-    verdict: "Very Good",
-    count: 60559,
-    highlights: ["Comfortable fit", "Value for money", "Good build quality"],
-    media: [
-      {
-        type: "image",
-        src: "/assets/reviews/p1_img1.jpg",
-        alt: "Customer photo 1",
-      },
-      {
-        type: "image",
-        src: "/assets/reviews/p1_img2.jpg",
-        alt: "Customer photo 2",
-      },
-      {
-        type: "video",
-        src: "/assets/reviews/p1_video.mp4",
-        poster: "/assets/reviews/p1_video_poster.jpg",
-      },
-      {
-        type: "image",
-        src: "/assets/reviews/p1_img3.jpg",
-        alt: "Customer photo 3",
-      },
-      {
-        type: "image",
-        src: "/assets/reviews/p1_img4.jpg",
-        alt: "Customer photo 4",
-      },
-      // add more if you like; grid shows first 5 and overlays +N
-    ],
-    reviews: [
-      {
-        user: "Rohit",
-        stars: 5,
-        date: "Mar 12, 2025",
-        text: "Shoes are superb! Cushioning is great for daily use.",
-      },
-      {
-        user: "Aisha",
-        stars: 4,
-        date: "Feb 28, 2025",
-        text: "Color matches the photos. Laces a bit long but overall nice.",
-      },
-    ],
-  },
-  2: {
-    rating: 4.1,
-    verdict: "Good",
-    count: 1289,
-    highlights: ["Lightweight", "Looks premium"],
-    media: [
-      {
-        type: "image",
-        src: "/assets/reviews/p2_img1.jpg",
-        alt: "Customer photo 1",
-      },
-      {
-        type: "video",
-        src: "/assets/reviews/p2_vid.mp4",
-        poster: "/assets/reviews/p2_vid_poster.jpg",
-      },
-      {
-        type: "image",
-        src: "/assets/reviews/p2_img2.jpg",
-        alt: "Customer photo 2",
-      },
-    ],
-    reviews: [
-      {
-        user: "Kunal",
-        stars: 4,
-        date: "Jan 05, 2025",
-        text: "Worth the price.",
-      },
-    ],
-  },
-  // more product ids...
-};
 
+/* -----------------------------
+   SMALL REUSABLE PIECES
+----------------------------- */
 const StarRow = ({ value }) => {
   const stars = Array.from({ length: 5 }, (_, i) => i + 1);
   return (
@@ -119,8 +34,14 @@ const StarRow = ({ value }) => {
   );
 };
 
-const ReviewMediaGrid = ({ media }) => {
+// ✅ show only first 2 review media items, then overlay +N
+const ReviewMediaGrid = ({ media = [] }) => {
   if (!media.length) return null;
+
+  const MAX_SHOW = 2;
+  const visible = media.slice(0, MAX_SHOW);
+  const remaining = media.length - MAX_SHOW;
+
   return (
     <div
       style={{
@@ -129,19 +50,40 @@ const ReviewMediaGrid = ({ media }) => {
         gap: 8,
       }}
     >
-      {media.map((src, i) => (
-        <img
+      {visible.map((src, i) => (
+        <div
           key={i}
-          src={src}
-          alt={`Review media ${i + 1}`}
-          style={{
-            width: 100,
-            height: 100,
-            objectFit: "cover",
-            borderRadius: 8,
-            cursor: "pointer",
-          }}
-        />
+          style={{ position: "relative", width: 100, height: 100 }}
+        >
+          <img
+            src={src}
+            alt={`Review media ${i + 1}`}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              borderRadius: 8,
+            }}
+          />
+          {i === visible.length - 1 && remaining > 0 && (
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                background: "rgba(0,0,0,0.55)",
+                color: "#fff",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: 8,
+                fontWeight: 600,
+                fontSize: 14,
+              }}
+            >
+              +{remaining} more
+            </div>
+          )}
+        </div>
       ))}
     </div>
   );
@@ -151,15 +93,18 @@ export const ReviewsSection = ({ pid, reviews = [] }) => {
   if (!reviews.length) {
     return (
       <section className="ul-product-details-reviews" style={{ marginTop: 24 }}>
-        <h3 className="ul-product-details-inner-title">Ratings and reviews</h3>
+        <h3 className="ul-product-details-inner-title">
+          Ratings and reviews
+        </h3>
         <p>No reviews yet. Be the first to review this product.</p>
       </section>
     );
   }
 
-  // Calculate average rating & summary
+  // in your data, a review looks like:
+  // { user, rating, comment, images: [...] }
   const averageRating =
-    reviews.reduce((acc, r) => acc + r.rating, 0) / reviews.length;
+    reviews.reduce((acc, r) => acc + (r.rating || 0), 0) / reviews.length;
 
   const ratingText =
     averageRating >= 4.5
@@ -199,7 +144,7 @@ export const ReviewsSection = ({ pid, reviews = [] }) => {
         </span>
       </div>
 
-      {/* Media Grid */}
+      {/* Media Grid (capped) */}
       {allMedia.length > 0 && (
         <div style={{ marginTop: 12 }}>
           <ReviewMediaGrid media={allMedia} />
@@ -228,10 +173,12 @@ export const ReviewsSection = ({ pid, reviews = [] }) => {
               <div>
                 <h4 style={{ margin: 0 }}>{r.user}</h4>
               </div>
-              <StarRow value={r.rating} />
+              <StarRow value={r.rating || 0} />
             </div>
 
-            <p style={{ margin: "4px 0", color: "#374151" }}>{r.comment}</p>
+            <p style={{ margin: "4px 0", color: "#374151" }}>
+              {r.comment || r.text || ""}
+            </p>
 
             {r.images?.length > 0 && (
               <div style={{ marginTop: 6 }}>
@@ -245,12 +192,84 @@ export const ReviewsSection = ({ pid, reviews = [] }) => {
   );
 };
 
+
+const RelatedProducts = ({ currentProduct, allProducts }) => {
+  const navigate = useNavigate();
+
+  if (!currentProduct) return null;
+
+  const related = allProducts
+    .filter(
+      (p) =>
+        String(p.id) !== String(currentProduct.id) &&
+        p.category &&
+        currentProduct.category &&
+        p.category.toLowerCase() === currentProduct.category.toLowerCase()
+    )
+    .slice(0, 4);
+
+  if (!related.length) return null;
+
+  return (
+    <section style={{ marginTop: 32 }}>
+      <h3 className="ul-product-details-inner-title">Related products</h3>
+      <div className="flex flex-col gap-4">
+        {related.map((p) => {
+          const imgSrc = Array.isArray(p.images) ? p.images[0] : p.images;
+
+          return (
+            <div
+              key={p.id}
+              className="ul-product-horizontal cursor-pointer hover:shadow-md transition"
+              style={{
+                display: "flex",
+                gap: 12,
+                border: "1px solid #eee",
+                borderRadius: 10,
+                padding: 10,
+                background: "#fff",
+              }}
+              onClick={() => navigate(`/shopdetails/${p.id}`)} // ✅ navigate on click
+            >
+              <div
+                style={{
+                  width: 70,
+                  height: 70,
+                  overflow: "hidden",
+                  borderRadius: 8,
+                  background: "#f3f4f6",
+                  flexShrink: 0,
+                }}
+              >
+                {imgSrc ? (
+                  <img
+                    src={imgSrc}
+                    alt={p.title}
+                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  />
+                ) : null}
+              </div>
+              <div style={{ flex: 1 }}>
+                <h4 style={{ margin: 0, fontSize: 14 }}>{p.title}</h4>
+                <p style={{ margin: "4px 0", fontSize: 13, color: "#6b7280" }}>
+                  {p.price}
+                </p>
+                <p style={{ margin: 0, fontSize: 12, color: "#9ca3af" }}>
+                  {p.category}
+                </p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  );
+};
 /* ====================== MAIN PAGE ====================== */
 export default function ShopDetailsPage() {
   const { id } = useParams();
-  const productId = id;
-  const product = products.find((item) => item.id === productId);
-  // products2.find((item) => item.id === productId);
+  // make sure we compare as string
+  const product = products.find((item) => String(item.id) === String(id));
 
   const [qty, setQty] = useState(1);
   const [size, setSize] = useState("S");
@@ -260,13 +279,14 @@ export default function ShopDetailsPage() {
   // ✅ Scroll to top on mount
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+  }, [id]);
 
   const incQty = () => setQty((q) => q + 1);
   const decQty = () => setQty((q) => (q > 1 ? q - 1 : 1));
 
   const handleAddToCart = () => {
     if (!product) return;
+    // include selected size/color
     dispatch(addToCart({ ...product, size, color, quantity: qty }));
     dispatch(getCartTotal());
     toast.success(`${qty} × ${product.title} added to cart`, {
@@ -293,7 +313,7 @@ export default function ShopDetailsPage() {
       <Header />
       <ToastContainer />
       <main>
-        {/* BREADCRUMB SECTION START */}
+        {/* BREADCRUMB */}
         <div className="ul-container">
           <div className="ul-breadcrumb">
             <h2 className="ul-breadcrumb-title">Shop Details</h2>
@@ -310,22 +330,24 @@ export default function ShopDetailsPage() {
             </div>
           </div>
         </div>
-        {/* BREADCRUMB SECTION END */}
 
-        {/* MAIN CONTENT SECTION START */}
+        {/* MAIN CONTENT */}
         <div className="ul-inner-page-container">
           <div className="ul-product-details">
             <div className="ul-product-details-top">
               <div className="row ul-bs-row row-cols-lg-2 row-cols-1 align-items-center">
-                {/* img */}
+                {/* images */}
                 <div className="col flex justify-center items-center h-full">
-                  <Carousel slides={product.images} />
+                  {/* product.images is array in your data */}
+                  <Carousel
+                    slides={Array.isArray(product.images) ? product.images : [product.images]}
+                  />
                 </div>
 
-                {/* txt */}
+                {/* text */}
                 <div className="col">
                   <div className="ul-product-details-txt">
-                    {/* product rating (static display) */}
+                    {/* rating */}
                     <div className="ul-product-details-rating">
                       <span
                         className="rating"
@@ -334,7 +356,6 @@ export default function ShopDetailsPage() {
                         {Array.from({ length: 5 }, (_, index) => {
                           const starValue = index + 1;
                           if (product.rating >= starValue) {
-                            // full star
                             return (
                               <i
                                 key={index}
@@ -343,7 +364,6 @@ export default function ShopDetailsPage() {
                               />
                             );
                           } else if (product.rating >= starValue - 0.5) {
-                            // half star
                             return (
                               <i
                                 key={index}
@@ -357,7 +377,6 @@ export default function ShopDetailsPage() {
                               />
                             );
                           } else {
-                            // empty star
                             return (
                               <i
                                 key={index}
@@ -368,12 +387,14 @@ export default function ShopDetailsPage() {
                           }
                         })}
                         <span style={{ marginLeft: 6, fontWeight: 500 }}>
-                          {product.rating.toFixed(1)}
+                          {product.rating?.toFixed
+                            ? product.rating.toFixed(1)
+                            : product.rating}
                         </span>
                       </span>
 
                       <span className="review-number">
-                        ({product.reviews.length} customer reviews)
+                        ({product.reviews?.length || 0} customer reviews)
                       </span>
                     </div>
 
@@ -382,18 +403,19 @@ export default function ShopDetailsPage() {
                       {product.price}
                     </span>
 
-                    {/* product title */}
+                    {/* title */}
                     <h3 className="ul-product-details-title">
                       {product.title}
                     </h3>
 
-                    {/* product description */}
+                    {/* description */}
                     <p className="ul-product-details-descr">
                       {product.description}
                     </p>
 
-                    {/* product options */}
+                    {/* options */}
                     <div className="ul-product-details-options">
+                      {/* sizes */}
                       <div className="ul-product-details-option ul-product-details-sizes">
                         <span className="title">Size</span>
                         <form
@@ -425,6 +447,7 @@ export default function ShopDetailsPage() {
                         </form>
                       </div>
 
+                      {/* colors */}
                       <div className="ul-product-details-option ul-product-details-colors">
                         <span className="title">Color</span>
                         <form
@@ -460,7 +483,7 @@ export default function ShopDetailsPage() {
                       </div>
                     </div>
 
-                    {/* product quantity */}
+                    {/* quantity */}
                     <div className="ul-product-details-option ul-product-details-quantity">
                       <span className="title">Quantity</span>
                       <form
@@ -495,7 +518,7 @@ export default function ShopDetailsPage() {
                       </form>
                     </div>
 
-                    {/* product actions */}
+                    {/* actions */}
                     <div className="ul-product-details-actions">
                       <div className="left">
                         <button
@@ -532,11 +555,11 @@ export default function ShopDetailsPage() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div>{" "}
               {/* row */}
             </div>
-            {/* top */}
 
+            {/* bottom: description, reviews, related */}
             <div className="ul-product-details-bottom">
               {/* description */}
               <div className="ul-product-details-long-descr-wrapper">
@@ -546,14 +569,14 @@ export default function ShopDetailsPage() {
                 <p>{product.description || "No description."}</p>
               </div>
 
-              {/* ✅ DYNAMIC ratings + media + text reviews */}
-              <ReviewsSection pid={productId} reviews={product.reviews} />
+              {/* reviews (with capped media) */}
+              <ReviewsSection pid={id} reviews={product.reviews || []} />
 
-              {/* (optional) keep your review form below if you want */}
+              {/* related products */}
+              <RelatedProducts currentProduct={product} allProducts={products} />
             </div>
           </div>
         </div>
-        {/* MAIN CONTENT SECTION END */}
       </main>
       <Footer />
     </>
