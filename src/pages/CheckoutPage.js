@@ -164,6 +164,7 @@ export const CheckoutPage = () => {
               />
             </div> */}
           </div>
+          <br />
           <button
             type="button"
             onClick={handlePlaceOrder}
@@ -171,7 +172,6 @@ export const CheckoutPage = () => {
           >
             Place Your Order
           </button>
-          <PayNowButton />
         </section>
 
         {/* Order summary */}
@@ -208,29 +208,5 @@ export const CheckoutPage = () => {
 
       <Footer />
     </div>
-  );
-};
-
-const PayNowButton = () => {
-  const handlePayment = () => {
-    const paymentWindow = window.open(
-      "https://rzp.io/rzp/rNdcaDu8",
-      "RazorpayPayment",
-      "width=500,height=700,menubar=no,toolbar=no,location=no,status=no"
-    );
-    if (paymentWindow) paymentWindow.focus();
-  };
-
-  return (
-    <button
-      onClick={handlePayment}
-      className="relative px-6 py-3 font-semibold text-white rounded-full shadow-lg transition-all duration-300 ease-in-out hover:scale-105 active:scale-95 focus:outline-none"
-      style={{
-        background: "linear-gradient(90deg, #FF8C00, #FFD700)", // orange → yellow
-        boxShadow: "0 4px 15px rgba(255, 165, 0, 0.4)",
-      }}
-    >
-      Pay Now
-    </button>
   );
 };

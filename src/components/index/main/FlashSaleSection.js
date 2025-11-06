@@ -1,9 +1,7 @@
 import React, { useRef } from "react";
 import { useDispatch } from "react-redux";
-import { addToCart } from "../../../redux/cartSlice";
+import { addToCart, getCartTotal } from "../../../redux/cartSlice";
 import { ProductCard } from "../../../pages/ShopPage";
-// import { products } from "../../../pages/ShopPage";
-
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 
@@ -50,7 +48,7 @@ const FlashSaleSection = () => {
       <div className="ul-container">
         <div className="ul-flash-sale">
           <div className="ul-inner-container">
-            {/* heading */}
+            {/* header ... keep yours */}
             <div className="ul-section-heading ul-flash-sale-heading">
               <div className="left">
                 <span className="ul-section-sub-title">New Collection</span>

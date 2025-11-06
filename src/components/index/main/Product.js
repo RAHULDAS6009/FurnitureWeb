@@ -88,7 +88,7 @@ const ProductsSection = () => {
               </div>
 
               <div className="right">
-                <a href="#" className="ul-btn">
+                <a href="/shop" className="ul-btn">
                   More Collection <i className="flaticon-up-right-arrow"></i>
                 </a>
               </div>
@@ -124,6 +124,10 @@ const ProductsSection = () => {
                   spaceBetween={24}
                   loop={true}
                   breakpoints={{
+                    0: { slidesPerView: 1 },
+                    576: { slidesPerView: 2 },
+                    992: { slidesPerView: 3 },
+                    1200: { slidesPerView: 4 },
                     0: { slidesPerView: 1 },
                     576: { slidesPerView: 2 },
                     992: { slidesPerView: 3 },
@@ -224,6 +228,7 @@ const ProductsSection = () => {
           height: 40px;
           border: none;
           border-radius: 999px;
+          background: #ef2853;
           background: #ef2853;
           color: #fff;
           display: grid;
