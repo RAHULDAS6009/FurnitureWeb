@@ -72,7 +72,7 @@ export const Header = () => {
             <div className="header-bottom-left">
               <div className="logo-container">
                 <a href="/" className="d-inline-block">
-                  <img src="assets/img/logo.svg" alt="logo" className="logo" />
+                  <img src="/assets/img/logo.svg" alt="logo" className="logo" />
                 </a>
               </div>
 
