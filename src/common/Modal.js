@@ -60,7 +60,7 @@ const Modal = ({ isModalOpen, handleClose, data }) => {
             <div className="flex">
               <div className="relative">
                 <div className="flash_sale_img">
-                  <img src={data.img} alt="img" />
+                  <img src={data.images[0]} alt="img" />
                 </div>
               </div>
 

@@ -11,43 +11,38 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { products } from "../../../data/Data";
 
+import { AddToCartModal } from "../../../pages/ShopPage";
+
 const FlashSaleSection = () => {
   const dispatch = useDispatch();
   const prevRef = useRef(null);
   const nextRef = useRef(null);
 
-  // ------- ensure the payload shape your slice expects -------
-  const handleAdd = (rawProduct, e) => {
-    if (e) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-    if (!rawProduct) return;
+  // state for modal
+  const [modalOpen, setModalOpen] = React.useState(false);
+  const [selectedProduct, setSelectedProduct] = React.useState(null);
+  const [chosenSize, setChosenSize] = React.useState("M");
+  const [qty, setQty] = React.useState(1);
 
-    const product = {
-      id: rawProduct.id,
-      title: rawProduct.title,
-      price: rawProduct.price, // e.g. "$99.00" (parse inside slice)
-      img: rawProduct.img || rawProduct.image || rawProduct.thumbnail,
-      category: rawProduct.category,
-      size: rawProduct.size,
-      color: rawProduct.color,
-      inStock: rawProduct.inStock ?? true,
-      onSale: rawProduct.onSale ?? false,
-      discount: rawProduct.discount,
-      detailsUrl: rawProduct.detailsUrl || "/shopdetails",
-      categoryUrl: rawProduct.categoryUrl || "/shop",
-      quantity:
-        rawProduct.quantity && rawProduct.quantity > 0
-          ? rawProduct.quantity
-          : 1,
-    };
+  const handleAdd = (product, e) => {
+    e?.preventDefault();
+    e?.stopPropagation();
+    setSelectedProduct(product);
+    setChosenSize("M");
+    setQty(1);
+    setModalOpen(true);
+  };
 
-    if (!product.id) {
-      console.warn("addToCart: product.id missing", product);
-      return;
-    }
-    dispatch(addToCart(product));
+  const handleConfirmAdd = () => {
+    if (!selectedProduct) return;
+    dispatch(
+      addToCart({
+        ...selectedProduct,
+        size: chosenSize,
+        quantity: qty,
+      })
+    );
+    setModalOpen(false);
   };
 
   return (
@@ -62,7 +57,7 @@ const FlashSaleSection = () => {
                 <h2 className="ul-section-title">Trending Flash Sell</h2>
               </div>
 
-              {/* (optional) countdown UI */}
+              {/* countdown */}
               <div className="ul-flash-sale-countdown-wrapper">
                 <div className="ul-flash-sale-countdown">
                   <div className="days-wrapper">
@@ -88,7 +83,6 @@ const FlashSaleSection = () => {
                 View All Collection <i className="flaticon-up-right-arrow"></i>
               </a>
 
-              {/* nav arrows */}
               <div className="ul-products-slider-nav ul-products-slider-flash-nav">
                 <button className="prev" ref={prevRef}>
                   <i className="flaticon-left-arrow"></i>
@@ -99,7 +93,7 @@ const FlashSaleSection = () => {
               </div>
             </div>
 
-            {/* products slider */}
+            {/* Swiper product list */}
             <Swiper
               className="ul-flash-sale-slider"
               modules={[Navigation]}
@@ -122,14 +116,11 @@ const FlashSaleSection = () => {
             >
               {products.map((product) => (
                 <SwiperSlide key={product.id}>
-                  {/* If ProductCard supports onAdd, pass it */}
                   <div className="ul-product-card-wrap">
                     <ProductCard
                       product={product}
-                      onAdd={(e) => handleAdd(product, e)}
+                      onAddClick={(e) => handleAdd(product, e)}
                     />
-
-                    {/* Quick Add button overlay (works even if ProductCard ignores onAdd) */}
                     <button
                       className="ul-addtocart-quick"
                       onClick={(e) => handleAdd(product, e)}
@@ -146,17 +137,25 @@ const FlashSaleSection = () => {
         </div>
       </div>
 
-      {/* Small CSS fix for click-through issues */}
+      {/* Reuse modal from ShopPage */}
+      <AddToCartModal
+        open={modalOpen}
+        product={selectedProduct}
+        size={chosenSize}
+        qty={qty}
+        onSizeChange={setChosenSize}
+        onQtyChange={setQty}
+        onClose={() => setModalOpen(false)}
+        onConfirm={handleConfirmAdd}
+      />
+
       <style>{`
-        .ul-product-card-wrap {
-          position: relative;
-        }
+        .ul-product-card-wrap { position: relative; }
         .ul-addtocart-quick {
           position: absolute;
           right: 12px;
           bottom: 12px;
-          z-index: 5; 
-          pointer-events: auto; 
+          z-index: 5;
           border: none;
           background: #ef2853;
           color: #fff;
@@ -169,11 +168,6 @@ const FlashSaleSection = () => {
           opacity: 0.92;
         }
         .ul-addtocart-quick:hover { opacity: 1; }
-        /* In case an overlay covers the whole card, make sure quick button stays on top */
-        .ul-product .ul-product-actions,
-        .ul-product .ul-product-img::after {
-          pointer-events: none;
-        }
       `}</style>
     </div>
   );

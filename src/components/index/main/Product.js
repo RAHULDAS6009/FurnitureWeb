@@ -1,60 +1,77 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../redux/cartSlice";
-import { ProductCard } from "../../../pages/ShopPage";
-// import { products } from "../../../pages/ShopPage";
+import { ProductCard, AddToCartModal } from "../../../pages/ShopPage";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
-
 import "swiper/css";
 import "swiper/css/navigation";
 import { products } from "../../../data/Data";
 
+// import { AddToCartModal } from "../../../pages/ShopPage";
+
 const ProductsSection = () => {
   const dispatch = useDispatch();
 
-  // refs for row 1 navigation buttons
+  // Modal state
+  const [showModal, setShowModal] = useState(false);
+  const [addedProduct, setAddedProduct] = useState(null);
+  const modalTimeoutRef = useRef(null);
+
+  // refs for navigation
   const prevBtn1 = useRef(null);
   const nextBtn1 = useRef(null);
 
-  // (unused for now, keeping if you plan a second row)
-  const prevBtn2 = useRef(null);
-  const nextBtn2 = useRef(null);
+  // normalize and add to cart
+  const handleAdd = useCallback(
+    (rawProduct, e) => {
+      e?.preventDefault?.();
+      e?.stopPropagation?.();
+      if (!rawProduct) return;
 
-  // Normalize & dispatch to cart
-  const handleAdd = (rawProduct, e) => {
-    if (e) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-    if (!rawProduct) return;
+      const product = {
+        id: rawProduct.id,
+        title: rawProduct.title,
+        price: rawProduct.price,
+        img: rawProduct.images?.[0] || rawProduct.image || rawProduct.thumbnail,
+        category: rawProduct.category,
+        size: rawProduct.size,
+        color: rawProduct.color,
+        inStock: rawProduct.inStock ?? true,
+        onSale: rawProduct.onSale ?? false,
+        discount: rawProduct.discount,
+        detailsUrl: rawProduct.detailsUrl || "/shopdetails",
+        categoryUrl: rawProduct.categoryUrl || "/shop",
+        quantity:
+          rawProduct.quantity && rawProduct.quantity > 0
+            ? rawProduct.quantity
+            : 1,
+      };
 
-    const product = {
-      id: rawProduct.id,
-      title: rawProduct.title,
-      price: rawProduct.price, // "$99.00" — parse in slice or wherever you compute totals
-      img: rawProduct.img || rawProduct.image || rawProduct.thumbnail,
-      category: rawProduct.category,
-      size: rawProduct.size,
-      color: rawProduct.color,
-      inStock: rawProduct.inStock ?? true,
-      onSale: rawProduct.onSale ?? false,
-      discount: rawProduct.discount,
-      detailsUrl: rawProduct.detailsUrl || "/shopdetails",
-      categoryUrl: rawProduct.categoryUrl || "/shop",
-      quantity:
-        rawProduct.quantity && rawProduct.quantity > 0
-          ? rawProduct.quantity
-          : 1,
-    };
+      if (!product.id) {
+        console.warn("addToCart: product.id missing", product);
+        return;
+      }
 
-    if (!product.id) {
-      console.warn("addToCart: product.id missing", product);
-      return;
-    }
-    dispatch(addToCart(product));
-  };
+      dispatch(addToCart(product));
+
+      // clear any existing timeout to avoid flicker
+      if (modalTimeoutRef.current) clearTimeout(modalTimeoutRef.current);
+
+      setAddedProduct(product);
+      setShowModal(true);
+
+      console.log("🛒 Product Added:", product);
+
+      // hide modal after 2.5 seconds
+      modalTimeoutRef.current = setTimeout(() => {
+        setShowModal(false);
+        modalTimeoutRef.current = null;
+      }, 2500);
+    },
+    [dispatch]
+  );
 
   return (
     <>
@@ -77,9 +94,9 @@ const ProductsSection = () => {
               </div>
             </div>
 
-            {/* MAIN GRID (2 rows) */}
+            {/* main grid */}
             <div className="row ul-bs-row">
-              {/* ---------- ROW 1 LEFT BANNER ---------- */}
+              {/* LEFT BANNER */}
               <div className="col-lg-3 col-md-4 col-12">
                 <div className="ul-products-sub-banner">
                   <div className="ul-products-sub-banner-img">
@@ -99,7 +116,7 @@ const ProductsSection = () => {
                 </div>
               </div>
 
-              {/* ---------- ROW 1 SLIDER ---------- */}
+              {/* SLIDER */}
               <div className="col-lg-9 col-md-8 col-12">
                 <Swiper
                   className="ul-products-slider-1"
@@ -107,13 +124,12 @@ const ProductsSection = () => {
                   spaceBetween={24}
                   loop={true}
                   breakpoints={{
-                    0: { slidesPerView: 1 }, // mobile shows 1 product
-                    576: { slidesPerView: 2 }, // sm
-                    992: { slidesPerView: 3 }, // lg
-                    1200: { slidesPerView: 4 }, // xl
+                    0: { slidesPerView: 1 },
+                    576: { slidesPerView: 2 },
+                    992: { slidesPerView: 3 },
+                    1200: { slidesPerView: 4 },
                   }}
                   onBeforeInit={(swiper) => {
-                    // connect custom buttons
                     swiper.params.navigation.prevEl = prevBtn1.current;
                     swiper.params.navigation.nextEl = nextBtn1.current;
                   }}
@@ -124,16 +140,11 @@ const ProductsSection = () => {
                 >
                   {products.map((product) => (
                     <SwiperSlide key={product.id}>
-                      {/* Wrap so we can layer our quick add button on top */}
                       <div className="ul-product-card-wrap h-full">
-                        {/* Your existing card */}
                         <ProductCard
                           product={product}
-                          // If ProductCard supports onAdd, pass it:
                           onAdd={(e) => handleAdd(product, e)}
                         />
-
-                        {/* Quick Add button overlay (works even if ProductCard ignores onAdd) */}
                         <button
                           className="ul-addtocart-quick"
                           onClick={(e) => handleAdd(product, e)}
@@ -147,7 +158,6 @@ const ProductsSection = () => {
                   ))}
                 </Swiper>
 
-                {/* slider navigation row 1 */}
                 <div className="ul-products-slider-nav ul-products-slider-1-nav">
                   <button className="prev" ref={prevBtn1}>
                     <i className="flaticon-left-arrow"></i>
@@ -162,64 +172,45 @@ const ProductsSection = () => {
         </section>
       </div>
 
-      {/* PRODUCTS SECTION END */}
-      <div className="ul-container">
-        <section className="ul-ad">
-          <div className="ul-inner-container">
-            <div className="ul-ad-content">
-              <div className="ul-ad-txt">
-                <span className="ul-ad-sub-title">Trending Products</span>
-                <h2 className="ul-section-title">
-                  Get 30% Discount On All Hudis!
-                </h2>
+      {/* ADD TO CART MODAL */}
+      {showModal && addedProduct && (
+        <div
+          style={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%) scale(1)",
+            background: "white",
+            padding: 30,
+            borderRadius: 12,
+            zIndex: 9999,
+            boxShadow: "0 0 25px rgba(0,0,0,0.3)",
+            textAlign: "center",
+            animation: "fadeIn 0.3s ease",
+          }}
+        >
+          <h3>✅ Added to Cart!</h3>
+          <p style={{ fontWeight: "600", marginTop: 8 }}>
+            {addedProduct.title}
+          </p>
+          <button
+            onClick={() => setShowModal(false)}
+            style={{
+              marginTop: 12,
+              padding: "8px 16px",
+              background: "#ef2853",
+              color: "#fff",
+              border: "none",
+              borderRadius: 8,
+              cursor: "pointer",
+            }}
+          >
+            Close
+          </button>
+        </div>
+      )}
 
-                <div className="ul-ad-categories">
-                  <span className="category">
-                    <span>
-                      <i className="flaticon-check-mark"></i>
-                    </span>
-                    Zara
-                  </span>
-                  <span className="category">
-                    <span>
-                      <i className="flaticon-check-mark"></i>
-                    </span>
-                    Gucie
-                  </span>
-                  <span className="category">
-                    <span>
-                      <i className="flaticon-check-mark"></i>
-                    </span>
-                    Publo
-                  </span>
-                  <span className="category">
-                    <span>
-                      <i className="flaticon-check-mark"></i>
-                    </span>
-                    Men's
-                  </span>
-                  <span className="category">
-                    <span>
-                      <i className="flaticon-check-mark"></i>
-                    </span>
-                    Women's
-                  </span>
-                </div>
-              </div>
-
-              <div className="ul-ad-img">
-                <img src="assets/img/ad-img.png" alt="Ad" />
-              </div>
-
-              <a href="shop.html" className="ul-btn">
-                Check Discount <i className="flaticon-up-right-arrow"></i>
-              </a>
-            </div>
-          </div>
-        </section>
-      </div>
-
-      {/* Click-through safety CSS */}
+      {/* INLINE STYLE FIX */}
       <style>{`
         .ul-product-card-wrap {
           position: relative;
@@ -233,19 +224,21 @@ const ProductsSection = () => {
           height: 40px;
           border: none;
           border-radius: 999px;
-          background: #ef2853
+          background: #ef2853;
           color: #fff;
           display: grid;
           place-items: center;
           cursor: pointer;
           opacity: 0.92;
+          transition: all 0.2s ease;
         }
-        .ul-addtocart-quick:hover { opacity: 1; }
-
-        /* If your card has hover overlays, make them ignore clicks so button receives it */
-        .ul-product .ul-product-actions,
-        .ul-product .ul-product-img::after {
-          pointer-events: none;
+        .ul-addtocart-quick:hover {
+          opacity: 1;
+          transform: scale(1.05);
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translate(-50%, -50%) scale(0.95); }
+          to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
         }
       `}</style>
     </>

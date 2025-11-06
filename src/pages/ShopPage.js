@@ -18,6 +18,96 @@ const parsePrice = (p) => {
   return Number.isFinite(n) ? n : 0;
 };
 
+// 👇 Add this right before the final closing line of your ShopPage.jsx
+export const AddToCartModal = ({
+  open,
+  product,
+  size,
+  qty,
+  onSizeChange,
+  onQtyChange,
+  onClose,
+  onConfirm,
+}) => {
+  if (!open || !product) return null;
+
+  const sizeOptions = ["S", "M", "L", "XL", "XXL"];
+
+  return (
+    <div
+      className="ul-modal-overlay"
+      role="dialog"
+      aria-modal="true"
+      onClick={onClose}
+    >
+      <div className="ul-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="ul-modal-header">
+          <h4>Add to Cart</h4>
+          <button
+            className="ul-modal-close"
+            onClick={onClose}
+            aria-label="Close"
+          >
+            ×
+          </button>
+        </div>
+
+        <div className="ul-modal-body">
+          <div className="ul-modal-product">
+            <img src={product.images[0]} alt={product.title} />
+            <div>
+              <h5 className="ul-modal-title">{product.title}</h5>
+              <div className="ul-modal-price">{product.price}</div>
+            </div>
+          </div>
+
+          <div className="ul-modal-row">
+            <label>Size</label>
+            <div className="ul-size-pills">
+              {sizeOptions.map((s) => (
+                <button
+                  key={s}
+                  className={`ul-size-pill ${size === s ? "active" : ""}`}
+                  onClick={() => onSizeChange(s)}
+                  type="button"
+                >
+                  {s}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="ul-modal-row">
+            <label>Quantity</label>
+            <div className="ul-qty">
+              <button
+                type="button"
+                onClick={() => onQtyChange(Math.max(1, qty - 1))}
+              >
+                −
+              </button>
+              <input type="number" min={1} value={qty} readOnly />
+              <button type="button" onClick={() => onQtyChange(qty + 1)}>
+                +
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div className="ul-modal-footer">
+          <button className="ul-btn-secondary" onClick={onClose}>
+            Cancel
+          </button>
+          <button className="ul-btn-primary" onClick={onConfirm}>
+            Confirm <i className="flaticon-shopping-bag" />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ✅ Main ShopPage Component
 export const ShopPage = () => {
   // filters
   const [category, setCategory] = useState("");
@@ -188,8 +278,8 @@ export const ShopPage = () => {
             <ProductCard
               key={product.id}
               product={product}
-              onAddClick={() => openConfirm(product)} // opens confirm dialog
-              onQuickAdd={(e) => handleQuickAdd(product, e)} // direct add (bag icon)
+              onAddClick={() => openConfirm(product)}
+              onQuickAdd={(e) => handleQuickAdd(product, e)}
             />
           ))}
           {filtered.length === 0 && (
@@ -228,83 +318,18 @@ export const ShopPage = () => {
       <ToastContainer />
       <Footer />
 
-      {/* Add-to-Cart Confirm Dialog */}
-      {confirmOpen && selectedProduct && (
-        <div
-          className="ul-modal-overlay"
-          role="dialog"
-          aria-modal="true"
-          onClick={closeConfirm}
-        >
-          <div className="ul-modal" onClick={(e) => e.stopPropagation()}>
-            <div className="ul-modal-header">
-              <h4>Add to Cart</h4>
-              <button
-                className="ul-modal-close"
-                onClick={closeConfirm}
-                aria-label="Close"
-              >
-                ×
-              </button>
-            </div>
-            <div className="ul-modal-body">
-              <div className="ul-modal-product">
-                <img
-                  src={selectedProduct.images[0]}
-                  alt={selectedProduct.title}
-                />
-                <div>
-                  <h5 className="ul-modal-title">{selectedProduct.title}</h5>
-                  <div className="ul-modal-price">{selectedProduct.price}</div>
-                </div>
-              </div>
-
-              <div className="ul-modal-row">
-                <label>Size</label>
-                <div className="ul-size-pills">
-                  {sizeOptions.map((s) => (
-                    <button
-                      key={s}
-                      className={`ul-size-pill ${
-                        chosenSize === s ? "active" : ""
-                      }`}
-                      onClick={() => setChosenSize(s)}
-                      type="button"
-                    >
-                      {s}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div className="ul-modal-row">
-                <label>Quantity</label>
-                <div className="ul-qty">
-                  <button
-                    type="button"
-                    onClick={() => setQty((q) => Math.max(1, q - 1))}
-                  >
-                    −
-                  </button>
-                  <input type="number" min={1} value={qty} readOnly />
-                  <button type="button" onClick={() => setQty((q) => q + 1)}>
-                    +
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <div className="ul-modal-footer">
-              <button className="ul-btn-secondary" onClick={closeConfirm}>
-                Cancel
-              </button>
-              <button className="ul-btn-primary" onClick={handleConfirmAdd}>
-                Confirm <i className="flaticon-shopping-bag" />
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* ✅ Replaced modal here */}
+      <AddToCartModal
+        product={selectedProduct}
+        open={confirmOpen}
+        onClose={closeConfirm}
+        onConfirm={handleConfirmAdd}
+        chosenSize={chosenSize}
+        setChosenSize={setChosenSize}
+        qty={qty}
+        setQty={setQty}
+        sizeOptions={["S", "M", "L", "XL", "XXL"]}
+      />
 
       {/* ensure quick button is always clickable */}
       <style>{`
@@ -322,7 +347,7 @@ export const ShopPage = () => {
   );
 };
 
-// ProductCard now supports BOTH: onAddClick (modal) and onQuickAdd (direct bag icon)
+// ✅ ProductCard (unchanged)
 export const ProductCard = ({ product, onAddClick, onQuickAdd }) => {
   const {
     id,
@@ -345,7 +370,6 @@ export const ProductCard = ({ product, onAddClick, onQuickAdd }) => {
       >
         <div className="ul-product-heading">
           <span className="ul-product-price">{price}</span>
-          {/* <span className="ul-product-discount-tag">{discount}</span> */}
         </div>
 
         <img
@@ -359,22 +383,12 @@ export const ProductCard = ({ product, onAddClick, onQuickAdd }) => {
             marginBottom: "30px",
           }}
         />
-        {/* hover actions (open modal add) */}
+
         <div
           className="ul-product-actions"
           onClick={(e) => e.stopPropagation()}
-          style={{ pointerEvents: "auto" }} // override global pointer-events none
-        >
-          {/* <button
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              onAddClick?.();
-            }}
-          >
-            <i className="flaticon-shopping-bag" />
-          </button> */}
-        </div>
+          style={{ pointerEvents: "auto" }}
+        ></div>
 
         <div className="ul-product-txt">
           <h4 className="ul-product-title">
@@ -389,7 +403,6 @@ export const ProductCard = ({ product, onAddClick, onQuickAdd }) => {
           </h5>
         </div>
 
-        {/* floating quick add (always visible in bottom-right) */}
         <button
           className="ul-quick-add-btn"
           onClick={(e) => {

@@ -260,7 +260,7 @@ export const CartPage = () => {
    Compact Flipkart-style Cart Item card (UI only)
    ========================================================= */
 const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
-  const { title, images, price, quantity, size, color, discount, onSale } =
+  const { title, img, images, price, quantity, size, color, discount, onSale } =
     item;
 
   const unit = parsePrice(price);
@@ -290,7 +290,7 @@ const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
         <a href="/shopdetails" aria-label={title}>
           <img
             className="cart-img"
-            src={images?.[0] || "/products/placeholder.png"} // fallback image
+            src={img || images[0] || "/products/placeholder.png"} // fallback image
             alt={title || "Product image"}
           />
         </a>
