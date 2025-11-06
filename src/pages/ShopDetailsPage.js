@@ -11,7 +11,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { products } from "../data/Data";
 import { useNavigate } from "react-router-dom";
 
-
 /* -----------------------------
    SMALL REUSABLE PIECES
 ----------------------------- */
@@ -51,10 +50,7 @@ const ReviewMediaGrid = ({ media = [] }) => {
       }}
     >
       {visible.map((src, i) => (
-        <div
-          key={i}
-          style={{ position: "relative", width: 100, height: 100 }}
-        >
+        <div key={i} style={{ position: "relative", width: 100, height: 100 }}>
           <img
             src={src}
             alt={`Review media ${i + 1}`}
@@ -93,9 +89,7 @@ export const ReviewsSection = ({ pid, reviews = [] }) => {
   if (!reviews.length) {
     return (
       <section className="ul-product-details-reviews" style={{ marginTop: 24 }}>
-        <h3 className="ul-product-details-inner-title">
-          Ratings and reviews
-        </h3>
+        <h3 className="ul-product-details-inner-title">Ratings and reviews</h3>
         <p>No reviews yet. Be the first to review this product.</p>
       </section>
     );
@@ -192,7 +186,6 @@ export const ReviewsSection = ({ pid, reviews = [] }) => {
   );
 };
 
-
 const RelatedProducts = ({ currentProduct, allProducts }) => {
   const navigate = useNavigate();
 
@@ -245,7 +238,11 @@ const RelatedProducts = ({ currentProduct, allProducts }) => {
                   <img
                     src={imgSrc}
                     alt={p.title}
-                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
                   />
                 ) : null}
               </div>
@@ -335,12 +332,19 @@ export default function ShopDetailsPage() {
         <div className="ul-inner-page-container">
           <div className="ul-product-details">
             <div className="ul-product-details-top">
-              <div className="row ul-bs-row row-cols-lg-2 row-cols-1 align-items-center">
+              <div
+                className="row ul-bs-row row-cols-lg-2 row-cols-1 align-items-center
+              "
+              >
                 {/* images */}
-                <div className="col flex justify-center items-center h-full">
+                <div className="col flex justify-center items-center">
                   {/* product.images is array in your data */}
                   <Carousel
-                    slides={Array.isArray(product.images) ? product.images : [product.images]}
+                    slides={
+                      Array.isArray(product.images)
+                        ? product.images
+                        : [product.images]
+                    }
                   />
                 </div>
 
@@ -573,7 +577,10 @@ export default function ShopDetailsPage() {
               <ReviewsSection pid={id} reviews={product.reviews || []} />
 
               {/* related products */}
-              <RelatedProducts currentProduct={product} allProducts={products} />
+              <RelatedProducts
+                currentProduct={product}
+                allProducts={products}
+              />
             </div>
           </div>
         </div>

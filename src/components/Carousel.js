@@ -30,7 +30,7 @@ const Carousel = ({ slides }) => {
     <div className="w-full flex gap-2 relative overflow-hidden">
       <img
         key={slide} // force re-render for animation
-        className="slide-animation w-full object-cover rounded-md"
+        className="slide-animation w-full object-cover h-[80vh] rounded-md"
         // slide from left
         src={slides[slide]}
         alt=""

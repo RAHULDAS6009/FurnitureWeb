@@ -63,7 +63,7 @@ export const CheckoutPage = () => {
         body: JSON.stringify(orderData),
       });
 
-      alert("✅ Order submitted! Check your email and sheet.");
+      // alert("✅ Order submitted! Check your email and sheet.");
       localStorage.removeItem("cart");
       navigate("/order-confirmed");
     } catch (err) {
