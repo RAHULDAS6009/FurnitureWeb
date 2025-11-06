@@ -27,7 +27,7 @@ const Carousel = ({ slides }) => {
     return () => clearInterval(interval);
   }, [slide]);
   return (
-    <div className="w-[70vh] flex gap-2 relative overflow-hidden h-[85vh] ">
+    <div className="w-[70vh] flex gap-2 relative overflow-hidden h-[90vh] ">
       <img
         key={slide} // force re-render for animation
         className="slide-animation w-full object-fill  rounded-md"
