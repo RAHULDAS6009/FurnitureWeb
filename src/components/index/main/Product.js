@@ -1,8 +1,7 @@
 import React, { useRef } from "react";
 import { useDispatch } from "react-redux";
-import { addToCart } from "../../../redux/cartSlice";
+import { addToCart, getCartTotal } from "../../../redux/cartSlice";
 import { ProductCard } from "../../../pages/ShopPage";
-// import { products } from "../../../pages/ShopPage";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
@@ -18,11 +17,7 @@ const ProductsSection = () => {
   const prevBtn1 = useRef(null);
   const nextBtn1 = useRef(null);
 
-  // (unused for now, keeping if you plan a second row)
-  const prevBtn2 = useRef(null);
-  const nextBtn2 = useRef(null);
-
-  // Normalize & dispatch to cart
+  // 🛒 normalize to the SAME shape as ShopPage
   const handleAdd = (rawProduct, e) => {
     if (e) {
       e.preventDefault();
@@ -30,30 +25,34 @@ const ProductsSection = () => {
     }
     if (!rawProduct) return;
 
-    const product = {
-      id: rawProduct.id,
-      title: rawProduct.title,
-      price: rawProduct.price, // "$99.00" — parse in slice or wherever you compute totals
-      img: rawProduct.img || rawProduct.image || rawProduct.thumbnail,
-      category: rawProduct.category,
-      size: rawProduct.size,
-      color: rawProduct.color,
-      inStock: rawProduct.inStock ?? true,
-      onSale: rawProduct.onSale ?? false,
-      discount: rawProduct.discount,
-      detailsUrl: rawProduct.detailsUrl || "/shopdetails",
-      categoryUrl: rawProduct.categoryUrl || "/shop",
+    // make sure we always have images: []
+    const images =
+      Array.isArray(rawProduct.images) && rawProduct.images.length
+        ? rawProduct.images
+        : rawProduct.img
+        ? [rawProduct.img]
+        : rawProduct.image
+        ? [rawProduct.image]
+        : rawProduct.thumbnail
+        ? [rawProduct.thumbnail]
+        : [];
+
+    const payload = {
+      ...rawProduct,
+      images, // ✅ cart can now do images[0]
       quantity:
         rawProduct.quantity && rawProduct.quantity > 0
           ? rawProduct.quantity
           : 1,
     };
 
-    if (!product.id) {
-      console.warn("addToCart: product.id missing", product);
+    if (!payload.id) {
+      console.warn("addToCart: product.id missing", payload);
       return;
     }
-    dispatch(addToCart(product));
+
+    dispatch(addToCart(payload));
+    dispatch(getCartTotal());
   };
 
   return (
@@ -71,15 +70,14 @@ const ProductsSection = () => {
               </div>
 
               <div className="right">
-                <a href="#" className="ul-btn">
+                <a href="/shop" className="ul-btn">
                   More Collection <i className="flaticon-up-right-arrow"></i>
                 </a>
               </div>
             </div>
 
-            {/* MAIN GRID (2 rows) */}
             <div className="row ul-bs-row">
-              {/* ---------- ROW 1 LEFT BANNER ---------- */}
+              {/* left banner */}
               <div className="col-lg-3 col-md-4 col-12">
                 <div className="ul-products-sub-banner">
                   <div className="ul-products-sub-banner-img">
@@ -99,7 +97,7 @@ const ProductsSection = () => {
                 </div>
               </div>
 
-              {/* ---------- ROW 1 SLIDER ---------- */}
+              {/* slider */}
               <div className="col-lg-9 col-md-8 col-12">
                 <Swiper
                   className="ul-products-slider-1"
@@ -107,13 +105,12 @@ const ProductsSection = () => {
                   spaceBetween={24}
                   loop={true}
                   breakpoints={{
-                    0: { slidesPerView: 1 }, // mobile shows 1 product
-                    576: { slidesPerView: 2 }, // sm
-                    992: { slidesPerView: 3 }, // lg
-                    1200: { slidesPerView: 4 }, // xl
+                    0: { slidesPerView: 1 },
+                    576: { slidesPerView: 2 },
+                    992: { slidesPerView: 3 },
+                    1200: { slidesPerView: 4 },
                   }}
                   onBeforeInit={(swiper) => {
-                    // connect custom buttons
                     swiper.params.navigation.prevEl = prevBtn1.current;
                     swiper.params.navigation.nextEl = nextBtn1.current;
                   }}
@@ -124,16 +121,16 @@ const ProductsSection = () => {
                 >
                   {products.map((product) => (
                     <SwiperSlide key={product.id}>
-                      {/* Wrap so we can layer our quick add button on top */}
                       <div className="ul-product-card-wrap h-full">
-                        {/* Your existing card */}
+                        {/* ✅ use the real ProductCard, but pass correct prop name */}
                         <ProductCard
                           product={product}
-                          // If ProductCard supports onAdd, pass it:
-                          onAdd={(e) => handleAdd(product, e)}
+                          onAddClick={() => handleAdd(product)}
+                          // if your ProductCard also supports onQuickAdd, you can pass it too:
+                          onQuickAdd={(e) => handleAdd(product, e)}
                         />
 
-                        {/* Quick Add button overlay (works even if ProductCard ignores onAdd) */}
+                        {/* overlay quick add as backup */}
                         <button
                           className="ul-addtocart-quick"
                           onClick={(e) => handleAdd(product, e)}
@@ -147,7 +144,7 @@ const ProductsSection = () => {
                   ))}
                 </Swiper>
 
-                {/* slider navigation row 1 */}
+                {/* slider navigation */}
                 <div className="ul-products-slider-nav ul-products-slider-1-nav">
                   <button className="prev" ref={prevBtn1}>
                     <i className="flaticon-left-arrow"></i>
@@ -162,7 +159,7 @@ const ProductsSection = () => {
         </section>
       </div>
 
-      {/* PRODUCTS SECTION END */}
+      {/* ad section (your original) */}
       <div className="ul-container">
         <section className="ul-ad">
           <div className="ul-inner-container">
@@ -211,7 +208,7 @@ const ProductsSection = () => {
                 <img src="assets/img/ad-img.png" alt="Ad" />
               </div>
 
-              <a href="shop.html" className="ul-btn">
+              <a href="/shop" className="ul-btn">
                 Check Discount <i className="flaticon-up-right-arrow"></i>
               </a>
             </div>
@@ -219,7 +216,7 @@ const ProductsSection = () => {
         </section>
       </div>
 
-      {/* Click-through safety CSS */}
+      {/* CSS fixes */}
       <style>{`
         .ul-product-card-wrap {
           position: relative;
@@ -233,7 +230,7 @@ const ProductsSection = () => {
           height: 40px;
           border: none;
           border-radius: 999px;
-          background: #ef2853
+          background: #ef2853;
           color: #fff;
           display: grid;
           place-items: center;
@@ -242,7 +239,7 @@ const ProductsSection = () => {
         }
         .ul-addtocart-quick:hover { opacity: 1; }
 
-        /* If your card has hover overlays, make them ignore clicks so button receives it */
+        /* make sure card overlays don't block the quick button */
         .ul-product .ul-product-actions,
         .ul-product .ul-product-img::after {
           pointer-events: none;
