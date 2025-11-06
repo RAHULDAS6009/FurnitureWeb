@@ -18,7 +18,7 @@ export const CheckoutPage = () => {
     zipcode: "",
     country: "",
     phone: "",
-    email: "das206053@gmail.com",
+    email: "rddas6363@gmail.com",
   });
 
   const cart = JSON.parse(localStorage.getItem("cart") || "[]");
