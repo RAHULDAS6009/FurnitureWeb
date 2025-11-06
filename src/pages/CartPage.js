@@ -48,7 +48,7 @@ export const CartPage = () => {
     };
   }, [cart]);
 
-  const shipping = cart.length > 0 ? 15 : 0; // flat demo shipping
+  const shipping = cart.length > 0 ? 0 : 0; // flat demo shipping
   const grandTotal = subtotal + shipping;
 
   // keep original getCartTotal behavior if you rely on it elsewhere
