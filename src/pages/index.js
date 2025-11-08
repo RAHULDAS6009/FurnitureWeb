@@ -1,7 +1,7 @@
 import Footer from "../components/index/Footer";
 import { Header } from "../components/index/Header";
 import Hero from "../components/index/Hero";
-import SiderBar from "../components/index/SiderBar";
+// import SiderBar from "../components/index/SiderBar";
 
 export default function index() {
   return (
@@ -15,12 +15,12 @@ export default function index() {
   );
 }
 
-function Loader() {
-  return (
-    <div>
-      <div class="preloader" id="preloader">
-        <div class="loader"></div>
-      </div>
-    </div>
-  );
-}
+// function Loader() {
+//   return (
+//     <div>
+//       <div class="preloader" id="preloader">
+//         <div class="loader"></div>
+//       </div>
+//     </div>
+//   );
+// }
