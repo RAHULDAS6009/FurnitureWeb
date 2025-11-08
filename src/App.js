@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./App.css";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/autoplay";
 
 // make sure Header has: export default Header
-import Footer from "./common/Footer";
+// import Footer from "./common/Footer";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Index from "./pages/index";

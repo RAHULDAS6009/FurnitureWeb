@@ -352,7 +352,7 @@ export const ProductCard = ({ product, onAddClick, onQuickAdd }) => {
   const {
     id,
     price,
-    discount,
+    // discount,
     oldPrice,
     images,
     title,
