@@ -21,24 +21,48 @@ export const CheckoutPage = () => {
     email: "rddas6363@gmail.com",
   });
 
+  const [message, setMessage] = useState({ text: "", type: "" });
+
   const cart = JSON.parse(localStorage.getItem("cart") || "[]");
 
   const handleChange = (field, value) =>
     setBilling((prev) => ({ ...prev, [field]: value }));
 
   const handlePlaceOrder = async () => {
-    if (!cart.length) {
-      alert("Your cart is empty!");
+    const requiredFields = [
+      "firstName",
+      "lastName",
+      "address1",
+      "city",
+      "state",
+      "zipcode",
+      "country",
+      "phone",
+    ];
+
+    const emptyFields = requiredFields.filter((f) => !billing[f].trim());
+
+    if (emptyFields.length > 0) {
+      setMessage({
+        text: "⚠️ Please fill out all required fields before placing your order.",
+        type: "error",
+      });
       return;
     }
 
-    const subtotal = cart.reduce(
+    if (!cart.length) {
+      setMessage({
+        text: "🛒 Your cart is empty.",
+        type: "error",
+      });
+      return;
+    }
+
+    const total = cart.reduce(
       (acc, item) =>
-        acc + parseFloat(item.price.replace("$", "")) * item.quantity,
+        acc + parseFloat(item.price.replace("Rs", "").trim()) * item.quantity,
       0
     );
-    const tax = 10;
-    const total = subtotal + tax;
 
     const orderData = {
       order_id: Math.floor(Math.random() * 1000000),
@@ -51,7 +75,7 @@ export const CheckoutPage = () => {
       state: billing.state,
       zipcode: billing.zipcode,
       country: billing.country,
-      cart: cart, // includes image URLs
+      cart,
       total: total.toFixed(2),
     };
 
@@ -63,12 +87,21 @@ export const CheckoutPage = () => {
         body: JSON.stringify(orderData),
       });
 
-      // alert("✅ Order submitted! Check your email and sheet.");
-      localStorage.removeItem("cart");
-      navigate("/order-confirmed");
+      setMessage({
+        text: "✅ Order placed successfully! Redirecting...",
+        type: "success",
+      });
+
+      setTimeout(() => {
+        localStorage.removeItem("cart");
+        navigate("/order-confirmed");
+      }, 1500);
     } catch (err) {
       console.error("Error:", err);
-      alert("❌ Failed to submit order.");
+      setMessage({
+        text: "❌ Something went wrong. Please try again.",
+        type: "error",
+      });
     }
   };
 
@@ -83,88 +116,29 @@ export const CheckoutPage = () => {
         <section className="ul-checkout-form">
           <h3 className="ul-checkout-title">Billing Details</h3>
           <div className="row row-cols-lg-2 row-cols-1 ul-bs-row">
-            <div className="form-group">
-              <label>First Name*</label>
-              <input
-                type="text"
-                value={billing.firstName}
-                onChange={(e) => handleChange("firstName", e.target.value)}
-              />
-            </div>
-            <div className="form-group">
-              <label>Last Name*</label>
-              <input
-                type="text"
-                value={billing.lastName}
-                onChange={(e) => handleChange("lastName", e.target.value)}
-              />
-            </div>
-            <div className="form-group">
-              <label>Street Address*</label>
-              <input
-                type="text"
-                value={billing.address1}
-                onChange={(e) => handleChange("address1", e.target.value)}
-              />
-            </div>
-            <div className="form-group">
-              <label>Address 2</label>
-              <input
-                type="text"
-                value={billing.address2}
-                onChange={(e) => handleChange("address2", e.target.value)}
-              />
-            </div>
-            <div className="form-group">
-              <label>City*</label>
-              <input
-                type="text"
-                value={billing.city}
-                onChange={(e) => handleChange("city", e.target.value)}
-              />
-            </div>
-            <div className="form-group">
-              <label>State*</label>
-              <input
-                type="text"
-                value={billing.state}
-                onChange={(e) => handleChange("state", e.target.value)}
-              />
-            </div>
-            <div className="form-group">
-              <label>Zip Code*</label>
-              <input
-                type="text"
-                value={billing.zipcode}
-                onChange={(e) => handleChange("zipcode", e.target.value)}
-              />
-            </div>
-            <div className="form-group">
-              <label>Country*</label>
-              <input
-                type="text"
-                value={billing.country}
-                onChange={(e) => handleChange("country", e.target.value)}
-              />
-            </div>
-            <div className="form-group">
-              <label>Phone*</label>
-              <input
-                type="text"
-                value={billing.phone}
-                onChange={(e) => handleChange("phone", e.target.value)}
-              />
-            </div>
-            {/* <div className="form-group col-lg-12">
-              <label>Email*</label>
-              <input
-                type="email"
-                value={billing.email}
-                onChange={(e) => handleChange("email", e.target.value)}
-              />
-            </div> */}
+            {[
+              ["First Name*", "firstName"],
+              ["Last Name*", "lastName"],
+              ["Street Address*", "address1"],
+              ["Address 2", "address2"],
+              ["City*", "city"],
+              ["State*", "state"],
+              ["Zip Code*", "zipcode"],
+              ["Country*", "country"],
+              ["Phone*", "phone"],
+            ].map(([label, field]) => (
+              <div key={field} className="form-group">
+                <label>{label}</label>
+                <input
+                  type="text"
+                  value={billing[field]}
+                  onChange={(e) => handleChange(field, e.target.value)}
+                />
+              </div>
+            ))}
           </div>
           <br />
+
           <button
             type="button"
             onClick={handlePlaceOrder}
@@ -172,6 +146,19 @@ export const CheckoutPage = () => {
           >
             Place Your Order
           </button>
+
+          {/* Inline message */}
+          {message.text && (
+            <p
+              className={`mt-3 text-sm ${
+                message.type === "error"
+                  ? "text-red-500"
+                  : "text-green-600 font-medium"
+              }`}
+            >
+              {message.text}
+            </p>
+          )}
         </section>
 
         {/* Order summary */}
@@ -185,22 +172,19 @@ export const CheckoutPage = () => {
               <span>{item.price}</span>
             </div>
           ))}
-          <div className="single-row">
-            <span>Tax</span>
-            <span>$10.00</span>
-          </div>
           <div className="ul-checkout-bill-summary-footer ul-checkout-bill-summary-header">
             <span className="left">Total</span>
             <span className="right">
-              $
-              {(
-                cart.reduce(
+              Rs{" "}
+              {cart
+                .reduce(
                   (acc, item) =>
                     acc +
-                    parseFloat(item.price.replace("$", "")) * item.quantity,
+                    parseFloat(item.price.replace("Rs", "").trim()) *
+                      item.quantity,
                   0
-                ) + 10
-              ).toFixed(2)}
+                )
+                .toFixed(2)}
             </span>
           </div>
         </aside>

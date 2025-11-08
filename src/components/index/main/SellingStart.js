@@ -179,15 +179,15 @@ const MostSellingSection = () => {
               >
                 {/* {product.img} */}
                 <div className="ul-product-horizontal h-48">
-                  <div className="ul-product-horizontal-img">
+                  <div className="ul-product-horizontal-img ">
                     <img
                       src={`${product.images[0]}`}
                       alt="Product"
                       loading="lazy"
                       style={{
-                        objectFit: "cover",
+                        objectFit: "fill",
                         width: "100px",
-                        height: "100px",
+                        height: "101px",
                         // height: "px",
                       }}
                     />

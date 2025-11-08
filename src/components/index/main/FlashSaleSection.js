@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { addToCart, getCartTotal } from "../../../redux/cartSlice";
 import { ProductCard } from "../../../pages/ShopPage";
@@ -56,7 +56,7 @@ const FlashSaleSection = () => {
               </div>
 
               {/* countdown */}
-              <div className="ul-flash-sale-countdown-wrapper">
+              {/* <div className="ul-flash-sale-countdown-wrapper">
                 <div className="ul-flash-sale-countdown">
                   <div className="days-wrapper">
                     <div className="days number">3</div>
@@ -75,7 +75,8 @@ const FlashSaleSection = () => {
                     <span className="txt">Sec</span>
                   </div>
                 </div>
-              </div>
+              </div> */}
+              <FlashSaleCountdown />
 
               <a href="/shop" className="ul-btn">
                 View All Collection <i className="flaticon-up-right-arrow"></i>
@@ -167,6 +168,83 @@ const FlashSaleSection = () => {
         }
         .ul-addtocart-quick:hover { opacity: 1; }
       `}</style>
+    </div>
+  );
+};
+
+const FlashSaleCountdown = () => {
+  const [timeLeft, setTimeLeft] = useState(0);
+
+  useEffect(() => {
+    // 3 days in seconds = 3 * 24 * 60 * 60
+    const totalSeconds = 3 * 24 * 60 * 60;
+
+    // Retrieve stored end time if exists
+    const storedEndTime = localStorage.getItem("flashSaleEndTime");
+    let endTime = storedEndTime
+      ? Number(storedEndTime)
+      : Date.now() + totalSeconds * 1000;
+
+    // Reset if expired
+    if (Date.now() > endTime) {
+      endTime = Date.now() + totalSeconds * 1000;
+      localStorage.setItem("flashSaleEndTime", endTime.toString());
+    }
+
+    // Update every second
+    const interval = setInterval(() => {
+      const now = Date.now();
+      const diff = endTime - now;
+
+      if (diff <= 0) {
+        // Restart countdown when finished
+        endTime = Date.now() + totalSeconds * 1000;
+        localStorage.setItem("flashSaleEndTime", endTime.toString());
+      }
+
+      setTimeLeft(Math.max(0, Math.floor((endTime - now) / 1000)));
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Calculate Days, Hours, Minutes, Seconds
+  const days = Math.floor(timeLeft / (24 * 3600));
+  const hours = Math.floor((timeLeft % (24 * 3600)) / 3600);
+  const minutes = Math.floor((timeLeft % 3600) / 60);
+  const seconds = Math.floor(timeLeft % 60);
+
+  return (
+    <div className="ul-flash-sale-countdown-wrapper flex justify-center">
+      <div className="ul-flash-sale-countdown flex items-center justify-center gap-6">
+        <div className="days-wrapper text-center">
+          <div className="days number text-3xl font-bold bg-gradient-to-r from-pink-500 via-orange-400 to-yellow-400 bg-clip-text text-transparent">
+            {String(days).padStart(2, "0")}
+          </div>
+          <span className="txt text-sm text-gray-500">Days</span>
+        </div>
+
+        <div className="hours-wrapper text-center">
+          <div className="hours number text-3xl font-bold text-orange-400">
+            {String(hours).padStart(2, "0")}
+          </div>
+          <span className="txt text-sm text-gray-500">Hours</span>
+        </div>
+
+        <div className="minutes-wrapper text-center">
+          <div className="minutes number text-3xl font-bold text-yellow-400">
+            {String(minutes).padStart(2, "0")}
+          </div>
+          <span className="txt text-sm text-gray-500">Min</span>
+        </div>
+
+        <div className="seconds-wrapper text-center">
+          <div className="seconds number text-3xl font-bold bg-gradient-to-r from-pink-500 via-orange-400 to-yellow-400 bg-clip-text text-transparent animate-pulse">
+            {String(seconds).padStart(2, "0")}
+          </div>
+          <span className="txt text-sm text-gray-500">Sec</span>
+        </div>
+      </div>
     </div>
   );
 };

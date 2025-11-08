@@ -353,6 +353,7 @@ export const ProductCard = ({ product, onAddClick, onQuickAdd }) => {
     id,
     price,
     discount,
+    oldPrice,
     images,
     title,
     category,
@@ -368,8 +369,43 @@ export const ProductCard = ({ product, onAddClick, onQuickAdd }) => {
         onClick={() => navigate(`/shopdetails/${id}`)}
         style={{ cursor: "pointer" }}
       >
-        <div className="ul-product-heading">
-          <span className="ul-product-price">{price}</span>
+        <div className="ul-product-heading flex items-center gap-3">
+          {(() => {
+            // Convert "Rs 850" → 850 safely
+            const numericPrice = Number(price?.toString().replace(/\D/g, ""));
+            const numericOldPrice = Number(
+              oldPrice?.toString().replace(/\D/g, "")
+            );
+            const discount =
+              numericOldPrice && numericPrice
+                ? Math.round(
+                    ((numericOldPrice - numericPrice) / numericOldPrice) * 100
+                  )
+                : 0;
+
+            return (
+              <span className="ul-product-price flex items-center gap-3 text-sm font-semibold">
+                {/* New Price */}
+                <span className="bg-gradient-to-r from-pink-500 via-orange-400 to-yellow-400 bg-clip-text text-transparent text-lg font-bold">
+                  Rs {numericPrice}
+                </span>
+
+                {/* Old Price */}
+                {numericOldPrice > numericPrice && (
+                  <span className="text-gray-400 line-through text-sm">
+                    Rs {numericOldPrice}
+                  </span>
+                )}
+
+                {/* Discount Badge */}
+                {discount > 0 && (
+                  <span className="text-sm font-semibold px-2 py-1 rounded-full bg-gradient-to-r from-pink-500 via-orange-400 to-yellow-400 text-white shadow-md">
+                    {discount}% OFF
+                  </span>
+                )}
+              </span>
+            );
+          })()}
         </div>
 
         <img
@@ -378,7 +414,7 @@ export const ProductCard = ({ product, onAddClick, onQuickAdd }) => {
           className="rounded-md"
           style={{
             objectFit: "fill",
-            width: "98%",
+            width: "200%",
             height: "350px",
             marginBottom: "30px",
           }}

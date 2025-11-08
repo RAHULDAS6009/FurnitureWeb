@@ -403,8 +403,43 @@ export default function ShopDetailsPage() {
                     </div>
 
                     {/* price */}
-                    <span className="ul-product-details-price">
-                      {product.price}
+                    <span className="flex items-center gap-3 text-lg font-semibold">
+                      {(() => {
+                        // Clean numeric values even if "Rs 850" or "850 Rs"
+                        const price = Number(
+                          product.price?.toString().replace(/\D/g, "")
+                        );
+                        const oldPrice = Number(
+                          product.oldPrice?.toString().replace(/\D/g, "")
+                        );
+                        const discount =
+                          oldPrice && price
+                            ? Math.round(((oldPrice - price) / oldPrice) * 100)
+                            : 0;
+
+                        return (
+                          <>
+                            {/* New Price */}
+                            <span className="bg-gradient-to-r from-pink-500 via-orange-400 to-yellow-400 bg-clip-text text-transparent text-2xl font-bold">
+                              Rs {price}
+                            </span>
+
+                            {/* Old Price */}
+                            {oldPrice > price && (
+                              <span className="text-gray-400 line-through text-base">
+                                Rs {oldPrice}
+                              </span>
+                            )}
+
+                            {/* Discount Badge */}
+                            {discount > 0 && (
+                              <span className="text-sm font-semibold px-2 py-1 rounded-full bg-gradient-to-r from-pink-500 via-orange-400 to-yellow-400 text-white shadow-md">
+                                {discount}% OFF
+                              </span>
+                            )}
+                          </>
+                        );
+                      })()}
                     </span>
 
                     {/* title */}

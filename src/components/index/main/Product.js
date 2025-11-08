@@ -76,7 +76,7 @@ const ProductsSection = () => {
   return (
     <>
       {/* PRODUCTS SECTION START */}
-      <div className="ul-container">
+      <div className="ul-container mb-8">
         <br />
         <section className="ul-products">
           <div className="ul-inner-container">
@@ -97,7 +97,7 @@ const ProductsSection = () => {
             {/* main grid */}
             <div className="row ul-bs-row">
               {/* LEFT BANNER */}
-              <div className="col-lg-3 col-md-4 col-12">
+              {/* <div className="col-lg-3 col-md-4 col-12">
                 <div className="ul-products-sub-banner">
                   <div className="ul-products-sub-banner-img">
                     <img
@@ -114,10 +114,11 @@ const ProductsSection = () => {
                     </a>
                   </div>
                 </div>
-              </div>
+              </div> */}
 
               {/* SLIDER */}
-              <div className="col-lg-9 col-md-8 col-12">
+              {/* <div className="col-lg-9 col-md-8 col-12"> */}
+              <div>
                 <Swiper
                   className="ul-products-slider-1"
                   modules={[Navigation]}
@@ -144,7 +145,7 @@ const ProductsSection = () => {
                 >
                   {products.map((product) => (
                     <SwiperSlide key={product.id}>
-                      <div className="ul-product-card-wrap h-full">
+                      <div className=" ul-product-card-wrap h-full ">
                         <ProductCard
                           product={product}
                           onAdd={(e) => handleAdd(product, e)}
