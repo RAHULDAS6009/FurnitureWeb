@@ -180,10 +180,10 @@ export const ShopPage = () => {
 
   const priceRanges = [
     { key: "", label: "Any Price" },
-    { key: "0-50", label: "Under $50" },
-    { key: "50-100", label: "$50 – $100" },
-    { key: "100-200", label: "$100 – $200" },
-    { key: "200+", label: "$200 & above" },
+    { key: "0-500", label: "Under ₹500" },
+    { key: "500-1000", label: "₹500 – ₹1000" },
+    // { key: "100-200", label: "$100 – $200" },
+    // { key: "200+", label: "$200 & above" },
   ];
 
   const filtered = useMemo(() => {
@@ -291,7 +291,7 @@ export const ShopPage = () => {
       </section>
 
       {/* Pagination (visual only) */}
-      <div className="ul-pagination">
+      <div className="ul-pagination mb-4">
         <ul>
           <li>
             <a href="#">

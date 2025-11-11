@@ -162,9 +162,9 @@ function BannerSlide({ img, subTitle, title, price, link, extraClass = "" }) {
       <div className="ul-banner-slide-txt">
         <span className="ul-banner-slide-sub-title">{subTitle}</span>
         <h1 className="ul-banner-slide-title">{title}</h1>
-        <p className="ul-banner-slide-price">
+        {/* <p className="ul-banner-slide-price">
           Starting From <span className="price">${price}</span>
-        </p>
+        </p> */}
         <a href={link} className="ul-btn">
           SHOP NOW <i className="flaticon-up-right-arrow"></i>
         </a>

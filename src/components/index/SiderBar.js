@@ -202,7 +202,7 @@ export default function SiderBar({ onClose }) {
       </div>
       <div>{isMobile && <MobileSidebarNav />}</div>
       {/* <!-- sidebar footer --> */}
-      <div className="ul-sidebar-footer">
+      <div className="ul-sidebar-footer mb-12">
         <span className="ul-sidebar-footer-title">Follow us</span>
 
         <div className="ul-sidebar-footer-social">
@@ -212,7 +212,10 @@ export default function SiderBar({ onClose }) {
           <a href="#">
             <i className="flaticon-twitter"></i>
           </a>
-          <a href="#">
+          <a
+            href="https://www.instagram.com/mont_oaklyn?igsh=MWxxbWwxNHZ5YmE1cw%3D%3D&utm_source=qr"
+            target="_blank"
+          >
             <i className="flaticon-instagram"></i>
           </a>
           <a href="#">
@@ -240,7 +243,7 @@ function MobileSidebarNav() {
             Shop
           </a>
           <a href="/shop" className="border-t py-2 px-4 hover:text-red-600">
-            Women
+            Fabric's
           </a>
           <a href="/shop" className="border-t py-2 px-4  hover:text-red-600">
             Men's

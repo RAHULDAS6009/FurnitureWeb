@@ -99,9 +99,10 @@ export const Header = () => {
                         All Categories
                       </option>
                       <option value="clothing">Clothing</option>
-                      <option value="watches">Watches</option>
+                      <option value="clothing">Fabric</option>
+                      {/* <option value="watches">Watches</option>
                       <option value="jewellery">Jewellery</option>
-                      <option value="glasses">Glasses</option>
+                      <option value="glasses">Glasses</option> */}
                       {/* map your app categories as needed */}
                     </select>
                   </div>
@@ -135,8 +136,8 @@ export const Header = () => {
                 <nav className="ul-header-nav">
                   <a href="/">Home</a>
                   <a href="/shop">Shop</a>
-                  <a href="/shop">Women</a>
                   <a href="/shop">Men's</a>
+                  <a href="/shop">Fabric's</a>
                 </nav>
               </div>
             </div>
