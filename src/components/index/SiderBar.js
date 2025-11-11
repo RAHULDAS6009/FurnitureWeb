@@ -209,18 +209,18 @@ export default function SiderBar({ onClose }) {
           <a href="#">
             <i className="flaticon-facebook-app-symbol"></i>
           </a>
-          <a href="#">
+          {/* <a href="#">
             <i className="flaticon-twitter"></i>
-          </a>
+          </a> */}
           <a
             href="https://www.instagram.com/mont_oaklyn?igsh=MWxxbWwxNHZ5YmE1cw%3D%3D&utm_source=qr"
             target="_blank"
           >
             <i className="flaticon-instagram"></i>
           </a>
-          <a href="#">
+          {/* <a href="#">
             <i className="flaticon-youtube"></i>
-          </a>
+          </a> */}
         </div>
       </div>
     </div>

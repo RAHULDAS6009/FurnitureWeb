@@ -19,7 +19,7 @@ const reviewsData = [
       "The kurta is beautiful! The fabric is soft and the embroidery is very neat. It fits perfectly, just like the size chart suggested. Delivery was also quick.",
   },
   {
-    img: "review-author-2.png",
+    img: "review-author-2.jpg",
     name: "Rohan Gupta",
     role: "Verified Buyer",
     rating: 5,
@@ -27,7 +27,7 @@ const reviewsData = [
       "Absolutely love these jeans. The fit is amazing and the denim quality is top-notch. They are very comfortable to wear all day. Will be buying another pair!",
   },
   {
-    img: "review-author-3.png",
+    img: "review-author-3.jpg",
     name: "Anil Singh",
     role: "Verified Buyer",
     rating: 4,
