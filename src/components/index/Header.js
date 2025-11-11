@@ -13,13 +13,13 @@ export const Header = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    
     setItem(state.length);
 
-   
     const opener = document.querySelector(".ul-header-mobile-search-opener");
     const closer = document.querySelector(".ul-header-mobile-search-closer");
-    const searchWrapper = document.querySelector(".ul-header-search-form-wrapper");
+    const searchWrapper = document.querySelector(
+      ".ul-header-search-form-wrapper"
+    );
 
     const openSearch = () => searchWrapper?.classList.add("active");
     const closeSearch = () => searchWrapper?.classList.remove("active");
@@ -27,12 +27,11 @@ export const Header = () => {
     if (opener && searchWrapper) opener.addEventListener("click", openSearch);
     if (closer && searchWrapper) closer.addEventListener("click", closeSearch);
 
-   
     return () => {
       if (opener) opener.removeEventListener("click", openSearch);
       if (closer) closer.removeEventListener("click", closeSearch);
     };
-  }, [state]); 
+  }, [state]);
   const onSubmit = (e) => {
     e.preventDefault();
     const params = new URLSearchParams();
@@ -72,7 +71,11 @@ export const Header = () => {
             <div className="header-bottom-left">
               <div className="logo-container">
                 <a href="/" className="d-inline-block">
-                  <img src="/assets/img/logo.svg" alt="logo" className="logo" />
+                  <img
+                    src="/assets/img/montoaklynlogo.png"
+                    alt="logo"
+                    className="logo"
+                  />
                 </a>
               </div>
 
@@ -86,7 +89,9 @@ export const Header = () => {
                       value={category}
                       onChange={(e) => setCategory(e.target.value)}
                     >
-                      <option value="all" data-placeholder="true">All Categories</option>
+                      <option value="all" data-placeholder="true">
+                        All Categories
+                      </option>
                       <option value="clothing">Clothing</option>
                       <option value="watches">Watches</option>
                       <option value="jewellery">Jewellery</option>
@@ -126,9 +131,6 @@ export const Header = () => {
                   <a href="/shop">Shop</a>
                   <a href="/shop">Women</a>
                   <a href="/shop">Men's</a>
-                 
-
-                  
                 </nav>
               </div>
             </div>
