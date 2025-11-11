@@ -64,17 +64,23 @@ export const Header = () => {
       </div>
 
       {/* header bottom */}
-      <div className="ul-header-bottom">
+
+      {/* logo alignmenr margin */}
+
+      <div className="ul-header-bottom  -mt-12">
         <div className="ul-container">
           <div className="ul-header-bottom-wrapper">
             {/* header left */}
             <div className="header-bottom-left">
-              <div className="logo-container">
+              <div className="logo-container relative">
+                {/* Black background below logo */}
+                <div className="absolute right-0 top-8 rounded-md left-0  -z-10 h-[45px] lg:h-[65px]" />
+
                 <a href="/" className="d-inline-block">
                   <img
-                    src="/assets/img/montoaklynlogo.png"
+                    src="/assets/img/montoaklyn.png"
                     alt="logo"
-                    className="logo"
+                    className="logo scale-150 relative z-10"
                   />
                 </a>
               </div>

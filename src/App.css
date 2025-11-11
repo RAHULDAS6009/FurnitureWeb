@@ -62,6 +62,10 @@
   animation: slide-in 0.3s ease-out forwards;
 }
 
+/* .animate-slide-out2 {
+  animation: slide-in  ease-out infinite;
+} */
+
 
 
 .ul-most-sell-filter-navs button.active {

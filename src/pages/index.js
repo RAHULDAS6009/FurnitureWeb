@@ -9,8 +9,11 @@ export default function index() {
       {/* <Loader /> */}
       {/* <SiderBar /> */}
       <Header />
-      <Hero />
-      <Footer />
+      {/* logo alignmenr margin */}
+      <div className="-mt-[60px]">
+        <Hero />
+        <Footer />
+      </div>
     </div>
   );
 }

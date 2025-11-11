@@ -46,11 +46,11 @@ export default function Footer() {
 
           {/* <!-- single widget --> */}
           <div className="ul-footer-middle-widget align-self-center">
-            <a href="index.html">
+            <a href="/">
               <img
-                src="assets/img/logo-white.svg"
+                src="assets/img/montoaklynlogo.png"
                 alt="logo"
-                className="logo"
+                className="logo scale-150 pb-5"
               />
             </a>
           </div>

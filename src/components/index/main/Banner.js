@@ -105,7 +105,7 @@ const Banner = () => {
             {/* Main banner */}
             <div className="ul-banner-slider-wrapper">
               {/* This used to say 'swiper', but it's just our custom slider now */}
-              <div className="ul-banner-slider">
+              <div className="ul-banner-slider-track">
                 <div className="ul-banner-slider-track">
                   <BannerSlide {...activeSlide} />
                 </div>
@@ -138,7 +138,6 @@ const Banner = () => {
                       <img
                         src={img}
                         alt={`Banner ${i}`}
-                        
                         onClick={() => handleThumbClick(i)}
                       />
                     </div>
@@ -158,7 +157,7 @@ function BannerSlide({ img, subTitle, title, price, link, extraClass = "" }) {
   return (
     <div className={`ul-banner-slide ${extraClass}`}>
       <div className="ul-banner-slide-img">
-        <img src={img} alt="Banner" />
+        <img src={img} alt="Banner" className="animate-slide-out2" />
       </div>
       <div className="ul-banner-slide-txt">
         <span className="ul-banner-slide-sub-title">{subTitle}</span>
