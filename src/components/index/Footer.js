@@ -25,7 +25,7 @@ export default function Footer() {
                   href="https://www.instagram.com/mont_oaklyn?igsh=MWxxbWwxNHZ5YmE1cw%3D%3D&utm_source=qr"
                   target="_blank"
                 >
-                  <i className="flaticon-instagram-big-logo"></i>
+                  <i className="flaticon-instagram"></i>
                 </a>
                 {/* <a href="#">
                   <i className="flaticon-youtube"></i>
